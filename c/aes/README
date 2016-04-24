@@ -1,0 +1,19 @@
+To stream encrypted video:
+
+raspivid -k -o - | ./encrypt.out <KeyFile> | nc -l <PortNo>
+
+To stream encrypted audio
+
+arecord -Dplughw:<SoundCardName> -f cd | ./encrypt.out <FileName> | nc -l <PortNo>
+
+To view video
+
+mkfifo video_fifo;
+omxplayer video_fifo;
+nc <serverIP> <PortNo> | ./decrypt.out <KeyFile> > video_fifo
+
+To play audio
+
+mkfifo audio_fifo;
+aplay audio_fifo;
+mc <serverIP> <PortNo> | ./decrypt.out <KeyFile> > audio_fifo
