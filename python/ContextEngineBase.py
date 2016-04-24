@@ -108,7 +108,7 @@ class ContextEngineBase:
     def addBatchObservations(self, newInputObsMatrix, newOutputVector):
         for newInputVector in newInputObsMatrix:
             outputValue = newOutputVector.pop();
-            self.addSingleObservation(newInputVector, newInputObsMatrix);
+            self.addSingleObservation(newInputVector, outputValue);
 
     #  Train the coefficients on the existing observation matrix if there are
     #  enough observations.
@@ -131,4 +131,4 @@ class ContextEngineBase:
 
     #  Test the trained matrix against the given input observation
     def test(self, inputObsVector):
-        return np.dot(self.coefficientVector[0],inputObsNPVector);
+        return np.dot(self.coefficientVector[0],inputObsVector);
