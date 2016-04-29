@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neighbors import KNeighborsClassifier
 ## Implementation of the Knn algorithm: 
 class Knn:
 
@@ -29,7 +30,8 @@ class Knn:
 	y_Test = np.empty([0]);
 
 	#trained result
-	knn = KNeighborsRegressor(n_neighbors=2, weights='uniform');
+	knnRegressor = KNeighborsRegressor(n_neighbors=2, weights='uniform');
+	#knnClassifier = KNeighborsClassifier(n_neighbors=5);
 
 	def __init__(self, complexity, numInputs, discreteOutputs, discreteInputs):
 		self.complexity = complexity;
@@ -75,7 +77,7 @@ class Knn:
 	def train(self):
 		if (self.numObservations > 0):
 			print("Training started");
-			self.knn.fit(self.x_Obs, self.y_Obs);
+			self.knnRegressor.fit(self.x_Obs, self.y_Obs);
  			return True;
 		else:
 			print("Not enough observations to train!");
@@ -88,7 +90,7 @@ class Knn:
 			print("Begin execute");
     		#x_Test = np.vstack((self.x_Test,inputObsVector));
 			x_Test = np.reshape(inputObsVector,(1,self.numInputs));
-			self.y_Test = self.knn.predict(x_Test);
+			self.y_Test = self.knnRegressor.predict(x_Test);
 			return self.y_Test;
 		else:
 			print("Wrong dimensions, fail to execute");
