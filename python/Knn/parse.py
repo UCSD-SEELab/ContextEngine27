@@ -79,7 +79,7 @@ plt.scatter(x_real, y_real, c='r', label='data')
 plt.plot(T, y_predict, c='g', label='prediction')
 plt.axis('tight')
 plt.legend()
-plt.title("KNeighborsRegressor (k = %i, weights = '%s')" % (5,
+plt.title("KNeighborsRegressor (k = %i, weights = '%s')" % (2,
 	"uniform"))
 
 plt.show()
