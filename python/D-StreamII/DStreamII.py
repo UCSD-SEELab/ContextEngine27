@@ -1,17 +1,13 @@
-
 #!/usr/bin/env python
-""" generated source for module MainActivity """
 
 import io
-
+import numpy as np
 import math
  
 
 class Coordinates(object):
-    """ generated source for class Coordinates """
 
     def __init__(self, c):
-        """ generated source for method __init__ """
         coord  = []
         for i in c:
             coord.append(i)
@@ -39,27 +35,21 @@ class Coordinates(object):
         return coord
 
     def getDimension(self, d):
-        """ generated source for method getDimension """
         if self.coords != None and len(self.coords) > d:
             return self.coords[d]
         else:
-           # print "Cannot get selected value"
             return None
 
     def setDimension(self, d, val):
-        """ generated source for method setDimension """
         if self.coords != None and len(self.coords) > d:
             self.coords[d] = val
         else:
             print "Cannot set selected value"
 
     def getSize(self):
-        """ generated source for method getSize """
         return len(self.coords)
 
     def equals(self, other):
-        """ generated source for method equals """
-
         other_list = (other).coords
         if len(other_list) != len(self.coords):
             return False
@@ -71,19 +61,16 @@ class Coordinates(object):
         return True
 
     def __str__(self):
-        """ generated source for method toString """
         return self.coords.__str__()
 # ============================================================================================================================================================================
 
 class ATTRIBUTE:
-    """ generated source for enum ATTRIBUTE """
     DENSE = u'DENSE'
     TRANSITIONAL = u'TRANSITIONAL'
     SPARSE = u'SPARSE'
 
 #  Characteristic vector of a grid
 class Grid(object):
-    """ generated source for class Grid """
 
     visited = False
     last_time_updated = 0
@@ -105,7 +92,6 @@ class Grid(object):
     
 
     def __init__(self, v, c, tg, D, attr, dim, dim_upper, dim_lower, dim_par, total_grids, decay, d_thres, s_thres,c_thres):
-        """ generated source for method __init__ """
         self.visited = v
         self.cluster = c
         self.last_time_updated = tg
@@ -120,13 +106,6 @@ class Grid(object):
         self.dense_threshold = d_thres
         self.sparse_threshold = s_thres
         self.correlation_threshold = c_thres
-        '''
-        attr_l = list()
-        i =0 
-        while i < 2*dim +1:
-            attr_l[i] = 1
-            i += 1
-        '''
         self.attraction_list = list()
 
 
@@ -138,72 +117,54 @@ class Grid(object):
 
 
     def setVisited(self, v):
-        """ generated source for method setVisited """
         self.visited = v
 
     def isVisited(self):
-        """ generated source for method isVisited """
         return self.visited
 
     def setCluster(self, c):
-        """ generated source for method setCluster """
         self.cluster = c
 
     def getCluster(self):
-        """ generated source for method getCluster """
         return self.cluster
 
     def setLastTimeUpdated(self, tg):
-        """ generated source for method setLastTimeUpdated """
         self.last_time_updated = tg
 
     def getLastTimeUpdated(self):
-        """ generated source for method getLastTimeUpdated """
         return self.last_time_updated
 
     def setLastTimeElementAdded(self, tg):
-        """ generated source for method setLastTimeElementAdded """
         self.last_time_element_added = tg
 
     def getLastTimeElementAdded(self):
-        """ generated source for method getLastTimeElementAdded """
         return self.last_time_element_added
 
     def getGridDensity(self):
-        """ generated source for method getGridDensity """
         return self.grid_density
 
     def updateGridDensity(self, time):
-        """ generated source for method updateGridDensity """
         self.grid_density = self.grid_density * (math.pow(self.decay_factor, time - self.last_time_updated)) + 1
 
     def updateDecayedGridDensity(self, time):
-        """ generated source for method updateDecayedGridDensity """
         self.grid_density = self.grid_density * (math.pow(self.decay_factor, time - self.last_time_updated))
 
     def isAttributeChangedFromLastAdjust(self):
-        """ generated source for method isAttributeChangedFromLastAdjust """
         return self.attributeChanged
 
     def setAttributeChanged(self, val):
-        """ generated source for method setAttributeChanged """
         self.attributeChanged = val
 
     def isDense(self):
-        """ generated source for method isDense """
-        #print " Call is DENSE"
         return self.grid_attribute == ATTRIBUTE.DENSE
 
     def isTransitional(self):
-        """ generated source for method isTransitional """
         return self.grid_attribute == ATTRIBUTE.TRANSITIONAL
 
     def isSparse(self):
-        """ generated source for method isSparse """
         return self.grid_attribute == ATTRIBUTE.SPARSE
 
     def getGridAttribute(self):
-        """ generated source for method getGridAttribute """
         str_ = ""
         if self.isDense():
             str_ = "DENSE"
@@ -214,7 +175,6 @@ class Grid(object):
         return str_
 
     def updateGridAttribute(self):
-        """ generated source for method updateGridAttribute """
         avg_density = 1.0 / (self.TOTAL_GRIDS * (1 - self.decay_factor))
         if self.grid_attribute != ATTRIBUTE.DENSE and self.grid_density >= self.dense_threshold * avg_density:
             self.attributeChanged = True
@@ -227,13 +187,11 @@ class Grid(object):
             self.grid_attribute = ATTRIBUTE.TRANSITIONAL
 
     def setInitialAttraction(self, attrL):
-        """ generated source for method setInitialAttraction """
         for i in attrL:
             self.attraction_list.append(i)
 
 
     def normalizeAttraction(self, attr_list):
-        """ generated source for method normalizeAttraction """
 
         total_attr = 0.0
         i = 0
@@ -252,7 +210,6 @@ class Grid(object):
 
 
     def getAttraction(self, data_coords, grid_coords):
-        """ generated source for method getAttraction """
         attr_list = list()
         i = 0
 
@@ -306,7 +263,6 @@ class Grid(object):
         return attr_list
 
     def updateGridAttraction(self, attr_list, time):
-        """ generated source for method updateGridAttraction """
         last = 2 * self.DIMENSION
         i = 0
         while i < 2 * self.DIMENSION + 1:
@@ -318,53 +274,28 @@ class Grid(object):
             i += 1
 
     def updateDecayedGridAttraction(self, time):
-        """ generated source for method updateDecayedGridAttraction """
         i = 0
         while i < 2 * self.DIMENSION + 1:
             attraction_decay = self.attraction_list[i]*(math.pow(self.decay_factor,(time -self.last_time_updated) ))
             self.attraction_list[i] = attraction_decay
             i += 1
 
-    def printGridAttraction(self, attrL):
-        """ generated source for method printGridAttraction """
-        print " GRID PRINT ATTRACTION"
-        # Log.i(MY_TAG," print Attraction grid ");
-        
-        i = 0
-        while i < 2 * self.DIMENSION + 1:
-            print "Attraction at " 
-            print i
-            print attrL[i]
-            i += 1
-        # Log.i(MY_TAG, " Attraction at " + String.valueOf(i) + " is " + String.valueOf(attrL.get(i)));
-
-    def printAttractionList(self):
-        """ generated source for method printAttractionList """
-        print " print ATRAACTION LIST"
-        #print self.DIMENSION
-        i = 0
-        while i < 2 * self.DIMENSION + 1:
-            print " Attraction at "
-            print i
-            print self.attraction_list[i]
-            i+= 1
-        #  Log.i(MY_TAG, " Attraction at " + String.valueOf(i) + " is " + String.valueOf(attraction_list.get(i)));
-
+            
     def getAttractionAtIndex(self, i):
-        """ generated source for method getAttractionAtIndex """
         return self.attraction_list[i]
 
 
 # ============================================================================================================================================================================
 
-class Clusterisation(object):
-    """ generated source for class Clusterisation """
+class DStreamII:
+    
     gridList = {} 
     clusters = {}
     DIMENSION = 0
     DIMENSION_LOWER_RANGE = list()
     DIMENSION_UPPER_RANGE = list()
     DIMENSION_PARTITION = list()
+    DIMENSION_GRIDSIZE = list()
     TOTAL_GRIDS = 1
     dense_threshold = 3.0
 
@@ -377,79 +308,86 @@ class Clusterisation(object):
     correlation_threshold = 0.0
     latestCluster = 0
 
-    def __init__(self):
-        """ generated source for method __init__ """
-        self.DIMENSION = 0
-        self.TOTAL_GRIDS = 1
-        self.dense_threshold = 3.0
-        self.sparse_threshold = 0.8
-        self.time_gap = 0
-        self.decay_factor = 0.998
-        self.correlation_threshold = 0.0
-        self.latestCluster = 0
+    complexity = 0;
 
-        
-    def printGridList(self):
-        """ generated source for method printGridList """
-        gridKeys = self.gridList
-        
-        for gKey in gridKeys:
-            grid = self.gridList.get(gKey)
-            if grid.isDense():
-                print " Coordinates:" 
-                print gKey
-                print " Density:" 
-                print grid.getGridDensity()
-                print " Grid: DENSE" 
-                print " Cluster: " 
-                print grid.getCluster()
-            if grid.isTransitional():
-                print " Coordinates:" 
-                print gKey 
-                print " Density:"
-                print grid.getGridDensity()
-                print " Grid: TRANSITIONAL"
-                print " Cluster: " 
-                print grid.getCluster()
-            if grid.isSparse():
-                print " Coordinates:"
-                print   gKey 
-                print " Density:" 
-                print grid.getGridDensity() 
-                print " Grid: SPARSE" 
-                print " Cluster: " 
-                print grid.getCluster()
+    numInputs = 0;
 
-    def printGridAttraction(self):
-        """ generated source for method printGridAttraction """
-        gridKeys = self.gridList
-        for gKey in gridKeys:
-            grid = self.gridList.get(gKey)
-            print gKey
+    discreteOutput = 0;
+
+    discreteInputs = [];
+
+    #  Number of observations - a running count of the unique numbe of
+    #  observations
+    numObservations = 0;
+
+    # Matrix model - each row represents a new input vector
+    #eg. x_Obs = array([[ 1.,  2.,  3.],
+    #   [ 2.,  1.,  5.]])
+    input_Obs = np.empty([0, 0]);
+
+    # Output observation array
+    # eg. y = [0, 1]
+    output_Obs = np.empty([0]);
+    
+
+    time = 0;                                                         
+
+    def __init__(self, complexity, numInputs, discreteOutputs, discreteInputs, appFieldsDict):
+        self.complexity = complexity;
+        self.numInputs = numInputs;
+        self.discreteOutputs = discreteOutputs;
+        self.discreteInputs = discreteInputs;
+        self.input_Obs = np.empty([0,numInputs]);
+        self.DIMENSION = numInputs;
+        self.TOTAL_GRIDS = 1;
+        self.dense_threshold = 3.0;
+        self.sparse_threshold = 0.8;
+        self.time_gap = 0;
+        self.decay_factor = 0.998;
+        self.correlation_threshold = 0.0;
+        self.latestCluster = 0;
+
+        if appFieldsDict.has_key("gridSize"):
+            gridSize = appFieldsDict.get("gridSize")
+            if len(gridSize) == numInputs:
+                self.DIMENSION_GRIDSIZE = gridSize
+
+        if appFieldsDict.has_key("gridUpperRange"):
+            gridUpperRange = appFieldsDict.get("gridUpperRange")
+            if len(gridUpperRange) == numInputs:
+                self.DIMENSION_UPPER_RANGE = gridUpperRange
+
+        if appFieldsDict.has_key("gridLowerRange"):
+            gridLowerRange = appFieldsDict.get("gridLowerRange")
+            if len(gridLowerRange) == numInputs:
+                self.DIMENSION_LOWER_RANGE = gridLowerRange
+
+
+    #  Add a new training observation. Requirements: newInputObs must be a
+    #  row array of size numInputs. newOutputObs must be a single value.
+    def addSingleObservation(self, newInputObs, newOutputObs):
+        if (len(newInputObs) == self.numInputs):
+            self.input_Obs = np.vstack((self.input_Obs,newInputObs));
+            #self.output_Obs = np.append(self.output_Obs, newOutputObs);
+            self.output_Obs = np.append(self.output_Obs, newOutputObs);
+            self.numObservations += 1;
+        else:
+            print("Wrong dimensions!");
+
+
+    #  Add a set of training observations, with the newInputObsMatrix being a
+    #  matrix of doubles, where the row magnitude must match the number of inputs,
+    #  and the column magnitude must match the number of observations.
+    #  and newOutputVector being a column vector of doubles
+    def addBatchObservations(self, newInputObsMatrix, newOutputVector):
+        i =0 
+        for newInputVector in newInputObsMatrix:
+            outputValue = newOutputVector[i]
+            #outputValue = newOutputVector.pop();
+            self.addSingleObservation(newInputVector, outputValue);
+            i+=1
             
-            if grid.isDense():
-                print " Coordinates: " 
-                print gKey
-                print " Density: " 
-                print grid.getGridDensity() 
-                print " Grid: DENSE"
-            if grid.isTransitional():
-                print " Coordinates: "
-                print gKey
-                print " Density: " 
-                print grid.getGridDensity() 
-                print " Grid: TRANSITIONAL"
-            if grid.isSparse():
-                print " Coordinates:"
-                print gKey 
-                print " Density: " 
-                print grid.getGridDensity() 
-                print "  Grid: SPARSE"
-            
-            grid.printAttractionList()
-
     def printClusters(self):
-        """ generated source for method printClusters """
         clusterKeys = self.clusters
         
         for ckey in clusterKeys:
@@ -460,37 +398,7 @@ class Clusterisation(object):
                 print coord
 
 
-    ## working correctly
-    def updateDimensionInfo(self, line):
-        """ generated source for method updateDimensionInfo """
-        dimensionInfo = line.split(",")
-        length = len(dimensionInfo)
-        self.DIMENSION = int(dimensionInfo[0])
-        total_pairs = 0
-        i = 1
-        
-        while i < (length - 2):
-            self.DIMENSION_LOWER_RANGE.append(int(dimensionInfo[i]))
-            self.DIMENSION_UPPER_RANGE.append(int(dimensionInfo[i + 1]))
-            self.DIMENSION_PARTITION.append(int(dimensionInfo[i + 2]))
-            self.TOTAL_GRIDS *= int(dimensionInfo[i + 2])
-            i = i + 3
-        factor = 0.0
-        pairs = 0.0
-        j = 0
-        
-        while j < self.DIMENSION:
-            factor = self.TOTAL_GRIDS / self.DIMENSION_PARTITION[j]
-            pairs = self.DIMENSION_PARTITION[j] - 1
-            total_pairs += (factor) * (pairs)
-            j += 1
-        
-        self.correlation_threshold = self.dense_threshold / (total_pairs * (1 - self.decay_factor))
- 
-
-
     def getNeighbours(self, from_):
-        """ generated source for method getNeighbours """
         neighbours = list()
         dim = 0
         while dim < from_.getSize():
@@ -507,7 +415,6 @@ class Clusterisation(object):
         return neighbours
 
     def getDimensionBigNeighbours(self, from_, dim):
-        """ generated source for method getDimensionBigNeighbours """
         coord = Coordinates(from_)
         val = coord.getDimension(dim)
         bigger = Coordinates(from_)
@@ -518,8 +425,6 @@ class Clusterisation(object):
         return coord
 
     def getDimensionSmallNeighbours(self, from_, dim):
-        """ generated source for method getDimensionSmallNeighbours """
-
         coord = Coordinates(from_)
         val = coord.getDimension(dim)
         smaller = Coordinates(from_)
@@ -530,7 +435,6 @@ class Clusterisation(object):
         return coord
 
     def checkUnconnectedClusterAndSplit(self, clusterIndex):
-        """ generated source for method checkUnconnectedClusterAndSplit """
         if not self.clusters.has_key(clusterIndex):
             return
         gridCoords = self.clusters[clusterIndex]
@@ -560,7 +464,6 @@ class Clusterisation(object):
 
 
     def findStronglyCorrelatedNeighbourWithMaxClusterSize(self, coord, onlyDense):
-        """ generated source for method findStronglyCorrelatedNeighbourWithMaxClusterSize """
         resultCoord = Coordinates(coord)
         initCoord = Coordinates(coord)
         largestClusterSize = 0
@@ -606,11 +509,11 @@ class Clusterisation(object):
 
 
     def removeSporadicGrids(self, gridList, time):
-        """ generated source for method removeSporadicGrids """
         removeGrids = list()
         gridListKeys = gridList.keys()
         for glKey in gridListKeys:
             grid = gridList.get(glKey)
+            key = glKey.getCoords()
             lastTimeElementAdded = grid.getLastTimeElementAdded()
             densityThresholdFunc = (self.sparse_threshold * (1 - math.pow(self.decay_factor, time - lastTimeElementAdded + 1))) / (self.TOTAL_GRIDS * (1 - self.decay_factor))
             grid.updateDecayedGridDensity(time)
@@ -619,12 +522,11 @@ class Clusterisation(object):
             grid.setLastTimeUpdated(time)
             if grid.getGridDensity() < densityThresholdFunc:
                 removeGrids.append(key)
-        for index in removeGrids:
-            gridList.remove(index)   
+        #for index in removeGrids:
+            #gridList.remove(index)   
 
 
     def adjustClustering(self, gridList, time):
-        """ generated source for method adjustClustering """
         gridListKeys = gridList.keys()
         for coordkey in gridListKeys:
             grid = gridList.get(coordkey)
@@ -718,9 +620,7 @@ class Clusterisation(object):
             grid.setAttributeChanged(False)
     
 
-    def mapDataToGrid(self, line, time):
-        """ generated source for method mapDataToGrid """
-        dataInfo = line.split(",")
+    def mapDataToGrid(self, dataInfo):
         datalength = len(dataInfo)
         if datalength != self.DIMENSION:
             return
@@ -735,7 +635,7 @@ class Clusterisation(object):
             data_coords.append(data)
             if data >= self.DIMENSION_UPPER_RANGE[i] or data < self.DIMENSION_LOWER_RANGE[i]:
                 return
-            grid_Width = (self.DIMENSION_UPPER_RANGE[i] - self.DIMENSION_LOWER_RANGE[i]) / (self.DIMENSION_PARTITION[i])
+            grid_Width = float(self.DIMENSION_UPPER_RANGE[i] - self.DIMENSION_LOWER_RANGE[i]) / float(self.DIMENSION_PARTITION[i])
             dim_index = int(math.floor((data - self.DIMENSION_LOWER_RANGE[i]) / grid_Width))
             grid_coords.append(dim_index)
             i += 1
@@ -744,49 +644,165 @@ class Clusterisation(object):
         gridCoords = Coordinates(grid_coords)
 
         if not self.gridList.has_key(gridCoords):
-            g = Grid(False,0,time,1,ATTRIBUTE.SPARSE, self.DIMENSION, self.DIMENSION_UPPER_RANGE, self.DIMENSION_LOWER_RANGE, self.DIMENSION_PARTITION, self.TOTAL_GRIDS, self.decay_factor, self.dense_threshold, self.sparse_threshold, self.correlation_threshold)
+            g = Grid(False,0,self.time,1,ATTRIBUTE.SPARSE, self.DIMENSION, self.DIMENSION_UPPER_RANGE, self.DIMENSION_LOWER_RANGE, self.DIMENSION_PARTITION, self.TOTAL_GRIDS, self.decay_factor, self.dense_threshold, self.sparse_threshold, self.correlation_threshold)
             attrL = g.getAttraction(data_coords, grid_coords)
             g.setInitialAttraction(attrL)
             self.gridList[gridCoords] = g
         else:
             g = self.gridList[gridCoords]
             gridCoords = None
-            g.updateGridDensity(time)
+            g.updateGridDensity(self.time)
             g.updateGridAttribute()
             attrL = g.getAttraction(data_coords, grid_coords)
-            g.updateGridAttraction(attrL, time)
-            g.setLastTimeUpdated(time)
+            g.updateGridAttraction(attrL, self.time)
+            g.setLastTimeUpdated(self.time)
+            
+
+    def updateParameters(self):
+        factor = 0.0
+        pairs = 0.0
+        total_pairs = 0
+        #print self.DIMENSION_UPPER_RANGE
+        #print self.DIMENSION_LOWER_RANGE
+        #print self.DIMENSION_PARTITION
+
+        i =0
+        while i < self.DIMENSION:
+            factor  = self.TOTAL_GRIDS / self.DIMENSION_PARTITION[i]
+            pairs = self.DIMENSION_PARTITION[i] - 1
+            total_pairs += (factor)*(pairs)
+            i += 1
+
+        self.correlation_threshold = self.dense_threshold / (total_pairs * ( 1 - self.decay_factor))
+        dense_to_sparse_time = math.log(self.sparse_threshold/ self.dense_threshold)/math.log(self.decay_factor)
+        sparse_to_dense_time = math.log((self.TOTAL_GRIDS - self.dense_threshold) / (self.TOTAL_GRIDS - self.sparse_threshold))/ math.log(self.decay_factor)
+        self.time_gap = int (min(dense_to_sparse_time, sparse_to_dense_time))
+        return None;
+            
+    #  Train the coefficients on the existing observation matrix if there are
+    #  enough observations.
+    def train(self):
+        upperRangeGiven = len(self.DIMENSION_UPPER_RANGE)
+        lowerRangeGiven = len(self.DIMENSION_LOWER_RANGE)
+        gridSizeGiven = len(self.DIMENSION_GRIDSIZE)
+        if ( upperRangeGiven > 0 and lowerRangeGiven > 0 and gridSizeGiven > 0 ):
+            i =0
+            while i < self.DIMENSION:
+                upperRange = self.DIMENSION_UPPER_RANGE[i]
+                lowerRange = self.DIMENSION_LOWER_RANGE[i]
+                gridSize = self.DIMENSION_GRIDSIZE[i]
+                partition = int((upperRange-lowerRange)/gridSize)
+                self.DIMENSION_PARTITION.append(partition)
+                self.TOTAL_GRIDS *= partition
+                i += 1
+            self.updateParameters()
+            return True
         
+        if (self.numObservations >= 0):
+            print("Training started");
+            i=0            
+            temparray = []
 
+            while i <self.DIMENSION:
+                tempInputOneDim = self.input_Obs[:,i]            
+
+                tempOutput = self.output_Obs
+                minVal = float(tempInputOneDim[0])
+                maxVal = float(tempInputOneDim[0])
+
+                clusterMaxValue = {}
+                clusterMinValue = {}
+                size = len(tempInputOneDim)
+                j =0
+                while j < size:
+                    currVal = float(tempInputOneDim[j])
+                    if ( currVal < minVal):
+                        minVal = currVal
+
+                    if ( currVal > maxVal):
+                        maxVal = currVal
+
+
+                    if ( gridSizeGiven > 0):
+                        j +=1 
+                        continue
+                    
+
+                    clusterId = float(tempOutput[j])
+                    if not clusterMaxValue.has_key(clusterId):
+                        clusterMaxValue[clusterId] = currVal
+                        clusterMinValue[clusterId] = currVal
+                    else:
+                        if (clusterMaxValue.get(clusterId)< currVal):
+                            clusterMaxValue[clusterId] = currVal
+                        if (clusterMinValue.get(clusterId) > currVal):
+                            clusterMinValue[clusterId] = currVal
+                    
+                    j += 1
                 
-    def readFromFile(self):
-        print "ReadFromFile"
-        time =0
-        first = True
-        with open('rand.txt') as fp:
-            for line in fp:
-                if first:
-                    first = False
-                    self.updateDimensionInfo(line)
-                    dense_to_sparse_time = math.log(self.sparse_threshold / self.dense_threshold) / math.log(self.decay_factor)
-                    sparse_to_dense_time = math.log((self.TOTAL_GRIDS - self.dense_threshold) / (self.TOTAL_GRIDS - self.sparse_threshold)) / math.log(self.decay_factor)
-                    self.time_gap = int(min(dense_to_sparse_time, sparse_to_dense_time))
+
+                minDiff = 9223372036854775807
+                gridSize = 1
+                
+                if ( gridSizeGiven == 0 ) :
+                    clusterIdKeys = clusterMaxValue.keys()
+                    minClusId = 0
+                    for clusId in clusterIdKeys:
+                        maxClusVal = clusterMaxValue.get(clusId)
+                        minClusVal = clusterMinValue.get(clusId)
+                        if maxClusVal == minClusVal:
+                            continue
+                    
+                        currDiff = maxClusVal - minClusVal
+                        if ( currDiff < minDiff):
+                            minDiff = currDiff
+                            minClusId = clusId
+                    gridSize = 4*minDiff
+                else :
+                    gridSize = self.DIMENSION_GRIDSIZE[i]
+
+
+                upperRange =0
+                lowerRange =0
+
+                if ( upperRangeGiven == 0):
+                    upperRange = int(maxVal + maxVal)
+                    self.DIMENSION_UPPER_RANGE.append(upperRange)
                 else:
-                    self.mapDataToGrid(line, time)
-                    if time > 0:
-                        
-                        if time % self.time_gap == 0:
-                            self.removeSporadicGrids(self.gridList, time)
-                            self.adjustClustering(self.gridList, time)
-                time += 1
-        print " =====Clusters====="
-        self.printClusters()
-        print " ======Grid List ===="
-        self.printGridList()
-        print " =====Attraction======"
-        self.printGridAttraction()
+                    upperRange = self.DIMENSION_UPPER_RANGE[i]
 
- 
+                if ( lowerRangeGiven == 0):                
+                    lowerRange = int(minVal - minVal)
+                    self.DIMENSION_LOWER_RANGE.append(lowerRange)
+                else:
+                    lowerRange = self.DIMENSION_LOWER_RANGE[i]
 
-cluster = Clusterisation()
-cluster.readFromFile()
+                partition = int((upperRange - lowerRange)/(gridSize))
+                self.DIMENSION_PARTITION.append(partition)
+                self.TOTAL_GRIDS *= partition
+                i += 1
+
+            self.updateParameters()
+            return True;
+        else:
+            print("Not enough observations to train!");
+            return False;
+
+    #  Execute the trained matrix against the given input observation
+    #inputObsVector is a row vector of doubles
+    def execute(self, inputObsVector):
+        
+        if(len(inputObsVector) == self.numInputs):            
+            self.mapDataToGrid(inputObsVector);
+            
+            if self.time > 0 :
+                if self.time % self.time_gap == 0:
+                     self.removeSporadicGrids(self.gridList, self.time)
+                     self.adjustClustering(self.gridList, self.time)
+                     
+            self.time += 1;    
+            return None;
+        else:
+            print("Wrong dimensions, fail to execute");
+            return None;
+
