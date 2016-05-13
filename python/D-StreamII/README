@@ -1,0 +1,17 @@
+D-Stream II Algorithm:-
+D-Stream II algorithm is density grid based time series data clustering algorithm. It follows an online-offline approach. In the online phase, each multi-dimensional input data is mapped to a corresponding discretized grid in the multidimensional phase and the characteristic vector of the grid is updated. In the offline phase, the clusters are adjusted dynamically after every time interval gap i.e. new clusters are created and existing clusters are disintegrated.
+
+The algorithm adopts a density decaying technique to capture the dynamic changes of a data stream and an attraction-based mechanism to accurately generate cluster boundaries. The algorithm clusters two neighboring grids only if they are strongly correlated where two grids are considered as strongly correlated if their attractions in both directions are higher than a threshold value. During the offline phase, the algorithm only adjusts grids whose density attributes changed since the last time the grids were adjusted. This approach improves the time complexity of the algorithm since all grids are not adjusted every time gap interval. The D-Stream II algorithm handles outliers by detecting the sporadic grids from the sparse grid and removing the grid from the grid list. 
+
+
+Initialization for Context Engine:
+Complexity = 0
+numInputs = input dimension                                                     // DIMENSION
+discreteOutputs =0
+discreteInputs = 0
+appFieldsDict = {'gridSize': [], 'gridUpperRange': [], 'gridLowerRange': [] }   // Determines the size of the grid. If any parameter is not given then it is estimated during training phase.
+	      		     	 		       			        // Grid size detemines the granuality of clustering. 
+
+
+Output:
+Print the final clusters along with the grids which belongs to a particular cluster.
