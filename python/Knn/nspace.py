@@ -22,7 +22,7 @@ writer.writeheader()
     
 csv = recfromcsv('all.csv', delimiter=',')
 
-trainer = Knn(complexity=0, numInputs=7, discreteOutputs=0, discreteInputs=0);
+trainer = Knn(complexity=2, numInputs=7, inputClassifiers=np.empty([7]));
 x_train = [];
 y_train = [];
 x_predict = [];
@@ -93,7 +93,7 @@ for i in range(numRow*day_predict_start,numRow*(day_predict_end+1)):
 	x_predict=[time_predict, row[2], row[4], row[5], row[6], row[7], row[8]];
 	testStart = T.clock()
 	result = trainer.execute(x_predict);
-	result = round(result[0],4)
+	result = round(result,4)
 	testEnd = T.clock()
 	testLatency += testEnd - testStart
 	#y_predict = np.concatenate((y_predict,result));
