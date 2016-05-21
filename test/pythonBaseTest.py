@@ -42,12 +42,12 @@ for trainingSample in range(numTrainingSamples):
         output = float(outputRow[0]);
 
         firstTS = time.time();
-        teslaTest.addSingleObservation([input1, input2], output);
+        algorithmTest.addSingleObservation([input1, input2], output);
         secondTS = time.time();
         teslaTimestamps["load" + str(trainingSample)] = secondTS - firstTS;
 
 firstTS = time.time();
-teslaTest.train();
+algorithmTest.train();
 secondTS = time.time();
 teslaTimestamps["train"] = secondTS - firstTS;
 
@@ -61,7 +61,7 @@ for executeSample in range(numExecuteSamples):
         output = float(outputRow[0]);
 
         firstTS = time.time();
-        theor = teslaTest.execute([input1, input2]);
+        theor = algorithmTest.execute([input1, input2]);
         secondTS = time.time();
         teslaTimestamps["test" + str(executeSample)] = secondTS - firstTS;
         teslaTimestamps["delta" + str(executeSample)] = abs(output - theor);
