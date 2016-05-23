@@ -1,61 +1,46 @@
-import sys, os
 import numpy as np
 import math
-sys.path.insert(1, os.path.join(sys.path[0], '..'));
-                
-from ContextEngineBase import *
-
 
 ## Implementation of the TESLA algorithm: map input variables to output
 ## observations
-class Tesla(ContextEngineBase):
+class Tesla:
 
     ## Member variables
     #  Function order - limit the highest order of the function
     functionOrder = 1;
 
-##    #  Number of inputs - interface for the number of input variables -
-##    #  defines input vector (+1 for training vector - n input, 1 output)
-##    numInputs = 0;
-##
+    #  Number of inputs - interface for the number of input variables -
+    #  defines input vector (+1 for training vector - n input, 1 output)
+    numInputs = 0;
+
     #  Number of normalized inputs - this is the number of inputs needed,
     #  corrected for the order.
     #  e.g. 1st order == numInputs, 2nd order == numInputs^2, etc.
     numNormalizedInputs = 0;
 
-##    #  Number of observations - a running count of the unique numbe of
-##    #  observations
-##    numObservations = 0;
-##
-##    #  Matrix model - each row represents a new input vector
-##    observationMatrix = np.empty([0, 0]);
-##
-##    #  Coefficient vector - the column vector representing the trained
-##    #  coefficients based on observations
-##    coefficientVector = [];
-##
-##    #  Output observation vector - the column vector of recorded observations
-##    outputVector = [];
+    #  Number of observations - a running count of the unique numbe of
+    #  observations
+    numObservations = 0;
+
+    #  Matrix model - each row represents a new input vector
+    observationMatrix = np.empty([0, 0]);
+
+    #  Coefficient vector - the column vector representing the trained
+    #  coefficients based on observations
+    coefficientVector = [];
+
+    #  Output observation vector - the column vector of recorded observations
+    outputVector = [];
     
 
     #  Constructor - the order and number of inputs are mandatory
-    def __init__(self,
-                 complexity,
-                 numInputs,
-                 outputClassifier,
-                 inputClassifiers,
-                 appFieldsDict):
-        super(Tesla, self).__init__(complexity,
-                     numInputs,
-                     outputClassifier,
-                     inputClassifiers,
-                     appFieldsDict);
-        
-        self.order = complexity.value;
+    def __init__(self, order, numInputs):
+        self.functionOrder = order;
+        self.numInputs = numInputs;
         self.numNormalizedInputs = \
-            int(math.factorial(self.numInputs+self.order)/\
-            (math.factorial(self.order)*math.factorial(self.numInputs)));
-
+            int(math.factorial(self.numInputs+order)/\
+            (math.factorial(order)*math.factorial(self.numInputs)));
+    
         # Generate the blank coefficient matrix
         self.coefficientVector = np.zeros([self.numNormalizedInputs,1])
 
@@ -77,7 +62,7 @@ class Tesla(ContextEngineBase):
             normalizedInputObs = self.generateNormalizedInputs(newInputObs);
 
             # Only add non-duplicates
-            if (not self.__isADuplicate(normalizedInputObs, newOutputObs)):
+            if (not self.isADuplicate(normalizedInputObs, newOutputObs)):
                 # TODO: Replace the following code with a general implementation
                 if (self.observationMatrix.shape[0] == 0):
                     self.observationMatrix = np.array([normalizedInputObs]);
@@ -136,7 +121,7 @@ class Tesla(ContextEngineBase):
     
     #  Returns True if the provided input vector and output observation already
     #  exist in the observation matrix, False otherwise
-    def __isADuplicate(self, normalizedInputVector, outputObs):
+    def isADuplicate(self, normalizedInputVector, outputObs):
         return False;
         for row in range(0, self.observationMatrix.shape[0]):
             if (np.array_equal(self.observationMatrix[row], normalizedInputVector) \
@@ -145,7 +130,7 @@ class Tesla(ContextEngineBase):
         return False;
 
     #  Test the trained matrix against the given input observation
-    def execute(self, inputObsVector):
+    def test(self, inputObsVector):
         inputObsVector.insert(0, 1);
         inputObsNPVector = np.array(self.generateNormalizedInputs(inputObsVector));
         return np.dot(self.coefficientVector[0],inputObsNPVector);

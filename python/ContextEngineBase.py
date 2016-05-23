@@ -83,21 +83,19 @@ class ContextEngineBase:
         if (len(newInputObs) == self.numInputs
             and type(newOutputObs) not in (tuple, list)):
 
-            # Only add non-duplicates
-            if (not self.isADuplicate(newInputObs, newOutputObs)):
-                # TODO: Replace the following code with a general implementation
-                if (self.observationMatrix.shape[0] == 0):
-                    self.observationMatrix = np.array([newInputObs]);
-                    self.outputVector = np.array([newOutputObs]);
-                    self.numObservations = 1;
-                else:
-                    self.observationMatrix = np.append(self.observationMatrix,\
-                                                       np.array([newInputObs]),\
-                                                       axis=0);
-                    self.outputVector = np.append(self.outputVector,\
-                                                  np.array([newOutputObs]),\
-                                                  axis=0);
-                    self.numObservations += 1;
+            # TODO: Replace the following code with a general implementation
+            if (self.observationMatrix.shape[0] == 0):
+                self.observationMatrix = np.array([newInputObs]);
+                self.outputVector = np.array([newOutputObs]);
+                self.numObservations = 1;
+            else:
+                self.observationMatrix = np.append(self.observationMatrix,\
+                                                   np.array([newInputObs]),\
+                                                   axis=0);
+                self.outputVector = np.append(self.outputVector,\
+                                              np.array([newOutputObs]),\
+                                              axis=0);
+                self.numObservations += 1;
         else:
             print("Wrong dimensions!");
 
@@ -120,15 +118,6 @@ class ContextEngineBase:
         else:
             print("Not enough observations to train!");
     
-    #  Returns True if the provided input vector and output observation already
-    #  exist in the observation matrix, False otherwise
-    def isADuplicate(self, inputVector, outputObs):
-        for row in range(0, self.observationMatrix.shape[0]):
-            if (np.array_equal(self.observationMatrix[row], inputVector) \
-               and self.outputVector[row] == outputObs):
-                return True;
-        return False;
-
     #  Test the trained matrix against the given input observation
-    def test(self, inputObsVector):
+    def execute(self, inputObsVector):
         return np.dot(self.coefficientVector[0],inputObsVector);
