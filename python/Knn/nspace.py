@@ -22,7 +22,7 @@ writer.writeheader()
     
 csv = recfromcsv('all.csv', delimiter=',')
 
-trainer = Knn(complexity=2, numInputs=7, inputClassifiers=np.empty([7]));
+trainer = Knn(complexity=2, numInputs=7, inputClassifiers=np.empty([7]), outputClassifier=0, appFieldsDict=0);
 x_train = [];
 y_train = [];
 x_predict = [];
