@@ -1,7 +1,7 @@
 %Implementation of the context engine base class: the class inherited by 
 %other machine learning algorithms.
 
-classdef ContextEngineBase
+classdef ContextEngineBase < ContextEngineBaseAbstract
     properties
         %Member variables
         %Function order - limit the highest order of the function
@@ -50,7 +50,7 @@ classdef ContextEngineBase
                            %app-specific fields
     end
     methods
-        function self=ContextEngineBase(~,complexity,numInputs,...
+        function self=Initialize(~,complexity,numInputs,...
                 outputClassifier,inputClassifiers,appFieldsDict)
             if length(inputClassifiers)~=numInputs
                 error('The magnitude of inputClassifiers must be the same as numInputs');
@@ -71,7 +71,7 @@ classdef ContextEngineBase
         %Add a new training observation. Requirements: newInputObs must be a
         %row array of size numInputs. newOutputObs must be a single value.
         
-        function self=addSingleObservation(self,newInputObs,newOutputObs)
+        function self=AddSingleObservation(self,newInputObs,newOutputObs)
             if length(newInputObs)==self.numInputs
                 %Only add non-duplicates
                 if ~isADuplicate(self,newInputObs,newOutputObs)
@@ -97,7 +97,7 @@ classdef ContextEngineBase
         %Add a set of training observations, with the newInputObsMatrix being a
         %set of correctly-sized vectors and newOutputVector being a vector of
         %individual values.
-        function self=addBatchObservations(self,...
+        function self=AddBatchObservations(self,...
                 newInputObsMatrix, newOutputVector)
             for i=1:size(newInputObsMatrix,1)
                 newInputVector =newInputObsMatrix(i,:);
@@ -109,10 +109,9 @@ classdef ContextEngineBase
         
         %Train the coefficients on the existing observation matrix if there are
         %enough observations.
-        %TODO: What is numNormalizedInputs?
-        function self= train(self)
-            %TODO: numNormalizedInputs means?
-            if size(self.observationMatrix,1) >= self.numNormalizedInputs
+        %TODO: Check if numNormalizedInputs is same as numInputs.
+        function self= Train(self)
+            if size(self.observationMatrix,1) >= self.numInputs
                 print('Training started');
                 self.coefficientVector = ...
                     self.observationMatrix\self.outputVector;
@@ -137,7 +136,7 @@ classdef ContextEngineBase
         end
         
         %Test the trained matrix against the given input observation
-        function z=test(self, inputObsVector)
+        function z=Execute(self, inputObsVector)
             z=self.coefficientVector(0)*inputObsVector;
         end
         

@@ -42,6 +42,9 @@ class Tesla(ContextEngineBase):
     inputHistory = [];
     outputHistoryNum = 0;
     outputHistory = [];
+
+    # Tracking values for each coefficient for correlation analysis
+    correlationValues = {};
     
 
     #  Constructor - the order and number of inputs are mandatory
@@ -57,7 +60,7 @@ class Tesla(ContextEngineBase):
                      inputClassifiers,
                      appFieldsDict);
         
-        self.order = complexity.value;
+        self.functionOrder = complexity.value;
         if ("inputHistoryNum" in self.customFieldsDict):
             self.inputHistoryNum = int(
                 self.customFieldsDict["inputHistoryNum"]);
@@ -68,8 +71,8 @@ class Tesla(ContextEngineBase):
         # Generate the number of normalized inputs. This is compounded by
         # the input and output histories
         self.numNormalizedInputs = \
-            int(math.factorial(self.numInputs+self.order)/\
-            (math.factorial(self.order)*math.factorial(self.numInputs)));
+            int(math.factorial(self.numInputs+self.functionOrder)/\
+            (math.factorial(self.functionOrder)*math.factorial(self.numInputs)));
 
         # Update with input history
         self.numNormalizedInputs += (self.numNormalizedInputs
@@ -80,6 +83,9 @@ class Tesla(ContextEngineBase):
 
         # Generate the blank coefficient matrix
         self.coefficientVector = np.zeros([self.numNormalizedInputs,1])
+
+        # Initialize the correlation dictionary
+        self.initializeCorrelationDict();
 
         # All other matrices/vectors are left the same, as they are dependent
         # on the number of observations.
@@ -142,7 +148,11 @@ class Tesla(ContextEngineBase):
                 if (len(self.inputHistory) < self.inputHistoryNum):
                     self.inputHistory.append(normalizedInputObs);
                 if (len(self.inputHistory) < self.inputHistoryNum):
-                    self.outputHistory.append(newOutputObs)
+                    self.outputHistory.append(newOutputObs);
+
+            # Update the correlation coefficient keys
+            for i in range(len(normalizedInputObs)):
+                self.correlationValues[i].append(normalizedInputObs[i]);
         else:
             print("Wrong dimensions! Expected ",
                   str(self.numInputs),
@@ -201,3 +211,16 @@ class Tesla(ContextEngineBase):
         inputObsVector.insert(0, 1);
         inputObsNPVector = np.array(self.generateNormalizedInputs(inputObsVector));
         return np.dot(self.coefficientVector[0],inputObsNPVector);
+
+    # Initialize the correlation coefficient keys
+    def initializeCorrelationDict(self):
+        for i in range(0, self.numNormalizedInputs):
+            self.correlationValues[i] = [];
+
+    #  Basic correlation analysis for each coefficient.
+    def getCorrelationValues(self):
+        calculatedCorrelations = [];
+        for i in range(0, self.numNormalizedInputs):
+            calculatedCorrelations.append(self.coefficientVector[0][i]/np.std(self.correlationValues[i]));
+        
+        return calculatedCorrelations;
