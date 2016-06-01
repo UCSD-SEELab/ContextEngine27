@@ -2,6 +2,12 @@ from enum import Enum
 
 import math
 import numpy as np
+import sys
+sys.path.append("../Security/Encrypt/")
+from encrypt import encrypt
+sys.path.remove("../Security/Encrypt/")
+sys.path.append("../Security/Decrypt/")
+from decrypt import decrypt
 
 class Complexity(Enum):
     firstOrder  = 1
@@ -47,6 +53,8 @@ class ContextEngineBase:
     #  Output observation vector - the column vector of recorded observations
     outputVector = [];
     
+    #  Name of the file that contains the key for encryption/decryption
+    key = {};   
 
     #  Constructor - the order and number of inputs are mandatory
     #  Parameters:
@@ -73,6 +81,13 @@ class ContextEngineBase:
 
         # Generate the blank coefficient matrix
         self.coefficientVector = np.zeros([self.numInputs,1])
+
+        # Check for the presence of AES key in the key-value pair, and update 
+        # the value of key with the keyFileName passed as argument
+	if appFieldsDict.has_key("key"):
+            key = appFieldsDict.get("key")
+            if len(key) != 0:
+                self.key = key
 
         # All other matrices/vectors are left the same, as they are dependent
         # on the number of observations.
@@ -107,6 +122,32 @@ class ContextEngineBase:
         for newInputVector in newInputObsMatrix:
             outputValue = newOutputVector.pop();
             self.addSingleObservation(newInputVector, outputValue);
+
+    #  Returns the name of the file that contains the encrypted data, takes in 
+    #  name of the file containing key and name of the file to be encrypted
+    def encrypt(self, plainTextFile):
+         if len(self.key) != 0:
+             if len(plainTextFile) != 0:
+                 return encrypt(self.key, plainTextFile);
+
+             else:
+                 return
+
+         else:
+             return
+            
+    #  Returns the name of the file that contains the decrypted data, takes in 
+    #  name of the file containing key and name of the file to be decrypted
+    def decrypt(self, encyptedFileplainTextFile):
+         if len(self.key) != 0:
+             if len(encyptedFileplainTextFile) != 0:
+                 return decrypt(self.key, encyptedFileplainTextFile);
+
+             else:
+                 return
+
+         else:
+             return
 
     #  Train the coefficients on the existing observation matrix if there are
     #  enough observations.
