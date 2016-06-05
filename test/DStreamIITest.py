@@ -16,8 +16,8 @@ from DStreamII import DStreamII
 ## For different tests, these values will vary.
 inputFilePath = "DStreamIITestInput.csv"
 outputFilePath = "DStreamIITestOutput.csv"
-numTrainingSamples = 5;
-numExecuteSamples = 25;
+numTrainingSamples = 30;
+numExecuteSamples = 100;
 
 inputFile = open(inputFilePath);
 outputFile = open(outputFilePath);
