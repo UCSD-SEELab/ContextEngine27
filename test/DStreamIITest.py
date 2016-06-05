@@ -12,12 +12,10 @@ sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 ## Import your algorithms here.
 from DStreamII import DStreamII
-from ContextEngineBase import Complexity
 
 ## For different tests, these values will vary.
-inputFilePath = "input.csv"
-outputFilePath = "output.csv"
-complexity = Complexity.firstOrder;
+inputFilePath = "DStreamIITestInput.csv"
+outputFilePath = "DStreamIITestOutput.csv"
 numTrainingSamples = 5;
 numExecuteSamples = 25;
 

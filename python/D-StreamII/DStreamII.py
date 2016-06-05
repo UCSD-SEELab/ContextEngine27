@@ -3,7 +3,6 @@
 import io
 import numpy as np
 import math
- 
 
 class Coordinates(object):
 
@@ -44,7 +43,7 @@ class Coordinates(object):
         if self.coords != None and len(self.coords) > d:
             self.coords[d] = val
         else:
-            print "Cannot set selected value"
+            print ("Cannot set selected value")
 
     def getSize(self):
         return len(self.coords)
@@ -347,17 +346,17 @@ class DStreamII:
         self.correlation_threshold = 0.0;
         self.latestCluster = 0;
 
-        if appFieldsDict.has_key("gridSize"):
+        if 'gridSize' in appFieldsDict:
             gridSize = appFieldsDict.get("gridSize")
             if len(gridSize) == numInputs:
                 self.DIMENSION_GRIDSIZE = gridSize
 
-        if appFieldsDict.has_key("gridUpperRange"):
+        if 'gridUpperRange' in appFieldsDict:
             gridUpperRange = appFieldsDict.get("gridUpperRange")
             if len(gridUpperRange) == numInputs:
                 self.DIMENSION_UPPER_RANGE = gridUpperRange
 
-        if appFieldsDict.has_key("gridLowerRange"):
+        if 'gridLowerRange' in appFieldsDict:
             gridLowerRange = appFieldsDict.get("gridLowerRange")
             if len(gridLowerRange) == numInputs:
                 self.DIMENSION_LOWER_RANGE = gridLowerRange
@@ -392,10 +391,10 @@ class DStreamII:
         
         for ckey in clusterKeys:
             gridCoords = self.clusters.get(ckey)
-            print " Cluster Index: " + ckey.__str__() 
+            print (" Cluster Index: " + ckey.__str__()) 
             for coord in gridCoords:
-                print "   Coordinates: " 
-                print coord
+                print ("   Coordinates: ")
+                print (coord)
 
 
     def getNeighbours(self, from_):
@@ -405,11 +404,11 @@ class DStreamII:
             val = from_.getDimension(dim)
             bigger = Coordinates(from_)
             bigger.setDimension(dim, val + 1)
-            if self.gridList.has_key(bigger):
+            if bigger in self.gridList:
                 neighbours.append(bigger)
             smaller = Coordinates(from_)
             smaller.setDimension(dim, val - 1)
-            if self.gridList.has_key(smaller):
+            if smaller in self.gridList:
                 neighbours.append(smaller)
             dim += 1
         return neighbours
@@ -420,7 +419,7 @@ class DStreamII:
         bigger = Coordinates(from_)
         bigger.setDimension(dim, val + 1)
 
-        if self.gridList.has_key(bigger):
+        if bigger in self.gridList:
             return bigger
         return coord
 
@@ -430,12 +429,12 @@ class DStreamII:
         smaller = Coordinates(from_)
         smaller.setDimension(dim, val - 1)
 
-        if self.gridList.has_key(smaller):
+        if smaller in self.gridList:
             return smaller
         return coord
 
     def checkUnconnectedClusterAndSplit(self, clusterIndex):
-        if not self.clusters.has_key(clusterIndex):
+        if not clusterIndex in self.clusters:
             return
         gridCoords = self.clusters[clusterIndex]
         grpCoords = {}
@@ -483,7 +482,7 @@ class DStreamII:
                     if not bigNeighbourClusterIndex == 0 and not bigNeighbourClusterIndex == grid.getCluster():
 
                         if bigNeighbourGrid.getAttractionAtIndex(2 * i + 1) > self.correlation_threshold and grid.getAttractionAtIndex(2 * i) > self.correlation_threshold:
-                            if self.clusters.has_key(bigNeighbourClusterIndex):
+                            if bigNeighbourClusterIndex in self.clusters:
                                 bigNeighbourClusterGrids = self.clusters.get(bigNeighbourClusterIndex)
                                 if len(bigNeighbourClusterGrids) >= largestClusterSize:
                                     largestClusterSize = len(bigNeighbourClusterGrids)
@@ -495,7 +494,7 @@ class DStreamII:
                     smallNeighbourClusterIndex = smallNeighbourGrid.getCluster()
                     if not smallNeighbourClusterIndex == 0 and not smallNeighbourClusterIndex == grid.getCluster():
                         if smallNeighbourGrid.getAttractionAtIndex(2 * i) > self.correlation_threshold and grid.getAttractionAtIndex(2 * i + 1) > self.correlation_threshold:
-                            if self.clusters.has_key(smallNeighbourClusterIndex):        
+                            if smallNeighbourClusterIndex in self.clusters:
                                 smallNeighbourClusterGrids = self.clusters.get(smallNeighbourClusterIndex)
                                 if len(smallNeighbourClusterGrids) >= largestClusterSize:
                                     largestClusterSize = len(smallNeighbourClusterGrids)
@@ -537,7 +536,7 @@ class DStreamII:
             
             gridCluster = grid.getCluster()
             if grid.isSparse():
-                if self.clusters.has_key(gridCluster):
+                if gridCluster in self.clusters:
                     clusterCoords = self.clusters.get(gridCluster)
                     grid.setCluster(0)
                     del clusterCoords[key]
@@ -545,9 +544,9 @@ class DStreamII:
             elif grid.isDense():
                 neighbourCoords = self.findStronglyCorrelatedNeighbourWithMaxClusterSize(key, False);
 
-                if not self.gridList.has_key(neighbourCoords) or neighbourCoords.equals(coordkey):
+                if not neighbourCoords in self.gridList or neighbourCoords.equals(coordkey):
 
-                    if not self.clusters.has_key(gridCluster):
+                    if not gridCluster in  self.clusters:
                     
                         clusterIndex = self.latestCluster + 1
                         self.latestCluster += 1
@@ -561,12 +560,12 @@ class DStreamII:
                 neighbour = self.gridList.get(neighbourCoords)
 
                 neighbourClusterIndex = neighbour.getCluster()
-                if not self.clusters.has_key(neighbourClusterIndex):
+                if not neighbourClusterIndex in self.clusters:
                     continue 
 
                 neighbourClusterGrids = self.clusters.get(neighbourClusterIndex)
                 if neighbour.isDense():
-                    if not self.clusters.has_key(gridCluster):
+                    if not gridCluster in self.clusters:
                         grid.setCluster(neighbourClusterIndex)
                         self.clusters[neighbourClusterIndex].append(key)
                     else:
@@ -595,7 +594,7 @@ class DStreamII:
                                 self.clusters[gridCluster].append(c)
                             del self.clusters[neighbourClusterIndex]
                 elif neighbour.isTransitional():
-                    if not self.clusters.has_key(gridCluster):
+                    if not gridCluster in self.clusters:
                         grid.setCluster(neighbourClusterIndex)
                         self.clusters[neighbourClusterIndex].append(key)
                     else:
@@ -605,17 +604,17 @@ class DStreamII:
                             clusterGrid = clusters[neighbourClusterIndex]
                             del clusterGrid[neighbourCoords]
             elif grid.isTransitional():
-                if self.clusters.has_key(gridCluster):
+                if gridCluster in self.clusters:
                     del self.clusters[gridCluster]
                 neighbourCoords = self.findStronglyCorrelatedNeighbourWithMaxClusterSize(key, True);
-                if not self.gridList.has_key(neighbourCoords) or neighbourCoords.equals(coordkey):
+                if not neighbourCoords in self.gridList or neighbourCoords.equals(coordkey):
                     grid.setAttributeChanged(False)
                     grid.setCluster(0)
                     continue 
                 
                 neighbour = self.gridList.get(neighbourCoords)
                 neighbourClusterIndex = neighbour.getCluster()
-                if self.clusters.has_key(neighbourClusterIndex):
+                if neighbourClusterIndex in self.clusters:
                     self.clusters[neighbourClusterIndex].append(key)
             grid.setAttributeChanged(False)
     
@@ -643,7 +642,7 @@ class DStreamII:
         
         gridCoords = Coordinates(grid_coords)
 
-        if not self.gridList.has_key(gridCoords):
+        if not gridCoords in self.gridList:
             g = Grid(False,0,self.time,1,ATTRIBUTE.SPARSE, self.DIMENSION, self.DIMENSION_UPPER_RANGE, self.DIMENSION_LOWER_RANGE, self.DIMENSION_PARTITION, self.TOTAL_GRIDS, self.decay_factor, self.dense_threshold, self.sparse_threshold, self.correlation_threshold)
             attrL = g.getAttraction(data_coords, grid_coords)
             g.setInitialAttraction(attrL)
@@ -662,9 +661,9 @@ class DStreamII:
         factor = 0.0
         pairs = 0.0
         total_pairs = 0
-        #print self.DIMENSION_UPPER_RANGE
-        #print self.DIMENSION_LOWER_RANGE
-        #print self.DIMENSION_PARTITION
+        #print (self.DIMENSION_UPPER_RANGE)
+        #print (self.DIMENSION_LOWER_RANGE)
+        #print (self.DIMENSION_PARTITION)
 
         i =0
         while i < self.DIMENSION:
@@ -729,7 +728,7 @@ class DStreamII:
                     
 
                     clusterId = float(tempOutput[j])
-                    if not clusterMaxValue.has_key(clusterId):
+                    if not clusterId in clusterMaxValue:
                         clusterMaxValue[clusterId] = currVal
                         clusterMinValue[clusterId] = currVal
                     else:
