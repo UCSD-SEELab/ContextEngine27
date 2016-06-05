@@ -6,17 +6,10 @@ from sklearn.neighbors import KNeighborsClassifier
 ## Implementation of the Knn algorithm: 
 class Knn(ContextEngineBase):
 
-#	complexity = 0;
-
-#	numInputs = 0;
-
-	#discreteOutput = 0;
-
-	#discreteInputs = [];
 
 	#  Number of observations - a running count of the unique numbe of
     #  observations
-#	numObservations = 0;
+	#numObservations = 0;
 
     # Matrix model - each row represents a new input vector
     #eg. x_Obs = array([[ 1.,  2.,  3.],
@@ -78,7 +71,7 @@ class Knn(ContextEngineBase):
 		if (self.numObservations > 0):
 			print("Training started");
 			self.knnRegressor.fit(self.x_Obs, self.y_Obs);
- 			return True;
+			return True;
 		else:
 			print("Not enough observations to train!");
 			return False;

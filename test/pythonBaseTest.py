@@ -48,7 +48,7 @@ for trainingSample in range(numTrainingSamples):
         algorithmTest.addSingleObservation([input1, input2], output);
         secondTS = time.time();
         teslaTimestamps["load" + str(trainingSample)] = secondTS - firstTS;
-
+print(str(trainingSample))
 firstTS = time.time();
 algorithmTest.train();
 secondTS = time.time();
