@@ -22,7 +22,7 @@ from ContextEngineBase import Complexity
 inputFilePath = "dish.csv"
 outputFilePath = "dishOutput.csv"
 inputFile = open(inputFilePath);
-outputFile = open(outputFilePath, 'w');
+outputFile = open(outputFilePath);
 inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 complexity = Complexity.secondOrder;
@@ -30,6 +30,7 @@ numTrainingSamples = 96;
 numExecuteSamples = 96;
 inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
+
 csv = recfromcsv(inputFilePath, delimiter=',')
 ## Change the name of the algorithm to test it out.
 algorithmTest = Knn(complexity, 7, 0, [0,0,0,0,0,0,0], {});
@@ -40,8 +41,8 @@ knnTimestamps = {};
 numRow = 96
 day_train_start=0
 day_train_end=0
-day_predict_start= 1
-day_predict_end = 1
+day_predict_start= 0
+day_predict_end = 0
 #read in csv and parse data to trainer
 
 for i in range(numRow*day_train_start,numRow*(day_train_end+1)):
@@ -54,7 +55,6 @@ for i in range(numRow*day_train_start,numRow*(day_train_end+1)):
 	ti = (t[3]*3600+t[4]*60+t[5])/(24*3600.0)
 	x_obs = [ti, row[2], row[4], row[5], row[6], row[7], row[8]]
 	y_obs = dishwasher
-
 	firstTS = time.time();
 	algorithmTest.addSingleObservation(x_obs, y_obs);
 	secondTS = time.time();
