@@ -1,0 +1,35 @@
+* Use RSAPublicPrivateKey.py to generate public and private key pair for RSA. This must be done everytime a new netwrok sesison is established.
+
+* The python wrapper for encryption reads in the file/buffer, 16 bytes at a time, and calls the C function that implements AES encryption. 
+
+* The C function returns 16 bytes of encrypted data, which is written to a file/buffer as required. Similarly, the python wrapper for decryption reads in the decrypted file/buffer, 16 bytes at a time, and calls the C function that implements AES decryption. It returns 16 bytes of decrypted data, and writes it to a file/buffer as required.
+
+* Both the AES encryption and Decryption use a 128-bit key, stored in the file AESKEY for the algorithm.
+
+* In ContextEngineBase.py, both encrypt and decrypt functions are defined.
+
+* The parameters for encrypt function are plaintext file/buffer name and the AES Key, and it returns the name of encrypted file. It also encrypts the AES key using RSA public key of receiver to generate a file containing encrypted key.
+
+* The parameters for decrypt function are encrypted file/buffer name and RSA encrypted AES Key, and it returns the name of decrypted plaintext file. Before decrypting the data, it decrypts the encyrpted AES key usng own private key and stores it in a file.
+
+* Initialization for Context Engine for encrypt:
+
+Complexity = 0
+numInputs = 0                                                   
+discreteOutputs =0
+discreteInputs = 0
+appFieldsDict = {'key':'<keyFileName>'}   // To pass the name of file containing the key for encryption/decryption as a parameter
+
+* Initialization for Context Engine for decrypt:
+
+Complexity = 0
+numInputs = 0                                                   
+discreteOutputs =0
+discreteInputs = 0
+appFieldsDict = {'key':'<keyFileName>.enc'}   // To pass the name of file containing the key for encryption/decryption as a parameter
+
+
+Output:
+The ouput of encrypt fucntion is the ciphertext, currently appended to the file "encryptOut" in the Encrypt folder.
+The ouput of decrypt fucntion is the plaintext, currently appended to the file "decryptOut" in the Decrypt folder.
+                                                                                     

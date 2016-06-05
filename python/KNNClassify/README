@@ -1,0 +1,22 @@
+Cough Detection from Audio Data:
+
+-KNN Classifier is used to detect Cough from Audio data. 
+-The KNN Classifier is built with k=11 and model is fit using inputs and targets provided in lpcInputTarget.csv 
+-The feature vector used is LPC with order = 10. Total 60 different sound files are used as training data for KNN Classifier. 
+-Each training data is of 1 sec, there are 30 sound files of cough and remaining 30 sound files of non-cough. 
+-From each sound data we calculate LPC feature vector of order 10.
+
+Dependencies:
+1. Numpy
+2. Scipy --> scipy.io and scipy.signal
+3. Sklearn --> Sklearn.neighbours
+4. csv
+
+Steps to Run Code:
+1. Run main.py file present in KNNClassify folder.
+
+Inputs:
+Ten audio files present in testData folder in KNNClassify folder.
+
+Output:
+results - A list with length 10 containing 0 for No Cough and 1 for Cough Prediction
