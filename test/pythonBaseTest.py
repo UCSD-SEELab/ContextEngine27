@@ -9,7 +9,10 @@ import time
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
+sys.path.insert(1, os.path.join(sys.path[0], '../python/ALPR'));
+sys.path.insert(1, os.path.join(sys.path[0], '../python/VLR'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python'));
+
 
 ## Import your algorithms here.
 from Tesla import Tesla
