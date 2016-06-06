@@ -1,3 +1,4 @@
+# Added by Neha Ahlawat
 # This python wrapper for encryption reads in the file/buffer, 16 bytes at a time, 
 # and calls the C function that implements AES encryption.
 

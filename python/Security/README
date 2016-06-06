@@ -1,4 +1,4 @@
-* Use RSAPublicPrivateKey.py to generate public and private key pair for RSA. This must be done everytime a new netwrok sesison is established. Also, after runniing this scrpt, MAKE SURE that the public.pem and private.pem created are copied into the folder where encrypt and decrypt methods are being called
+* Use RSAPublicPrivateKey.py to generate public and private key pair for RSA. This has to be run one time, when the enryption is run for the very first time. Also, after runniing this scrpt, MAKE SURE that the public.pem and private.pem created are copied into the folder where encrypt and decrypt methods are being called
 
 * The script "encryptPythonScript" placed in /Security/Encrypt should be run before running encryption in order to compile C files for using with Pythn wrapper. 
 

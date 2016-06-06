@@ -1,4 +1,5 @@
 /******************************************************************************
+ * Added by: Neha Ahlawat
  * This file accepts 16 bytes of plaintext data from Python wrapper
  * as a bytearray and calls the encrypt fucntion in aesRPi.c file in 
  * order to encrypt it. It then returns this encrypted data as a bytearray
