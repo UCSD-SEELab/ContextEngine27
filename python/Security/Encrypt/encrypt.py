@@ -26,6 +26,7 @@ def encrypt(arg1, arg2):
         fileSize = sys.getsizeof(plainText)
         iteration = fileSize/16 
         bytesLeft = fileSize%16
+
         keyVal = keyFile.read(16)
         for i in range(0, iteration-1):
 
@@ -33,6 +34,7 @@ def encrypt(arg1, arg2):
                 print ("Key Read Error")
 
             else:
+
                 start = i*16;
                 encryptedText = bytearray(16)
                 encryptedText = aesEncrypt(plainText[start:(start+16)], keyVal)
