@@ -3,13 +3,13 @@ from enum import Enum
 import math
 import numpy as np
 import sys
-#sys.path.append("../Security/Encrypt/")
-#from encrypt import encrypt
-#from encrypt import rsaEncrypt
-#sys.path.remove("../Security/Encrypt/")
-#sys.path.append("../Security/Decrypt/")
-#from decrypt import rsaDecrypt
-#from decrypt import decrypt
+sys.path.append("Security/Encrypt/")
+from encrypt import encrypt
+from encrypt import rsaEncrypt
+sys.path.remove("Security/Encrypt/")
+sys.path.append("Security/Decrypt/")
+from decrypt import rsaDecrypt
+from decrypt import decrypt
 
 class Complexity(Enum):
     firstOrder  = 1
