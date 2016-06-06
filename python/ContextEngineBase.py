@@ -84,7 +84,7 @@ class ContextEngineBase:
 
         # Check for the presence of AES key in the key-value pair, and update 
         # the value of key with the keyFileName passed as argument
-        if appFieldsDict.has_key("key"):
+        if "key" in appFieldsDict:
             key = appFieldsDict.get("key")
             if len(key) != 0:
                 self.key = key
