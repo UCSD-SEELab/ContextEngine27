@@ -29,9 +29,9 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 csv = recfromcsv(inputFilePath, delimiter=',')
 ## Change the name of the algorithm to test it out.
-algorithmTest = Knn(complexity, 7, 0, [0,0,0,0,0,0,0], {});
+algorithmTest = DecisionTreeAB(complexity, 7, 0, [0,0,0,0,0,0,0], {});
 teslaTimestamps = {};
-knnTimestamps = {};
+dtABTimestamps = {};
 
 print(algorithmTest.complexity);
 print(algorithmTest.functionOrder);
@@ -58,7 +58,7 @@ for i in range(numRow*day_train_start,numRow*(day_train_end+1)):
 	firstTS = time.time();
 	algorithmTest.addSingleObservation(x_obs, y_obs);
 	secondTS = time.time();
-	svrTimestamps["load" + str(i)] = secondTS - firstTS;
+	dtABTimestamps["load" + str(i)] = secondTS - firstTS;
 
 firstTS = time.time();
 algorithmTest.train();
@@ -80,26 +80,26 @@ for i in range(numRow*day_predict,numRow*(day_predict+1)):
 	firstTS = time.time();
 	theor = algorithmTest.execute(x_predict);
 	secondTS = time.time();
-	svrTimestamps["test" + str(i)] = secondTS - firstTS;
-	svrTimestamps["delta" + str(i)] = abs(output - theor);
+	dtABTimestamps["test" + str(i)] = secondTS - firstTS;
+	dtABTimestamps["delta" + str(i)] = abs(output - theor);
 	runningTotal += output;
 
 avgActual = runningTotal/(1.0*numExecuteSamples);
 netLoadingTime = 0;
 for i in range(numTrainingSamples):
-    netLoadingTime += svrTimestamps["load" + str(i)];
+    netLoadingTime += dtABTimestamps["load" + str(i)];
 
 netExecuteTime = 0;
 runningMAE = 0.0;
 for i in range(numExecuteSamples):
-    netExecuteTime += svrTimestamps["test" + str(i)];
-    runningMAE += svrTimestamps["delta" + str(i)];
+    netExecuteTime += dtABTimestamps["test" + str(i)];
+    runningMAE += dtABTimestamps["delta" + str(i)];
 
 runningMAE = runningMAE/(1.0*avgActual*numExecuteSamples);
 
 print("Loading time (tot): " + str(netLoadingTime) + " seconds");
 print("Loading time (avg): " + str(netLoadingTime/(1.0*numTrainingSamples)) + " seconds");
-print("Training time: " + str(svrTimestamps["train"]) + " seconds");
+print("Training time: " + str(dtABTimestamps["train"]) + " seconds");
 print("Execute time (tot): " + str(netExecuteTime) + " seconds");
 print("Execute time (avg): " + str(netLoadingTime/(1.0*numExecuteSamples)) + " seconds");
 print("MAE: " + str(runningMAE));
