@@ -50,8 +50,8 @@ for i in range(numRow*day_train_start,numRow*(day_train_end+1)):
 	row = csv[i]
 	date=row[0]
 	dishwasher=csv[i+1][3]
-	date=string.replace(date,"/"," ")
-	date=string.replace(date,":"," ")
+	date=str(date).replace("/"," ")
+	date=str(date).replace(":"," ")
 	t=time.strptime(date, "%m %d %Y %H %M")
 	ti = (t[3]*3600+t[4]*60+t[5])/(24*3600.0)
 	x_obs = [ti, row[2], row[4], row[5], row[6], row[7], row[8]]
@@ -73,8 +73,8 @@ for i in range(numRow*day_predict_start,numRow*(day_predict_end+1)):
 	date=row[0]
 	date_predict = csv[i+1][0]
 	output=round(csv[i+1][3],4)
-	date=string.replace(date,"/"," ")
-	date=string.replace(date,":"," ")
+	date=str(date).replace("/"," ")
+	date=str(date).replace(":"," ")
 	t=time.strptime(date, "%m %d %Y %H %M")
 	ti = (t[3]*3600+t[4]*60+t[5])/(24*3600.0)
 	x_predict=[ti, row[2], row[4], row[5], row[6], row[7], row[8]];
