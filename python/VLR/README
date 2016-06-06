@@ -1,0 +1,11 @@
+* dataset contains training and testing images separated by class.
+
+* bof.pkl contains the trained classifier, where training is supposedly done offline, among other essential objects for classification.
+
+* To test VLR, run VLRTest.py in the test directory. Usage: "python VLRTest.py".
+
+* VLRTestInput.py contains image paths on each row, where the corresponding row in VLRTestOutput.py contains the ground-truth label.
+
+* VLR.py contains functions for extracting feature descriptors, preprocessing features, perform training on the feature matrix, then using the generated classifier to perform prediction.
+
+* Output of execute function returns the predicted label in string format.
