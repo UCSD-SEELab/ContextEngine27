@@ -45,7 +45,6 @@ for trainingSample in range(numTrainingSamples):
     if (len(inputrow) > 10):
         inputs = np.asarray(inputrow[0:11], dtype=np.float32)
         outputs = np.asarray(outputrow[0], dtype=np.float32)
-        
         firstTS = time.time();
         KNN.addSingleObservation(inputs,outputs);
         secondTS = time.time();
@@ -70,7 +69,6 @@ for executeSample in range(numExecuteSamples):
         KNNClassifyTimestamps["test" + str(executeSample)] = secondTS - firstTS;
         KNNClassifyTimestamps["delta" + str(executeSample)] = abs(outputs - theor);
         runningTotal += outputs;
-
 avgActual = runningTotal/(1.0*numExecuteSamples);
 
 netLoadingTime = 0;

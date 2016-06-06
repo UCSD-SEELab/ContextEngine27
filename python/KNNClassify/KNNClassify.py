@@ -2,6 +2,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
 import numpy as np
 import csv
+
 class KNNClassify :
     complexity = 0;
     numInputs = 0;
