@@ -12,21 +12,20 @@ def decrypt(arg1, arg2):
 
     try:
 
-	encryptedText = encryptedFile.read(16)
-	key = keyFile.read(16)
-	while encryptedText != '':
-		
-		if key == '':
-			print "Key Read Error"
-			
-		else:
-			decryptedText = aesDecrypt(encryptedText, key)
-			decryptedFile.write(decryptedText)
-			encryptedText = encryptedFile.read(16)
+        encryptedText = encryptedFile.read(16)
+        key = keyFile.read(16)
+        while encryptedText != '':
+            if key == '':
+                print("Key Read Error")
+
+            else:
+                decryptedText = aesDecrypt(encryptedText, key)
+                decryptedFile.write(decryptedText)
+                encryptedText = encryptedFile.read(16)
 	
     finally:
 
-	keyFile.close()
-	encryptedFile.close()
-	decryptedFile.close()
+        keyFile.close()
+        encryptedFile.close()
+        decryptedFile.close()
     return returnFile;

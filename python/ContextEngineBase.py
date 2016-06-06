@@ -3,11 +3,11 @@ from enum import Enum
 import math
 import numpy as np
 import sys
-sys.path.append("../Security/Encrypt/")
-from encrypt import encrypt
-sys.path.remove("../Security/Encrypt/")
-sys.path.append("../Security/Decrypt/")
-from decrypt import decrypt
+# TODO (Neha): security currently missing files.
+# sys.path.append("Security/Encrypt/")
+# from encrypt import encrypt
+# sys.path.append("Security/Decrypt/")
+# from decrypt import decrypt
 
 class Complexity(Enum):
     firstOrder  = 1
@@ -84,7 +84,7 @@ class ContextEngineBase:
 
         # Check for the presence of AES key in the key-value pair, and update 
         # the value of key with the keyFileName passed as argument
-	if appFieldsDict.has_key("key"):
+        if appFieldsDict.has_key("key"):
             key = appFieldsDict.get("key")
             if len(key) != 0:
                 self.key = key

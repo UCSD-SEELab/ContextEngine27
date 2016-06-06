@@ -12,21 +12,21 @@ def encrypt(arg1, arg2):
     try:
     		
         plainText = plainFile.read(16)
-	keyVal = keyFile.read(16)
-	while plainText != '':
-		
-	    if  keyVal == '':
-		print "Key Read Error"
-		
-	    else:
-		encryptedText = aesEncrypt(plainText, keyVal)
-		encryptedFile.write(encryptedText)
-		plainText = plainFile.read(16)
-	
+        keyVal = keyFile.read(16)
+        while plainText != '':
+
+            if  keyVal == '':
+                print("Key Read Error");
+
+            else:
+                encryptedText = aesEncrypt(plainText, keyVal)
+                encryptedFile.write(encryptedText)
+                plainText = plainFile.read(16)
+
     finally:
 
-	keyFile.close()
-	plainFile.close()
-	encryptedFile.close()
+        keyFile.close()
+        plainFile.close()
+        encryptedFile.close()
 
     return returnFile;
