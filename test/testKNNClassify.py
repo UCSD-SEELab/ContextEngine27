@@ -23,8 +23,8 @@ from ContextEngineBase import Complexity
 ## For different tests, these values will vary.
 inputFilePath = "KNNClassifierInput.csv"
 outputFilePath = "KNNClassifierOutput.csv"
-inputFile = open(inputFilePath,'rb');
-outputFile = open(outputFilePath,'rb');
+inputFile = open(inputFilePath,'r');
+outputFile = open(outputFilePath,'r');
 inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 complexity = Complexity.secondOrder;
