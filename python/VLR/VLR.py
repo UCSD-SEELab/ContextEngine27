@@ -8,9 +8,11 @@ import math
 import cv2
 from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
+from sklearn import cluster
 from sklearn.externals import joblib
 from scipy.cluster.vq import *
 from sklearn.preprocessing import StandardScaler
+sys.path.insert(1, os.path.join(sys.path[0], '..'));
 from ContextEngineBase import ContextEngineBase
 
 class VLR(ContextEngineBase):
@@ -47,10 +49,11 @@ class VLR(ContextEngineBase):
 
     def __init__(self, complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict):
         ContextEngineBase.__init__(self,complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict)
-        #self.x_Test = np.empty([0,numInputs]);
         self.fea_det = cv2.xfeatures2d.SURF_create();
         self.numObservations = 0;
         self.classes_names = os.listdir("../python/VLR/dataset/")
+        if True in appFieldsDict:
+            self.clf, self.classes_names, self.stdSlr, self.k, self.voc = joblib.load("../python/VLR/bof.pkl")
 
     #  Add a new training observation. Requirements: newInputObs must be a
     #  row array of size numInputs. newOutputObs must be a single value.
@@ -94,6 +97,20 @@ class VLR(ContextEngineBase):
         print("preprocessing success")
         return whiten(descriptors)
 
+    def softassign(self, descriptors):
+        im_features = np.zeros((1, self.k), "float32")
+        for i in range(len(descriptors)):
+            descriptor = descriptors[i]
+            s = 0
+            temp = np.zeros((1, self.k), "float32")
+            for j in range(self.k):
+                dist = np.linalg.norm(descriptor - self.voc[j])
+                s += dist
+                temp[0][j] = dist
+            for m in range(self.k):
+                im_features[0][m] += 1.0 - temp[0][m]/s
+        return im_features
+
     #  Quantize feature descriptors against the vocabulary of words i.e. constructing
     #  a BoW for each image, perform Tf-Idf vectorization, and scale the words.
     def quantize(self, descriptors):
@@ -102,10 +119,11 @@ class VLR(ContextEngineBase):
         start_marker = 0
         for i in xrange(self.numObservations):
             end_marker = start_marker + len(self.x_Obs[i][1])
-            words, L2distance = vq(descriptors[start_marker:end_marker], self.voc) # hard quantization!
+            #words, L2distance = vq(descriptors[start_marker:end_marker], self.voc) # hard quantization!
+            im_features[i] = self.softassign(descriptors[start_marker:end_marker])
             start_marker = end_marker
-            for wd in words:
-                im_features[i][wd] += 1
+            #for wd in words:
+            #    im_features[i][wd] += 1
         print("quantizing success")
         # Perform Tf-Idf vectorization
         nbr_occurences = np.sum( (im_features > 0) * 1, axis = 0)
@@ -121,7 +139,13 @@ class VLR(ContextEngineBase):
     def train(self):
         if (self.numObservations > 0):
             descriptors = self.preprocess();
-            self.voc, variance = kmeans(descriptors, self.k, 1) # codebook generation
+            #self.voc, variance = kmeans(descriptors, self.k) # codebook generation
+            k_means = cluster.KMeans(n_clusters=self.k, n_init=1)
+            k_means.fit(descriptors)
+            self.voc = k_means.cluster_centers_.squeeze()
+            if len(self.voc) != self.k:
+                print("generate codebook fail " + str(len(self.voc)))
+                sys.exit(1)
             print("generate codebook success")
             im_features = self.quantize(descriptors)
             # Train the linear SVM
@@ -129,7 +153,7 @@ class VLR(ContextEngineBase):
             self.clf.fit(im_features, np.array(self.image_classes))
             print("SVM training success")
             # Save the SVM
-            joblib.dump((self.clf, self.classes_names, self.stdSlr, self.k, self.voc), "bof.pkl", compress=3)
+            joblib.dump((self.clf, self.classes_names, self.stdSlr, self.k, self.voc), "../python/VLR/bof.pkl", compress=3)
             print("SVM saved")
 
         else:
@@ -149,9 +173,10 @@ class VLR(ContextEngineBase):
             (kpts, des) = self.fea_det.compute(im, kpts) # compute dense features
             des = whiten(des) # whiten features
             test_features = np.zeros((1, self.k), "float32") # bag of words
-            words, L2distance = vq(des, self.voc) # hard quantize
-            for wd in words:
-                test_features[0][wd] += 1
+            test_features = self.softassign(des)
+            #words, L2distance = vq(des, self.voc) # hard quantize
+            #for wd in words:
+            #    test_features[0][wd] += 1
             nbr_occurences = np.sum( (test_features > 0) * 1, axis = 0)
             idf = np.array(np.log((1.0*1+1) / (1.0*nbr_occurences + 1)), 'float32')
             test_features = self.stdSlr.transform(test_features)
