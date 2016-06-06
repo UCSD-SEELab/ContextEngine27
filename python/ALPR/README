@@ -1,0 +1,12 @@
+* To test ALPR, run ALPRTest.py in the test directory. Usage: "python ALPRTest.py".
+
+* ALPRTestInput.py contains video paths on each row, where the corresponding row in ALPRTestOutput.py contains the ground-truth label.
+
+* ALPR.py contains only functions for classifying using the pre-trained OpenALPR classifier. No training is done.
+
+* Output of execute function returns a matrix: each row represents a frame that was processed, with the number of columns being n, the number of highest confident predictions.
+Thus, each row gives at most n predictions.
+
+* During validation, the best prediction (according to edit distance) for each frame is used to compare against the ground-truth label, where the error is accumulated.
+
+* LED avg denotes the average Levenshtein error distance per frame during recognition.

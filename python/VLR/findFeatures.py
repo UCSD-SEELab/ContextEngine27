@@ -2,9 +2,10 @@
 
 import argparse as ap
 import cv2
+import csv
 import imutils 
 import numpy as np
-import os
+import os, sys
 from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
 from sklearn.externals import joblib
@@ -22,12 +23,23 @@ training_names = os.listdir(train_path)
 
 # Get all the path to the images and save them in a list
 # image_paths and the corresponding label in image_paths
+#f1 =  open('train.csv', 'wb');
+#writer1 = csv.writer(f1)
+#f2 = open('test.csv', 'wb');
+#writer2 = csv.writer(f2)
+#f3 = open('VLRTestOutput.csv', 'wb');
+#writer3 = csv.writer(f3)
 image_paths = []
 image_classes = []
 class_id = 0
 for training_name in training_names:
     dir = os.path.join(train_path, training_name)
     class_path = imutils.imlist(dir)
+#    for i in range(0, 5):
+#        writer1.writerow(['../python/VLR/' + class_path[i]])
+#        writer3.writerow([training_name])
+#    for j in range(5, 10):
+#        writer2.writerow(['../python/VLR/' + class_path[j]])
     image_paths+=class_path
     image_classes+=[class_id]*len(class_path)
     class_id+=1
