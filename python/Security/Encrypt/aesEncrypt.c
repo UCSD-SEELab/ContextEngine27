@@ -1,3 +1,10 @@
+/******************************************************************************
+ * This file accepts 16 bytes of plaintext data from Python wrapper
+ * as a bytearray and calls the encrypt fucntion in aesRPi.c file in 
+ * order to encrypt it. It then returns this encrypted data as a bytearray
+ *******************************************************************************
+ */
+
 #include <stdint.h>
 #include <arm_neon.h>
 #include <python2.7/Python.h>
@@ -20,6 +27,11 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+/**************************************************************************************************
+* The C function returns 16 bytes of encrypted data, which is written to a file/buffer as required
+***************************************************************************************************
+*/
+
 static PyObject* aesEncrypt ( PyObject* self, PyObject* args) {
 	static int run = 0;
 	
@@ -28,6 +40,7 @@ static PyObject* aesEncrypt ( PyObject* self, PyObject* args) {
 	uint8_t *fileRead = (uint8_t*) malloc(BUFSIZE);
 	memset(fileRead,0,BUFSIZE);
 	uint8_t *encryptOut = (uint8_t*) malloc(BUFSIZE);
+	memset(encryptOut,0,BUFSIZE);
 	uint8x16_t *in = (uint8x16_t*) malloc(16);
 	uint8x16_t *out = (uint8x16_t*) malloc(16);
 	uint8x16_t *key_v = (uint8x16_t*) malloc(16);
@@ -38,7 +51,7 @@ static PyObject* aesEncrypt ( PyObject* self, PyObject* args) {
 	uint8_t *key = (uint8_t*) malloc(KEYLEN);
 
 	PyArg_ParseTuple(args, "s#|s#", &fileRead, &count, &key, &count);
-
+	
 	if(key == NULL)
 	{	
 		return Py_BuildValue("s#", "Key Read Error", count);
@@ -87,9 +100,10 @@ static PyMethodDef aesEncrypt_methods[] = {
       {"aesEncrypt", aesEncrypt, METH_VARARGS}
 };
 
-/*
- *   Python calls this fucntion to initialize encrypt module
- */
+/************************************************************
+*   Python calls this fucntion to initialize encrypt module
+************************************************************
+*/
 
 void initaesEncrypt()
 {

@@ -8,7 +8,7 @@ import subprocess
 
 # This function encrypts a plain-text file/buffer
 # parameters for encrypt function are plaintext file/buffer name and the AES Key, 
-# it returns the name of encrypted file. 
+# it returns the name of decrypted plaintext file. 
 
 def encrypt(arg1, arg2):
     plainFile = open(arg2, "r")

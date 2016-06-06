@@ -4,9 +4,9 @@
 
 * The script "decryptPythonScript" placed in /Security/Decrypt should be run before running decryption in order to compile C files for using with Pythn wrapper.
 
-* The python wrapper for encryption reads in the file/buffer, 16 bytes at a time, and calls the C function that implements AES encryption. The C function returns 16 bytes of encrypted data, which is written to a file/buffer as required. 
+* The python wrapper for encryption reads in the file/buffer, 16 bytes at a time, and calls the C function that implements AES encryption. 
 
-* Similarly, the python wrapper for decryption reads in the decrypted file/buffer, 16 bytes at a time, and calls the C function that implements AES decryption. It returns 16 bytes of decrypted data, and writes it to a file/buffer as required.
+* The C function returns 16 bytes of encrypted data, which is written to a file/buffer as required. Similarly, the python wrapper for decryption reads in the decrypted file/buffer, 16 bytes at a time, and calls the C function that implements AES decryption. It returns 16 bytes of decrypted data, and writes it to a file/buffer as required.
 
 * Both the AES encryption and Decryption use a 128-bit key, stored in the file AESKEY for the algorithm.
 

@@ -1,5 +1,5 @@
 # This python wrapper for decryption reads in the file/buffer, 16 bytes at a time, 
-# and calls the C function that implements AES decryption.
+# and calls the C function that implements AES encryption.
 
 from aesDecrypt import *
 import sys
