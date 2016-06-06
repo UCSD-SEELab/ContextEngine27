@@ -29,9 +29,9 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 csv = recfromcsv(inputFilePath, delimiter=',')
 ## Change the name of the algorithm to test it out.
-algorithmTest = Knn(complexity, 7, 0, [0,0,0,0,0,0,0], {});
+algorithmTest = SVR(complexity, 7, 0, [0,0,0,0,0,0,0], {});
 teslaTimestamps = {};
-knnTimestamps = {};
+svrTimestamps = {};
 
 print(algorithmTest.complexity);
 print(algorithmTest.functionOrder);
