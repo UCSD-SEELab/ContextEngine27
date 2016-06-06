@@ -4,13 +4,13 @@ import io
 import numpy as np
 import math
 import sys
-sys.path.append("../python/Security/Encrypt/")
-from encrypt import encrypt
-from encrypt import rsaEncrypt
-sys.path.remove("../python/Security/Encrypt/")
-sys.path.append("../python/Security/Decrypt/")
-from decrypt import rsaDecrypt
-from decrypt import decrypt
+#sys.path.append("../python/Security/Encrypt/")
+#from encrypt import encrypt
+#from encrypt import rsaEncrypt
+#sys.path.remove("../python/Security/Encrypt/")
+#sys.path.append("../python/Security/Decrypt/")
+#from decrypt import rsaDecrypt
+#from decrypt import decrypt
 
 class Coordinates(object):
 
@@ -403,23 +403,23 @@ class DStreamII:
 
     #  Returns the name of the file that contains the encrypted data, takes in 
     #  name of the file containing key and name of the file to be encrypted
-    def encrypt(self, plainTextFile):
-        if len(self.key) != 0:
-            rsaEncrypt(self.key);
-            return encrypt(self.key, plainTextFile);
+    #def encrypt(self, plainTextFile):
+    #    if len(self.key) != 0:
+    #        rsaEncrypt(self.key);
+    #        return encrypt(self.key, plainTextFile);
 
-        else:
-            return
+    #    else:
+    #        return
             
     #  Returns the name of the file that contains the decrypted data, takes in 
     #  name of the file containing key and name of the file to be decrypted
-    def decrypt(self, encyptedFile):
-        if len(self.key) != 0:
-            rsaDecrypt(self.key);
-            return decrypt(self.key, encyptedFile);
-
-        else:
-            return
+    #def decrypt(self, encyptedFile):
+    #    if len(self.key) != 0:
+    #        rsaDecrypt(self.key);
+    #        return decrypt(self.key, encyptedFile);
+    #
+    #    else:
+    #        return
             
     def printClusters(self):
         clusterKeys = self.clusters
