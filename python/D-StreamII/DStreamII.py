@@ -371,7 +371,7 @@ class DStreamII:
             if len(gridLowerRange) == numInputs:
                 self.DIMENSION_LOWER_RANGE = gridLowerRange
 
-	if 'key' in appFieldsDict:
+        if 'key' in appFieldsDict:
             key = appFieldsDict.get("key")
             if len(key) != 0:
                 self.key = key
