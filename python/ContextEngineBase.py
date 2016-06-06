@@ -4,13 +4,13 @@ import math
 import numpy as np
 import sys
 
-#sys.path.append("Security/Encrypt/")
-#from encrypt import encrypt
-#from encrypt import rsaEncrypt
-#sys.path.remove("../Security/Encrypt/")
-#sys.path.append("Security/Decrypt/")
-#from decrypt import rsaDecrypt
-#from decrypt import decrypt
+sys.path.append("Security/Encrypt/")
+from encrypt import encrypt
+from encrypt import rsaEncrypt
+sys.path.remove("Security/Encrypt/")
+sys.path.append("Security/Decrypt/")
+from decrypt import rsaDecrypt
+from decrypt import decrypt
 
 class Complexity(Enum):
     firstOrder  = 1
@@ -126,7 +126,7 @@ class ContextEngineBase:
             outputValue = newOutputVector.pop();
             self.addSingleObservation(newInputVector, outputValue);
 
-    #  Returns the name of the file that contains the encrypted data, takes in 
+      #  Returns the name of the file that contains the encrypted data, takes in 
     #  name of the file containing key and name of the file to be encrypted
     def encrypt(self, plainTextFile):
         if len(self.key) != 0:
