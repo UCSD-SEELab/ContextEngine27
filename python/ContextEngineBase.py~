@@ -3,7 +3,6 @@ from enum import Enum
 import math
 import numpy as np
 import sys
-
 #sys.path.append("../Security/Encrypt/")
 #from encrypt import encrypt
 #from encrypt import rsaEncrypt
@@ -87,7 +86,7 @@ class ContextEngineBase:
 
         # Check for the presence of AES key in the key-value pair, and update 
         # the value of key with the keyFileName passed as argument
-        if "key" in appFieldsDict:
+	if appFieldsDict.has_key("key"):
             key = appFieldsDict.get("key")
             if len(key) != 0:
                 self.key = key
@@ -126,7 +125,7 @@ class ContextEngineBase:
             outputValue = newOutputVector.pop();
             self.addSingleObservation(newInputVector, outputValue);
 
-    #  Returns the name of the file that contains the encrypted data, takes in 
+      #  Returns the name of the file that contains the encrypted data, takes in 
     #  name of the file containing key and name of the file to be encrypted
     def encrypt(self, plainTextFile):
         if len(self.key) != 0:

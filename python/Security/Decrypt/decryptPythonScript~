@@ -1,5 +1,3 @@
-# Added by Neha Ahlawat
-
 gcc -shared -mfloat-abi=hard -mfpu=neon -oFast -ftree-vectorize -fPIC -I/home/usr/include/python3 aesDecrypt.c aesRPi.h aesRPi.c -o aesDecrypt.pyd 
 mv aesDecrypt.pyd aesDecrypt.so
 alias decrypt="python decrypt.py"
