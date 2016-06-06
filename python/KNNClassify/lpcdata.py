@@ -9,7 +9,6 @@ def lpc_ref(signal, order):
         raise ValueError("Array of rank > 1 not supported yet")
     if order > signal.size:
         raise ValueError("Input signal must have a lenght >= lpc order")
-
     if order > 0:
         p = order + 1
         r = np.zeros(p, signal.dtype)

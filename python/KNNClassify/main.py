@@ -8,13 +8,11 @@ knn = KNNClassify (complexity=0, numInputs=11, discreteOutputs=0, discreteInputs
 
 inputs = []
 targets = []
-
 with open('lpcInputTarget.csv', 'rb') as csvfile:
     spamreader = csv.reader(csvfile)
     for row in spamreader:
         inputs.append(map(float,row[0:11]))
         targets.append(map(int,row[11]))
-
 inputs = np.asarray(inputs, dtype=np.float32)
 targets = np.asarray(targets, dtype=np.float32)
 

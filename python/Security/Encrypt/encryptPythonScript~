@@ -1,0 +1,5 @@
+#A dded by Neha Ahlawat
+
+gcc -shared -mfloat-abi=hard -mfpu=neon -oFast -ftree-vectorize -fPIC -I/home/usr/include/python3 aesEncrypt.c aesRPi.h aesRPi.c -o aesEncrypt.pyd
+mv aesEncrypt.pyd aesEncrypt.so
+alias encrypt="python encrypt.py"

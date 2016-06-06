@@ -4,6 +4,7 @@ import io
 import numpy as np
 import math
 import sys
+
 sys.path.append("../python/Security/Encrypt/")
 from encrypt import encrypt
 from encrypt import rsaEncrypt
@@ -371,7 +372,8 @@ class DStreamII:
             if len(gridLowerRange) == numInputs:
                 self.DIMENSION_LOWER_RANGE = gridLowerRange
 
-	if 'key' in appFieldsDict:
+        if 'key' in appFieldsDict:
+
             key = appFieldsDict.get("key")
             if len(key) != 0:
                 self.key = key
@@ -403,6 +405,7 @@ class DStreamII:
 
     #  Returns the name of the file that contains the encrypted data, takes in 
     #  name of the file containing key and name of the file to be encrypted
+
     def encrypt(self, plainTextFile):
         if len(self.key) != 0:
             rsaEncrypt(self.key);
@@ -420,6 +423,7 @@ class DStreamII:
 
         else:
             return
+
             
     def printClusters(self):
         clusterKeys = self.clusters

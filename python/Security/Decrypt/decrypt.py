@@ -35,9 +35,9 @@ def decrypt(arg1, arg2):
 	
     finally:
 
-	keyFile.close()
-	encryptedFile.close()
-	decryptedFile.close()
+        keyFile.close()
+        encryptedFile.close()
+        decryptedFile.close()
     return returnFile;
 
 # Before decrypting the data, this fucntion decrypts the 

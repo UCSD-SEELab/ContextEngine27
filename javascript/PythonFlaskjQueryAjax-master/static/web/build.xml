@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- $Id: build.xml 788 2016-05-14 00:20:46Z cxh $ -->
+
+<project basedir="." default="build" name="accessors" 
+         >
+  <!-- We can refer to any environment variable FOO as ${env.FOO} -->
+  <property environment="env" />
+
+  <!-- Location of the eduk sources.  eduk is the embedded duktape
+       binary that does not use a file system.  Duktape is an embedded
+       JavaScript interpreter.
+  -->
+  <property name="eduk.source" value="${basedir}/hosts/duktape/eduk"/>
+
+  <!-- Location of the Duktape sources. -->
+  <property name="duktape.source" value="${basedir}/hosts/duktape/duktape"/>
+
+  <!-- The location of the jsdoc distribution, used by the jsdoc target. -->
+  <property name="jsdoc.home" value="vendors/jsdoc" />
+
+  <!-- Files to exclude. -->
+  <patternset id="accessors.excludes">
+    <exclude name="vendors/"/>
+  </patternset>
+  
+  <!-- Path of JavaScript tests that are run by Duktape. -->
+  <fileset id="test.duktape.files" dir="${basedir}/hosts">
+    <include name="**/duktape/test/*.js"/>
+    <patternset refid="accessors.excludes" />
+  </fileset>
+
+  <!-- Path of JavaScript tests that are run by mocha. -->
+  <fileset id="test.mocha.files" dir="${basedir}">
+    <include name="**/mocha/test*.js"/>
+    <patternset refid="accessors.excludes" />
+  </fileset>
+
+  <target name="build"
+          depends="duktape, jsdoc, ptdoc"
+          description="Compile the duktape binaries. Generate html and Ptdoc documentation.">
+  </target>
+
+  <target name="-check-vendors-jsdoc" unless="vendors.jsdoc.exists">
+    <available property="vendors.jsdoc.exists" file="${jsdoc.home}/jsdoc"/>
+  </target>
+
+  <target name="cleanAll" 
+	  description="Remove the reports/ and doc/jsdoc directories.">
+    <delete quiet="true" verbose="no" includeemptydirs="true">
+      <fileset dir="${basedir}" includes="reports/**" defaultexcludes="false"/>
+      <fileset dir="${basedir}" includes="doc/jsdoc/**" defaultexcludes="false"/>
+    </delete>
+  </target>
+
+  <!-- Build eduk first because it updates the .h files from the .js files
+       that are used by eduk and duk.
+    --> 
+  <target name="duktape"
+          depends="eduk, duk"
+          description="Build the duktape binaries">
+  </target>
+
+  <target name="duk"
+	  depends="eduk"
+          description="Build the duk binary.  Requires make and a C compiler.">
+    <echo>The duk binary has more command line options that the eduk binary.
+      The duk binary would not be deployed on an embedded machine.
+    </echo>
+    <exec dir="${duktape.source}"
+          executable="make">
+    </exec>
+  </target>
+
+  <target name="eduk"
+          description="Build the eduk binary.  Requires xxd, make and gcc.">
+    <echo>The eduk binary has fewer command line options than the duk binary.
+      The eduk binary is what would be deployed on an embedded machine.
+      The eduk binary can also be run from the command line.
+    </echo>
+    <exec dir="${eduk.source}"
+          executable="make">
+    </exec>
+  </target>
+
+  <target name="eduk.tcmalloc"
+          description="Build the eduk with tcmalloc for heap profiling">
+    <exec dir="${eduk.source}"
+          executable="make">
+      <arg value="eduk.tcmalloc"/>
+    </exec>
+  </target>
+
+  <target name="jsdoc"
+          depends="vendors-jsdoc"
+          description="Run jsdoc to generate documentation for JavaScript files."
+          >
+    <echo>Invoke jsdoc to generate documentation for .js files.
+    The output appears in doc/jsdoc/index.html
+    </echo>
+    <exec executable="${jsdoc.home}/jsdoc"
+          timeout="60000"
+          >
+      <arg value="--configure" />
+      <arg value="jsdoc/jsdoc.json" />
+      <arg value="--destination" />
+      <arg value="doc/jsdoc" />
+      <arg value="--readme" />
+      <arg value="README.md" />
+      <arg value="--recurse" />
+      <arg value="--verbose" />
+      <arg value="." />
+    </exec>
+  </target>
+
+    <target name="ptdoc"
+          depends="vendors-jsdoc"
+          description="Invoke jsdoc to read *.js files and generate *PtDoc.xml files suitable for Ptolemy"
+          >
+    <echo>Invoke jsdoc to read *.js files and generate *PtDoc.xml files suitable for Ptolemy.
+    See https://chess.eecs.berkeley.edu/ptexternal/wiki/Main/JSDocSystems
+    See jsdoc/jsdoc.json
+    See jsdoc/plugins/accessorJSDocTags.js
+    See jsdoc/templates/ptdoc/publish.js
+    </echo>
+    <exec executable="${jsdoc.home}/jsdoc">
+      <arg value="--configure" />
+      <arg value="jsdoc/jsdoc.json" />
+      <arg value="--recurse" />
+      <arg value="--template" />
+      <arg value="jsdoc/templates/ptdoc" />
+      <arg value="--verbose" />
+      <arg value="." />
+    </exec>
+  </target>
+
+  <target name="tests"
+          depends="tests.duk, tests.eduk, tests.mocha"
+          description="Run the duktape, eduk and node host tests">
+  </target>
+
+  <target name="tests.coverage"
+          description="Use istanbul and mocha to generate code coverage for JavaScript tests.">
+    <echo>
+      ==test.istanbul==
+      This target uses istanbul and mocha to generate code coverage for JavaScript tests
+      This target requires setup:
+        sudo npm install -g mocha
+        sudo npm install -g istanbul
+      The output will generated in the coverage/ directory.
+      See https://chess.eecs.berkeley.edu/ptexternal/wiki/Main/JSMocha
+    </echo>
+
+    <pathconvert refid="test.mocha.files"
+		 pathsep=" "
+		 property="converted"/>
+
+    <exec executable="istanbul">
+      <arg value="cover"/>
+      <arg value="_mocha"/>
+      <arg value="--"/>
+      <arg line="${converted}"/>
+    </exec>
+  </target>
+
+  <target name="tests.duk"
+          depends="tests.duk.test, tests.duk.auto"
+          description="Execute the duktape tests in duktape/test and test/auto.">
+  </target>
+
+  <target name="tests.duk.auto"
+          depends="duk"
+          description="Execute the duk tests in tests/auto.">
+    <!-- Use relative pathnames here so that we can look them up. -->
+    <apply dir="."
+           executable="hosts/duktape/duktape/duk"
+           failonerror="true"
+	   relative="true">
+      <arg value="--accessor"/>
+      <arg value="--timeout"/>
+      <arg value="4000"/>
+      <fileset dir=".">
+	<!-- eduk does not have a separate eduk test directory, we just
+	     run the accessors in test/auto instead.
+	  --> 
+	<include name="test/auto/*.js"/>
+        <patternset refid="accessors.excludes" />
+      </fileset>
+    </apply>
+  </target>
+  
+  <target name="tests.duk.test"
+          depends="duk"
+          description="Execute the duktape tests in duktape/test.">
+    <apply dir="hosts"
+           executable="duktape/duktape/duk"
+           failonerror="true">
+      <fileset dir="hosts">
+        <include name="duktape/test/*.js"/>
+        <patternset refid="accessors.excludes" />
+      </fileset>
+    </apply>
+  </target>
+
+  <target name="tests.eduk"
+          depends="eduk"
+          description="Execute the eduk tests.">
+    <!-- Use relative pathnames here so that we can look them up. -->
+    <apply dir="hosts"
+           executable="duktape/eduk/eduk"
+           failonerror="true"
+	   relative="true">
+      <arg value="--timeout"/>
+      <arg value="4000"/>
+      <fileset dir=".">
+	<!-- eduk does not have a separate eduk test directory, we just
+	     run the accessors in test/auto instead.
+	  --> 
+	<include name="test/auto/*.js"/>
+        <patternset refid="accessors.excludes" />
+      </fileset>
+    </apply>
+  </target>
+
+  <target name="tests.mocha"
+          description="Use mocha to test the Node host and generate output on stdout.">
+    <echo>
+      ==test.mocha==
+      This target uses mocha to test Node.js tests in **/mocha/test*.js files.
+      This target requires setup:
+        sudo npm install -g mocha
+        sudo npm install -g mocha-junit-reporter
+      See https://chess.eecs.berkeley.edu/ptexternal/wiki/Main/JSMocha
+    </echo>
+
+    <pathconvert refid="test.mocha.files"
+		 pathsep=" "
+		 property="converted"/>
+
+    <exec executable="mocha">
+      <arg line="${converted}"/>
+    </exec>
+  </target>
+
+  <target name="tests.mocha.xml"
+          description="Use mocha to test the Node Host and generate JUnit-compatible output.">
+    <echo>
+      ==test.mocha==
+      This target uses mocha to test Node.js tests in **/mocha/test*.js files.
+      This target requires setup:
+        sudo npm install -g mocha
+        sudo npm install -g mocha-junit-reporter
+      See https://chess.eecs.berkeley.edu/ptexternal/wiki/Main/JSMocha
+    </echo>
+
+    <pathconvert refid="test.mocha.files"
+		 pathsep=" "
+		 property="converted"/>
+
+    <exec executable="mocha">
+      <arg line="--bail"/>
+      <arg value="--reporter"/>
+      <arg value="mocha-junit-reporter"/>
+      <arg value="--reporter-options"/>
+      <arg value="mochaFile=reports/junit/mochaJUnit.xml"/>
+      <arg line="${converted}"/>
+    </exec>
+  </target>
+
+  <target name="vendors-jsdoc"
+	  depends="-check-vendors-jsdoc"
+	  description="Check out jsdoc using git to create vendors/jsdoc."
+	  unless="${vendors.jsdoc.exists}">
+    <echo> Clone the git repo.  We use an accessor-specific fork of https://github.com/terraswarm/jsdoc.git,
+    made on 12-Jun-2015 so that we can support @accessor, @input, @output, @parameter.
+    </echo>
+      <mkdir dir="${basedir}/vendors"/>
+      <exec dir="${basedir}/vendors"
+            executable="git">
+	<!-- We set LD_LIBRARY_PATH to "" and avoid
+     [exec] Cloning into 'jsdoc'...
+     [exec] fatal: unable to access 'https://github.com/terraswarm/jsdoc.git/': error setting certificate verify locations:
+     [exec]   CAfile: /etc/ssl/certs/ca-certificates.crt
+     [exec]   CApath: none
+     [exec] Result: 128
+	     -->
+	<env key="LD_LIBRARY_PATH"
+	     value=""/>
+        <arg value="clone"/>
+        <arg value="https://github.com/terraswarm/jsdoc.git"/>
+      </exec>
+  </target>
+
+    <target name="vendors-jsdoc-pull"
+	  depends="vendors-jsdoc"
+	  description="Do a git pull in vendors/jsdoc">
+      <exec dir="${basedir}/vendors/jsdoc"
+            executable="git">
+        <arg value="pull"/>
+      </exec>
+  </target>
+</project>

@@ -8,15 +8,15 @@ import time
 
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'));
-sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
-sys.path.insert(1, os.path.join(sys.path[0], '../python/ALPR'));
-sys.path.insert(1, os.path.join(sys.path[0], '../python/VLR'));
+#sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
+#sys.path.insert(1, os.path.join(sys.path[0], '../python/ALPR'));
+#sys.path.insert(1, os.path.join(sys.path[0], '../python/VLR'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 
 ## Import your algorithms here.
 from Tesla import Tesla
-from Knn import Knn
+#from Knn import Knn
 from ContextEngineBase import Complexity
 
 ## For different tests, these values will vary.
@@ -32,7 +32,7 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 
 ## Change the name of the algorithm to test it out.
-algorithmTest = Knn(Complexity.firstOrder, 2, 0, [0, 0], {});
+algorithmTest = Tesla(Complexity.firstOrder, 2, 0, [0, 0], {});
 teslaTimestamps = {};
 knnTimestamps = {};
 
