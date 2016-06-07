@@ -1,0 +1,795 @@
+for Hose ID 5357
+The overall value of R is: 0.857065
+The overall value of NMAE is: 0.142906
+The value of R for mic is: 0.890637
+The value of NMAE for mic is: 0.109342
+The value of R for ref is: 0.712932
+The value of NAME for ref is: 0.287011
+The value of R for use is: 0.672995
+The value of NMAE for use is: 0.326940
+The value of R for bath is: 0.858007
+The value of NMAE for bath is: 0.141964
+The value of R for oven is: 0.977419
+The value of NMAE for oven is: 0.022576
+The selected set of R is for set from house : 0.977419
+The selected set of NMAE is for set from house : 0.022576
+The selected set Input appliances are : oven1, microwave1, bathroom1
+for Hose ID 2974
+The overall value of R is: 0.958599
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.974817
+The value of NMAE for mic is: 0.025173
+The value of R for ref is: 0.757674
+The value of NAME for ref is: 0.242230
+The value of R for use is: 0.762242
+The value of NMAE for use is: 0.237663
+The value of R for bath is: 0.978014
+The value of NMAE for bath is: 0.021977
+The value of R for oven is: 0.987066
+The value of NMAE for oven is: 0.012929
+The selected set of R is for set from house : 0.987066
+The selected set of NMAE is for set from house : 0.012929
+The selected set Input appliances are : oven1, bathroom1, use
+for Hose ID 3849
+The overall value of R is: 0.950120
+The overall value of NMAE is: 0.049847
+The value of R for mic is: 0.975432
+The value of NMAE for mic is: 0.024552
+The value of R for ref is: 0.686161
+The value of NAME for ref is: 0.313631
+The value of R for use is: 0.743155
+The value of NMAE for use is: 0.256675
+The value of R for bath is: 0.989081
+The value of NMAE for bath is: 0.010912
+The value of R for oven is: 0.975019
+The value of NMAE for oven is: 0.024965
+The selected set of R is for set from house : 0.989081
+The selected set of NMAE is for set from house : 0.010912
+The selected set Input appliances are : bathroom1, oven1, use
+for Hose ID 8046
+The overall value of R is: 0.964828
+The overall value of NMAE is: 0.035134
+The value of R for mic is: 0.968085
+The value of NMAE for mic is: 0.031881
+The value of R for ref is: 0.790394
+The value of NAME for ref is: 0.209379
+The value of R for use is: 0.707735
+The value of NMAE for use is: 0.291949
+The value of R for bath is: 0.608789
+The value of NMAE for bath is: 0.390787
+The value of R for oven is: 0.994743
+The value of NMAE for oven is: 0.005252
+The selected set of R is for set from house : 0.994743
+The selected set of NMAE is for set from house : 0.005252
+The selected set Input appliances are : oven1, bathroom1, use
+for Hose ID 8156
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9776
+The overall value of R is: 0.942787
+The overall value of NMAE is: 0.057197
+The value of R for mic is: 0.966997
+The value of NMAE for mic is: 0.032994
+The value of R for ref is: 0.860393
+The value of NAME for ref is: 0.139567
+The value of R for use is: 0.764210
+The value of NMAE for use is: 0.235722
+The value of R for bath is: 0.949439
+The value of NMAE for bath is: 0.050547
+The value of R for oven is: 0.978217
+The value of NMAE for oven is: 0.021777
+The selected set of R is for set from house : 0.978217
+The selected set of NMAE is for set from house : 0.021777
+The selected set Input appliances are : oven1, use, bathroom1
+for Hose ID 6990
+The overall value of R is: 0.940109
+The overall value of NMAE is: 0.059822
+The value of R for mic is: 0.958682
+The value of NMAE for mic is: 0.041271
+The value of R for ref is: 0.725748
+The value of NAME for ref is: 0.273939
+The value of R for use is: 0.803983
+The value of NMAE for use is: 0.195793
+The value of R for bath is: 0.980398
+The value of NMAE for bath is: 0.019579
+The value of R for oven is: 0.981370
+The value of NMAE for oven is: 0.018609
+The selected set of R is for set from house : 0.981370
+The selected set of NMAE is for set from house : 0.018609
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 2361
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9773
+The overall value of R is: 0.903130
+The overall value of NMAE is: 0.096766
+The value of R for mic is: 0.968408
+The value of NMAE for mic is: 0.031558
+The value of R for ref is: 0.663340
+The value of NAME for ref is: 0.336300
+The value of R for use is: 0.696052
+The value of NMAE for use is: 0.303623
+The value of R for bath is: 0.852456
+The value of NMAE for bath is: 0.147386
+The value of R for oven is: 0.939201
+The value of NMAE for oven is: 0.060734
+The selected set of R is for set from house : 0.968408
+The selected set of NMAE is for set from house : 0.031558
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3192
+The overall value of R is: 0.958609
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.968258
+The value of NMAE for mic is: 0.031738
+The value of R for ref is: 0.853448
+The value of NAME for ref is: 0.146531
+The value of R for use is: 0.835065
+The value of NMAE for use is: 0.164911
+The value of R for bath is: 0.971426
+The value of NMAE for bath is: 0.028570
+The value of R for oven is: 0.991122
+The value of NMAE for oven is: 0.008876
+The selected set of R is for set from house : 0.991122
+The selected set of NMAE is for set from house : 0.008876
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 8047
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 4213
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 1415
+The overall value of R is: 0.970098
+The overall value of NMAE is: 0.029900
+The value of R for mic is: 0.987071
+The value of NMAE for mic is: 0.012928
+The value of R for ref is: 0.738358
+The value of NAME for ref is: 0.261626
+The value of R for use is: 0.781618
+The value of NMAE for use is: 0.218369
+The value of R for bath is: 0.985478
+The value of NMAE for bath is: 0.014521
+The value of R for oven is: 0.990196
+The value of NMAE for oven is: 0.009803
+The selected set of R is for set from house : 0.990196
+The selected set of NMAE is for set from house : 0.009803
+The selected set Input appliances are : oven1, microwave1, use
+for Hose ID 545
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3456
+The overall value of R is: 0.951009
+The overall value of NMAE is: 0.048977
+The value of R for mic is: 0.972307
+The value of NMAE for mic is: 0.027685
+The value of R for ref is: 0.702058
+The value of NAME for ref is: 0.297857
+The value of R for use is: 0.790619
+The value of NMAE for use is: 0.209322
+The value of R for bath is: 0.902361
+The value of NMAE for bath is: 0.097611
+The value of R for oven is: 0.985725
+The value of NMAE for oven is: 0.014271
+The selected set of R is for set from house : 0.985725
+The selected set of NMAE is for set from house : 0.014271
+The selected set Input appliances are : oven1, use, refrigerator1
+for Hose ID 5357
+The overall value of R is: 0.857065
+The overall value of NMAE is: 0.142906
+The value of R for mic is: 0.890637
+The value of NMAE for mic is: 0.109342
+The value of R for ref is: 0.712932
+The value of NAME for ref is: 0.287011
+The value of R for use is: 0.672995
+The value of NMAE for use is: 0.326940
+The value of R for bath is: 0.858007
+The value of NMAE for bath is: 0.141964
+The value of R for oven is: 0.977419
+The value of NMAE for oven is: 0.022576
+The selected set of R is for set from house : 0.977419
+The selected set of NMAE is for set from house : 0.022576
+The selected set Input appliances are : oven1, microwave1, bathroom1
+for Hose ID 2974
+The overall value of R is: 0.958599
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.974817
+The value of NMAE for mic is: 0.025173
+The value of R for ref is: 0.757674
+The value of NAME for ref is: 0.242230
+The value of R for use is: 0.762242
+The value of NMAE for use is: 0.237663
+The value of R for bath is: 0.978014
+The value of NMAE for bath is: 0.021977
+The value of R for oven is: 0.987066
+The value of NMAE for oven is: 0.012929
+The selected set of R is for set from house : 0.987066
+The selected set of NMAE is for set from house : 0.012929
+The selected set Input appliances are : oven1, bathroom1, use
+for Hose ID 3849
+The overall value of R is: 0.950120
+The overall value of NMAE is: 0.049847
+The value of R for mic is: 0.975432
+The value of NMAE for mic is: 0.024552
+The value of R for ref is: 0.686161
+The value of NAME for ref is: 0.313631
+The value of R for use is: 0.743155
+The value of NMAE for use is: 0.256675
+The value of R for bath is: 0.989081
+The value of NMAE for bath is: 0.010912
+The value of R for oven is: 0.975019
+The value of NMAE for oven is: 0.024965
+The selected set of R is for set from house : 0.989081
+The selected set of NMAE is for set from house : 0.010912
+The selected set Input appliances are : bathroom1, oven1, use
+for Hose ID 8046
+The overall value of R is: 0.964828
+The overall value of NMAE is: 0.035134
+The value of R for mic is: 0.968085
+The value of NMAE for mic is: 0.031881
+The value of R for ref is: 0.790394
+The value of NAME for ref is: 0.209379
+The value of R for use is: 0.707735
+The value of NMAE for use is: 0.291949
+The value of R for bath is: 0.608789
+The value of NMAE for bath is: 0.390787
+The value of R for oven is: 0.994743
+The value of NMAE for oven is: 0.005252
+The selected set of R is for set from house : 0.994743
+The selected set of NMAE is for set from house : 0.005252
+The selected set Input appliances are : oven1, bathroom1, use
+for Hose ID 8156
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9776
+The overall value of R is: 0.942787
+The overall value of NMAE is: 0.057197
+The value of R for mic is: 0.966997
+The value of NMAE for mic is: 0.032994
+The value of R for ref is: 0.860393
+The value of NAME for ref is: 0.139567
+The value of R for use is: 0.764210
+The value of NMAE for use is: 0.235722
+The value of R for bath is: 0.949439
+The value of NMAE for bath is: 0.050547
+The value of R for oven is: 0.978217
+The value of NMAE for oven is: 0.021777
+The selected set of R is for set from house : 0.978217
+The selected set of NMAE is for set from house : 0.021777
+The selected set Input appliances are : oven1, use, bathroom1
+for Hose ID 6990
+The overall value of R is: 0.940109
+The overall value of NMAE is: 0.059822
+The value of R for mic is: 0.958682
+The value of NMAE for mic is: 0.041271
+The value of R for ref is: 0.725748
+The value of NAME for ref is: 0.273939
+The value of R for use is: 0.803983
+The value of NMAE for use is: 0.195793
+The value of R for bath is: 0.980398
+The value of NMAE for bath is: 0.019579
+The value of R for oven is: 0.981370
+The value of NMAE for oven is: 0.018609
+The selected set of R is for set from house : 0.981370
+The selected set of NMAE is for set from house : 0.018609
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 2361
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9773
+The overall value of R is: 0.903130
+The overall value of NMAE is: 0.096766
+The value of R for mic is: 0.968408
+The value of NMAE for mic is: 0.031558
+The value of R for ref is: 0.663340
+The value of NAME for ref is: 0.336300
+The value of R for use is: 0.696052
+The value of NMAE for use is: 0.303623
+The value of R for bath is: 0.852456
+The value of NMAE for bath is: 0.147386
+The value of R for oven is: 0.939201
+The value of NMAE for oven is: 0.060734
+The selected set of R is for set from house : 0.968408
+The selected set of NMAE is for set from house : 0.031558
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3192
+The overall value of R is: 0.958609
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.968258
+The value of NMAE for mic is: 0.031738
+The value of R for ref is: 0.853448
+The value of NAME for ref is: 0.146531
+The value of R for use is: 0.835065
+The value of NMAE for use is: 0.164911
+The value of R for bath is: 0.971426
+The value of NMAE for bath is: 0.028570
+The value of R for oven is: 0.991122
+The value of NMAE for oven is: 0.008876
+The selected set of R is for set from house : 0.991122
+The selected set of NMAE is for set from house : 0.008876
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 8047
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 4213
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 1415
+The overall value of R is: 0.970098
+The overall value of NMAE is: 0.029900
+The value of R for mic is: 0.987071
+The value of NMAE for mic is: 0.012928
+The value of R for ref is: 0.738358
+The value of NAME for ref is: 0.261626
+The value of R for use is: 0.781618
+The value of NMAE for use is: 0.218369
+The value of R for bath is: 0.985478
+The value of NMAE for bath is: 0.014521
+The value of R for oven is: 0.990196
+The value of NMAE for oven is: 0.009803
+The selected set of R is for set from house : 0.990196
+The selected set of NMAE is for set from house : 0.009803
+The selected set Input appliances are : oven1, microwave1, use
+for Hose ID 545
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3456
+The overall value of R is: 0.951009
+The overall value of NMAE is: 0.048977
+The value of R for mic is: 0.972307
+The value of NMAE for mic is: 0.027685
+The value of R for ref is: 0.702058
+The value of NAME for ref is: 0.297857
+The value of R for use is: 0.790619
+The value of NMAE for use is: 0.209322
+The value of R for bath is: 0.902361
+The value of NMAE for bath is: 0.097611
+The value of R for oven is: 0.985725
+The value of NMAE for oven is: 0.014271
+The selected set of R is for set from house : 0.985725
+The selected set of NMAE is for set from house : 0.014271
+The selected set Input appliances are : oven1, use, refrigerator1
+for Hose ID 5357
+The overall value of R is: 0.857065
+The overall value of NMAE is: 0.142906
+The value of R for mic is: 0.890637
+The value of NMAE for mic is: 0.109342
+The value of R for ref is: 0.712932
+The value of NAME for ref is: 0.287011
+The value of R for use is: 0.672995
+The value of NMAE for use is: 0.326940
+The value of R for bath is: 0.858007
+The value of NMAE for bath is: 0.141964
+The value of R for oven is: 0.977419
+The value of NMAE for oven is: 0.022576
+The selected set of R is for set from house : 0.977419
+The selected set of NMAE is for set from house : 0.022576
+The selected set Input appliances are : oven1, microwave1, bathroom1
+for Hose ID 2974
+The overall value of R is: 0.958599
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.974817
+The value of NMAE for mic is: 0.025173
+The value of R for ref is: 0.757674
+The value of NAME for ref is: 0.242230
+The value of R for use is: 0.762242
+The value of NMAE for use is: 0.237663
+The value of R for bath is: 0.978014
+The value of NMAE for bath is: 0.021977
+The value of R for oven is: 0.987066
+The value of NMAE for oven is: 0.012929
+The selected set of R is for set from house : 0.987066
+The selected set of NMAE is for set from house : 0.012929
+The selected set Input appliances are : oven1, bathroom1, use
+for Hose ID 3849
+The overall value of R is: 0.950120
+The overall value of NMAE is: 0.049847
+The value of R for mic is: 0.975432
+The value of NMAE for mic is: 0.024552
+The value of R for ref is: 0.686161
+The value of NAME for ref is: 0.313631
+The value of R for use is: 0.743155
+The value of NMAE for use is: 0.256675
+The value of R for bath is: 0.989081
+The value of NMAE for bath is: 0.010912
+The value of R for oven is: 0.975019
+The value of NMAE for oven is: 0.024965
+for Hose ID 2361
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9773
+The overall value of R is: 0.903130
+The overall value of NMAE is: 0.096766
+The value of R for mic is: 0.968408
+The value of NMAE for mic is: 0.031558
+The value of R for ref is: 0.663340
+The value of NAME for ref is: 0.336300
+The value of R for use is: 0.696052
+The value of NMAE for use is: 0.303623
+The value of R for bath is: 0.852456
+The value of NMAE for bath is: 0.147386
+The value of R for oven is: 0.939201
+The value of NMAE for oven is: 0.060734
+The selected set of R is for set from house : 0.968408
+The selected set of NMAE is for set from house : 0.031558
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3192
+The overall value of R is: 0.958609
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.968258
+The value of NMAE for mic is: 0.031738
+The value of R for ref is: 0.853448
+The value of NAME for ref is: 0.146531
+The value of R for use is: 0.835065
+The value of NMAE for use is: 0.164911
+The value of R for bath is: 0.971426
+The value of NMAE for bath is: 0.028570
+The value of R for oven is: 0.991122
+The value of NMAE for oven is: 0.008876
+The selected set of R is for set from house : 0.991122
+The selected set of NMAE is for set from house : 0.008876
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 8047
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 4213
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 1415
+The overall value of R is: 0.970098
+The overall value of NMAE is: 0.029900
+The value of R for mic is: 0.987071
+The value of NMAE for mic is: 0.012928
+The value of R for ref is: 0.738358
+The value of NAME for ref is: 0.261626
+The value of R for use is: 0.781618
+The value of NMAE for use is: 0.218369
+The value of R for bath is: 0.985478
+The value of NMAE for bath is: 0.014521
+The value of R for oven is: 0.990196
+The value of NMAE for oven is: 0.009803
+The selected set of R is for set from house : 0.990196
+The selected set of NMAE is for set from house : 0.009803
+The selected set Input appliances are : oven1, microwave1, use
+for Hose ID 545
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3456
+The overall value of R is: 0.951009
+The overall value of NMAE is: 0.048977
+The value of R for mic is: 0.972307
+The value of NMAE for mic is: 0.027685
+The value of R for ref is: 0.702058
+The value of NAME for ref is: 0.297857
+The value of R for use is: 0.790619
+The value of NMAE for use is: 0.209322
+The value of R for bath is: 0.902361
+The value of NMAE for bath is: 0.097611
+The value of R for oven is: 0.985725
+The value of NMAE for oven is: 0.014271
+The selected set of R is for set from house : 0.985725
+The selected set of NMAE is for set from house : 0.014271
+The selected set Input appliances are : oven1, use, refrigerator1
+for Hose ID 2361
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 9773
+The overall value of R is: 0.903130
+The overall value of NMAE is: 0.096766
+The value of R for mic is: 0.968408
+The value of NMAE for mic is: 0.031558
+The value of R for ref is: 0.663340
+The value of NAME for ref is: 0.336300
+The value of R for use is: 0.696052
+The value of NMAE for use is: 0.303623
+The value of R for bath is: 0.852456
+The value of NMAE for bath is: 0.147386
+The value of R for oven is: 0.939201
+The value of NMAE for oven is: 0.060734
+The selected set of R is for set from house : 0.968408
+The selected set of NMAE is for set from house : 0.031558
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 3192
+The overall value of R is: 0.958609
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.968258
+The value of NMAE for mic is: 0.031738
+The value of R for ref is: 0.853448
+The value of NAME for ref is: 0.146531
+The value of R for use is: 0.835065
+The value of NMAE for use is: 0.164911
+The value of R for bath is: 0.971426
+The value of NMAE for bath is: 0.028570
+The value of R for oven is: 0.991122
+The value of NMAE for oven is: 0.008876
+The selected set of R is for set from house : 0.991122
+The selected set of NMAE is for set from house : 0.008876
+The selected set Input appliances are : oven1, bathroom1, microwave1
+for Hose ID 8047
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 4213
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+The selected set Input appliances are : microwave1, refrigerator1, use
+for Hose ID 1415
+The overall value of R is: 0.970098
+The overall value of NMAE is: 0.029900
+The value of R for mic is: 0.987071
+The value of NMAE for mic is: 0.012928
+The value of R for ref is: 0.738358
+The value of NAME for ref is: 0.261626
+The value of R for use is: 0.781618
+The value of NMAE for use is: 0.218369
+The value of R for bath is: 0.985478
+The value of NMAE for bath is: 0.014521
+The value of R for oven is: 0.990196
+The value of NMAE for oven is: 0.009803
+The selected set of R is for set from house : 0.990196
+The selected set of NMAE is for set from house : 0.009803
+The selected set Input appliances are : oven1, microwave1, use
+for Hose ID 545
+The overall value of R is: NaN
+The overall value of NMAE is: NaN
+The value of R for mic is: NaN
+The value of NMAE for mic is: NaN
+The value of R for ref is: NaN
+The value of NAME for ref is: NaN
+The value of R for use is: NaN
+The value of NMAE for use is: NaN
+The value of R for bath is: NaN
+The value of NMAE for bath is: NaN
+The value of R for oven is: NaN
+The value of NMAE for oven is: NaN
+The selected set of R is for set from house : NaN
+The selected set of NMAE is for set from house : NaN
+for Hose ID 5357
+The overall value of R is: 0.857065
+The overall value of NMAE is: 0.142906
+The value of R for mic is: 0.890637
+The value of NMAE for mic is: 0.109342
+The value of R for ref is: 0.712932
+The value of NAME for ref is: 0.287011
+The value of R for use is: 0.672995
+The value of NMAE for use is: 0.326940
+The value of R for bath is: 0.858007
+The value of NMAE for bath is: 0.141964
+The value of R for oven is: 0.977419
+The value of NMAE for oven is: 0.022576
+The selected set of R is for set from house : 0.977419
+The selected set of NMAE is for set from house : 0.022576
+The selected set Input appliances are : oven1, microwave1, bathroom1
+for Hose ID 2974
+The overall value of R is: 0.958599
+The overall value of NMAE is: 0.041385
+The value of R for mic is: 0.974817
+The value of NMAE for mic is: 0.025173
+The value of R for ref is: 0.757674
+The value of NAME for ref is: 0.242230
+The value of R for use is: 0.762242
+The value of NMAE for use is: 0.237663
+The value of R for bath is: 0.978014
+The value of NMAE for bath is: 0.021977
+The value of R for oven is: 0.987066
+The value of NMAE for oven is: 0.012929
+The selected set of R is for set from house : 0.987066
+The selected set of NMAE is for set from house : 0.012929
