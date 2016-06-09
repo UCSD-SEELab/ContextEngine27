@@ -20,8 +20,8 @@ from Tesla import Tesla
 from ContextEngineBase import Complexity
 
 ## For different tests, these values will vary.
-inputFilePath = "../python/Tesla/teslaInput.csv"
-outputFilePath = "../python/Tesla/teslaOutput.csv"
+inputFilePath = "accessorInput.csv"
+outputFilePath = "accessorOutput.csv"
 complexity = Complexity.firstOrder;
 numTrainingSamples = 5;
 numExecuteSamples = 5;
@@ -32,7 +32,7 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 
 ## Change the name of the algorithm to test it out.
-algorithmTest = Tesla(Complexity.firstOrder, 1, 0, [0, 0], {});
+algorithmTest = Tesla(Complexity.firstOrder, 1, 0, [0], {});
 teslaTimestamps = {};
 knnTimestamps = {};
 
@@ -41,11 +41,10 @@ for trainingSample in range(numTrainingSamples):
     outputRow = next(outputReader);
     if (len(inputRow) > 0):
         input1 = float(inputRow[0]);
-        input2 = float(inputRow[1]);
         output = float(outputRow[0]);
 
         firstTS = time.time();
-        algorithmTest.addSingleObservation([input1, input2], output);
+        algorithmTest.addSingleObservation([input1], output);
         secondTS = time.time();
         teslaTimestamps["load" + str(trainingSample)] = secondTS - firstTS;
 print(str(trainingSample))
@@ -60,11 +59,10 @@ for executeSample in range(numExecuteSamples):
     outputRow = next(outputReader);
     if (len(inputRow) > 0):
         input1 = float(inputRow[0]);
-        input2 = float(inputRow[1]);
         output = float(outputRow[0]);
 
         firstTS = time.time();
-        theor = algorithmTest.execute([input1, input2]);
+        theor = algorithmTest.execute([input1]);
         secondTS = time.time();
         teslaTimestamps["test" + str(executeSample)] = secondTS - firstTS;
         teslaTimestamps["delta" + str(executeSample)] = abs(output - theor);
