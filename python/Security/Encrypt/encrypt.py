@@ -24,7 +24,7 @@ def encrypt(arg1, arg2):
         st = os.stat(arg2)
         fileSize = st.st_size
         fileSize = sys.getsizeof(plainText)
-        iteration = fileSize/16 
+        iteration = int(fileSize/16) 
         bytesLeft = fileSize%16
 
         keyVal = keyFile.read(16)
