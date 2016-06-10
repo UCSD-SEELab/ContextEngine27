@@ -6,11 +6,13 @@ import time
 import numpy as np
 import math
 import cv2
+from math import sqrt, pi, exp
 from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
 from sklearn import cluster
 from sklearn.externals import joblib
 from scipy.cluster.vq import *
+from scipy import stats, spatial
 from sklearn.preprocessing import StandardScaler
 sys.path.insert(1, os.path.join(sys.path[0], '..'));
 from ContextEngineBase import ContextEngineBase
@@ -95,21 +97,47 @@ class VLR(ContextEngineBase):
         for image_path, descriptor in self.x_Obs[1:]:
             descriptors = np.vstack((descriptors, descriptor))
         print("preprocessing success")
-        return whiten(descriptors)
+        #return whiten(descriptors)
+        return descriptors
 
-    def softassign(self, descriptors):
-        im_features = np.zeros((1, self.k), "float32")
-        for i in range(len(descriptors)):
-            descriptor = descriptors[i]
-            s = 0
-            temp = np.zeros((1, self.k), "float32")
-            for j in range(self.k):
-                dist = np.linalg.norm(descriptor - self.voc[j])
-                s += dist
-                temp[0][j] = dist
-            for m in range(self.k):
-                im_features[0][m] += 1.0 - temp[0][m]/s
-        return im_features
+    #  Calculates the Euclidean distance of two arrays.
+    def __dist(self, u, v):
+        return spatial.distance.euclidean(u, v)
+
+    #  Gaussian kernel density estimation.
+    #  x: the distance
+    #  sigma: given sigma value
+    #  Returns: Estimation value of the give x and sigma
+    def __gaussian_kernel(self, x, sigma=200):
+        return (1 / (sqrt(2.*pi) * sigma)) * exp(-x ** 2 / (2.*sigma**2))
+
+    #  Quantize by assigning codes from a code book to descriptors of a target image.
+    #  soft: the flag for the type of quantization. If true, we will use soft 
+    #  quantization. The default is hard quantization.
+    def assignment(self, descriptors, soft=False):
+        adict = np.zeros((1, self.k), "float32")
+        for i in range(0, len(self.voc)):
+            adict[0][i] = 0
+                
+        if soft is False:
+            words, L2distance = vq(descriptors, self.voc)
+            for wd in words:
+                adict[0][wd] += 1
+
+        else:     
+            sum_k_ri = {}
+        
+            for i in range(0, len(self.voc)):
+                s = 0
+                for j in range(0, len(self.voc)):
+                    s += self.__gaussian_kernel(self.__dist(self.voc[i], self.voc[j]))
+                    sum_k_ri[i] = s
+            
+            for i in range(0, len(self.voc)):
+                for j in descriptors:
+                    adict[0][i] += self.__gaussian_kernel(self.__dist(j, self.voc[i])) / (sum_k_ri[i]) 
+                       
+        return adict
 
     #  Quantize feature descriptors against the vocabulary of words i.e. constructing
     #  a BoW for each image, perform Tf-Idf vectorization, and scale the words.
@@ -119,11 +147,8 @@ class VLR(ContextEngineBase):
         start_marker = 0
         for i in xrange(self.numObservations):
             end_marker = start_marker + len(self.x_Obs[i][1])
-            #words, L2distance = vq(descriptors[start_marker:end_marker], self.voc) # hard quantization!
-            im_features[i] = self.softassign(descriptors[start_marker:end_marker])
+            im_features[i] = self.assignment(descriptors[start_marker:end_marker], False)
             start_marker = end_marker
-            #for wd in words:
-            #    im_features[i][wd] += 1
         print("quantizing success")
         # Perform Tf-Idf vectorization
         nbr_occurences = np.sum( (im_features > 0) * 1, axis = 0)
@@ -139,10 +164,11 @@ class VLR(ContextEngineBase):
     def train(self):
         if (self.numObservations > 0):
             descriptors = self.preprocess();
-            #self.voc, variance = kmeans(descriptors, self.k) # codebook generation
-            k_means = cluster.KMeans(n_clusters=self.k, n_init=1)
-            k_means.fit(descriptors)
-            self.voc = k_means.cluster_centers_.squeeze()
+            #self.voc, variance = kmeans(descriptors, self.k, 1) # codebook generation
+            self.voc, label = kmeans2(descriptors, self.k)
+            #k_means = cluster.KMeans(n_clusters=self.k, n_init=2)
+            #k_means.fit(descriptors)
+            #self.voc = k_means.cluster_centers_.squeeze()
             if len(self.voc) != self.k:
                 print("generate codebook fail " + str(len(self.voc)))
                 sys.exit(1)
@@ -171,12 +197,8 @@ class VLR(ContextEngineBase):
             kpts = [cv2.KeyPoint(x, y, self.step_size) for y in range(0, im.shape[0], self.step_size)
                                    for x in range(0, im.shape[1], self.step_size)] # detect kpts
             (kpts, des) = self.fea_det.compute(im, kpts) # compute dense features
-            des = whiten(des) # whiten features
-            test_features = np.zeros((1, self.k), "float32") # bag of words
-            test_features = self.softassign(des)
-            #words, L2distance = vq(des, self.voc) # hard quantize
-            #for wd in words:
-            #    test_features[0][wd] += 1
+            #des = whiten(des) # whiten features
+            test_features = self.assignment(des, False)
             nbr_occurences = np.sum( (test_features > 0) * 1, axis = 0)
             idf = np.array(np.log((1.0*1+1) / (1.0*nbr_occurences + 1)), 'float32')
             test_features = self.stdSlr.transform(test_features)
