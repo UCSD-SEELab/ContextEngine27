@@ -4,7 +4,9 @@ import numpy as np
 import math
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
-from ContextEngineBase import ContextEngineBase
+from ContextEngineBase import *
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 ## Implementation of the DecisionTree algorithm:
 class DecisionTreeAB:
