@@ -1,7 +1,7 @@
 import sys, os
 import numpy as np
 import math
-sys.path.insert(1, os.path.join(sys.path[0], '..'));            
+sys.path.insert(1, os.path.join(sys.path[0], '..'));
 from ContextEngineBase import *
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neighbors import KNeighborsClassifier
