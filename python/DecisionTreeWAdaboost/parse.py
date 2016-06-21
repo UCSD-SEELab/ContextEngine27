@@ -3,8 +3,6 @@
 #parse by time
 from numpy import recfromcsv
 import matplotlib.pyplot as plt
-from knn import Knn
-from svr import SVR
 from dtAB import DecisionTreeAB
 import numpy as np
 

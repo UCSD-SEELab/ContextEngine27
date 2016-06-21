@@ -3,7 +3,9 @@
 import numpy as np
 import math
 from sklearn.svm import SVR
-from ContextEngineBase import ContextEngineBase
+from ContextEngineBase import *
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 ## Implementation of the SVR algorithm:
 class SVR:
