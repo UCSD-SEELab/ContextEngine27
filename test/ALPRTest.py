@@ -9,14 +9,12 @@ import Levenshtein
 
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'));
-sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python/ALPR'));
-#sys.path.insert(1, os.path.join(sys.path[0], '../python'));
+sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 
 ## Import your algorithms here.
 from Tesla import Tesla
-from Knn import Knn
 from ALPR import ALPR
 from ContextEngineBase import Complexity
 
@@ -33,7 +31,6 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 
 ## Change the name of the algorithm to test it out.
-#algorithmTest = Knn(Complexity.firstOrder, 2, 0, [0, 0], {});
 algorithmTest = ALPR(Complexity.firstOrder, 1, 0, [0], {});
 teslaTimestamps = {};
 knnTimestamps = {};

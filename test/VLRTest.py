@@ -8,14 +8,12 @@ import time
 
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'));
-sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python/VLR'));
-#sys.path.insert(1, os.path.join(sys.path[0], '../python'));
+sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 
 ## Import your algorithms here.
 from Tesla import Tesla
-from Knn import Knn
 from VLR import VLR
 from ContextEngineBase import Complexity
 
@@ -32,7 +30,6 @@ inputReader = csv.reader(inputFile);
 outputReader = csv.reader(outputFile);
 
 ## Change the name of the algorithm to test it out.
-#algorithmTest = Knn(Complexity.firstOrder, 2, 0, [0, 0], {});
 algorithmTest = VLR(Complexity.firstOrder, 1, 0, [0], {});
 teslaTimestamps = {};
 knnTimestamps = {};
@@ -55,7 +52,6 @@ algorithmTest.train();
 secondTS = time.time();
 vlrTimestamps["train"] = secondTS - firstTS;
 
-runningTotal = 0;
 for executeSample in range(numExecuteSamples):
     inputRow = next(inputReader);
     outputRow = next(outputReader);
@@ -68,9 +64,7 @@ for executeSample in range(numExecuteSamples):
         secondTS = time.time();
         vlrTimestamps["test" + str(executeSample)] = secondTS - firstTS;
         vlrTimestamps["delta" + str(executeSample)] = 1 if theor != output else 0;
-#        runningTotal += error;
-
-#avgActual = runningTotal/(1.0*numExecuteSamples);
+        print("Actual: " + output + " Predicted: " + theor)
 
 netLoadingTime = 0;
 for i in range(numTrainingSamples):

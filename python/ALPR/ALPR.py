@@ -7,7 +7,7 @@ import numpy as np
 import math
 from openalpr import Alpr
 import cv2
-
+sys.path.insert(1, os.path.join(sys.path[0], '..'));
 from ContextEngineBase import ContextEngineBase
 
 class ALPR(ContextEngineBase):
@@ -31,14 +31,13 @@ class ALPR(ContextEngineBase):
     #  inputObsVector is a path to the video file
     def execute(self, inputObsVector):
         if(len(inputObsVector) == self.numInputs):
-            #x_Test = np.vstack((self.x_Test,inputObsVector));
-            #x_Test = np.reshape(inputObsVector,(1,self.numInputs));
             y_Test = self.predict(inputObsVector);
             return y_Test;
         else:
             print("Wrong dimensions, fail to execute");
             return None;
 
+    #  Grabs frames and returns top n predictions per frame.
     def predict(self, x_Test):
         cap = cv2.VideoCapture(x_Test[0])
         if not cap.isOpened():
