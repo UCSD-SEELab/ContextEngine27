@@ -1,5 +1,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
+import sys,os
+sys.path.insert(1, os.path.join(sys.path[0], '..'));
 from ContextEngineBase import *    
 import numpy as np
 import csv
