@@ -166,7 +166,7 @@ class Tesla(ContextEngineBase):
     def addBatchObservations(self, newInputObsMatrix, newOutputVector):
         for newInputVector in newInputObsMatrix:
             outputValue = newOutputVector.pop();
-            self.addSingleObservation(newInputVector, newInputObsMatrix);
+            self.addSingleObservation(newInputVector, outputValue);
 
     #  Generate the normalized inputs based on function order
     def generateNormalizedInputs(self, inputObs):

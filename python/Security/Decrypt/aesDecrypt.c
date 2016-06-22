@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Added by: Neha Ahlawat
+ * This file accepts 16 bytes of encrypted data from Python wrapper
+ * as a bytearray and calls the decrypt fucntion in aesRPi.c file in 
+ * order to decrypt it. It then returns this decrypted data as a bytearray
+ *******************************************************************************
+ */
+
 #include <python2.7/Python.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,69 +26,97 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+/**************************************************************************************************
+* The C function returns 16 bytes of decrypted data, which is written to a file/buffer as required
+***************************************************************************************************
+*/
+
 static PyObject* aesDecrypt ( PyObject* self, PyObject* args) {
 	static int run = 0;
-	//FILE *fp;
-	//fp = fopen("metasense_stratfordcar_5april2016.dat", "rb");
-	//FILE *kp;
-	//kp = fopen("AESKEY", "rb");
-
-	//setbuf(stdout,NULL);
-	//if(kp == NULL) { printf("KEY read Error\n"); exit(1); }
 	
+	Py_ssize_t count;
+
 	uint8_t *fileRead = (uint8_t*) malloc(BUFSIZE);
 	memset(fileRead,0,BUFSIZE);
-	Py_ssize_t count;
-	Py_ssize_t count1;
+	uint8_t *decryptOut = (uint8_t*) malloc(BUFSIZE);
+	uint8x16_t *in = (uint8x16_t*) malloc(16);
+	uint8x16_t *out = (uint8x16_t*) malloc(16);
+	uint8x16_t *key_v = (uint8x16_t*) malloc(16);
+	uint8x16_t *iv_v = (uint8x16_t*) malloc(16);
+	
+	uint8_t RoundKey[176];
+	static uint8x16_t RoundKey_v[11];
 	uint8_t *key = (uint8_t*) malloc(KEYLEN);
-	memset(key,0,KEYLEN);
 
 	PyArg_ParseTuple(args, "s#|s#", &fileRead, &count, &key, &count);
-	uint8_t *decryptOut = (uint8_t*) malloc(BUFSIZE);
-	memset(decryptOut,0,BUFSIZE);
-		
-	// The array that stores the round keys.
-	
-	//while(!feof(kp)){
-	//	fread(key,1,KEYLEN,kp);
-	//}
 
-	if (run == 0) {
-		uint8_t initial = 0x00;
-		iv[0] = initial;
-		int i =1;
-		for (i = 1; i<15; i++) {
-			iv[i] = iv[i-1]+1;
+	if(key == NULL)
+	{	
+		return Py_BuildValue("s#", "Key Read Error", count);
+	}
+	
+
+	*iv_v = vld1q_u8(iv);
+
+	Key = key;
+	KeyExpansion(RoundKey);
+
+	int i;
+	for(i=0; i<11; i++) {
+		RoundKey_v[i] = vld1q_u8(RoundKey+(i*16));
+	}
+
+	if(fileRead != 0){
+
+		if (run == 0) {
+			uint8_t initial = 0x00;
+			iv[0] = initial;
+			int i =1;
+			for (i = 1; i<15; i++) {
+				iv[i] = iv[i-1]+1;
+			}
+			*in = vld1q_u8(fileRead);
+			AES128_CFB_decrypt(out, *in, run, RoundKey_v, *iv_v);
+			vst1q_u8(decryptOut, *out);
+			run++;
 		}
-		AES128_CBC_decrypt_buffer(decryptOut, fileRead, BUFSIZE, key, iv);
 		
-		run++;
-		//printf ("\n run = %d", run);
-	}
-	
-	else {
-		AES128_CBC_decrypt_buffer(decryptOut, fileRead, BUFSIZE, key, 0);
+		else {
+			*in = vld1q_u8(fileRead);
+			AES128_CFB_decrypt(out, *in, run, RoundKey_v, *iv_v);
+			vst1q_u8(decryptOut, *out);
+			run++;
+		}
+		
 	}
 
-	//free(fileRead);	
-	//fclose(fpout);
-	//fclose(fp);
-	//fclose(kp);
-	
+
 	return Py_BuildValue("s#", decryptOut, count);
 }
  
- 
 static PyMethodDef aesDecrypt_methods[] = {
-      {"aesDecrypt", aesDecrypt, METH_VARARGS}
+      {"aesDecrypt", aesDecrypt, METH_VARARGS}, {NULL, NULL, 0}
 };
 
-/*
- *   Python calls this to let us initialize our module
- */
-void initaesDecrypt()
+static struct PyModuleDef aesDecryptFunc =
 {
-      (void) Py_InitModule("aesDecrypt", aesDecrypt_methods);
+	
+    PyModuleDef_HEAD_INIT,
+    "aesDecrypt", /* name of module */
+    "aes Module", /* module documentation, may be NULL */
+    -1,          /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+    aesDecrypt_methods
+};
+
+
+/************************************************************
+*   Python calls this fucntion to initialize decrypt module
+************************************************************
+*/
+
+PyMODINIT_FUNC PyInit_aesDecrypt(void)
+{
+      return PyModule_Create(&aesDecryptFunc);
 }
 
 

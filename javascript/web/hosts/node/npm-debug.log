@@ -1,0 +1,174 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/4.2.1/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   '/Users/aryamansharda/Downloads/node-dsp-master' ]
+2 info using npm@3.3.9
+3 info using node@v4.2.1
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData /Users/aryamansharda/Downloads/node-dsp-master
+8 silly fetchDirectoryPackageData /Users/aryamansharda/Downloads/node-dsp-master
+9 silly install normalizeTree
+10 silly loadCurrentTree Finishing
+11 silly loadIdealTree Starting
+12 silly install loadIdealTree
+13 silly cloneCurrentTree Starting
+14 silly install cloneCurrentTreeToIdealTree
+15 silly cloneCurrentTree Finishing
+16 silly loadShrinkwrap Starting
+17 silly install loadShrinkwrap
+18 silly loadShrinkwrap Finishing
+19 silly loadAllDepsIntoIdealTree Starting
+20 silly install loadAllDepsIntoIdealTree
+21 warn engine dsp@0.0.3: wanted: {"node":"0.10.x"} (current: {"node":"4.2.1","npm":"3.3.9"})
+22 silly resolveWithNewModule dsp@0.0.3 checking installable status
+23 warn engine dsp@0.0.3: wanted: {"node":"0.10.x"} (current: {"node":"4.2.1","npm":"3.3.9"})
+24 silly cache add args [ '/Users/aryamansharda/Downloads/node-dsp-master', null ]
+25 verbose cache add spec /Users/aryamansharda/Downloads/node-dsp-master
+26 silly cache add parsed spec Result {
+26 silly cache add   raw: '/Users/aryamansharda/Downloads/node-dsp-master',
+26 silly cache add   scope: null,
+26 silly cache add   name: null,
+26 silly cache add   rawSpec: '/Users/aryamansharda/Downloads/node-dsp-master',
+26 silly cache add   spec: '/Users/aryamansharda/Downloads/node-dsp-master',
+26 silly cache add   type: 'directory' }
+27 verbose addLocalDirectory /Users/aryamansharda/.npm/dsp/0.0.3/package.tgz not in flight; packing
+28 info lifecycle dsp@0.0.3~prepublish: dsp@0.0.3
+29 silly lifecycle dsp@0.0.3~prepublish: no script for prepublish, continuing
+30 verbose tar pack [ '/Users/aryamansharda/.npm/dsp/0.0.3/package.tgz',
+30 verbose tar pack   '/Users/aryamansharda/Downloads/node-dsp-master' ]
+31 verbose tarball /Users/aryamansharda/.npm/dsp/0.0.3/package.tgz
+32 verbose folder /Users/aryamansharda/Downloads/node-dsp-master
+33 verbose addLocalTarball adding from inside cache /Users/aryamansharda/.npm/dsp/0.0.3/package.tgz
+34 silly cache afterAdd dsp@0.0.3
+35 verbose afterAdd /Users/aryamansharda/.npm/dsp/0.0.3/package/package.json not in flight; writing
+36 verbose afterAdd /Users/aryamansharda/.npm/dsp/0.0.3/package/package.json written
+37 silly loadAllDepsIntoIdealTree Finishing
+38 silly idealTree:prePrune lib
+38 silly idealTree:prePrune └── dsp@0.0.3
+39 silly loadIdealTree Finishing
+40 silly currentTree lib
+41 silly idealTree lib
+41 silly idealTree └── dsp@0.0.3
+42 silly generateActionsToTake Starting
+43 silly install generateActionsToTake
+44 silly generateActionsToTake Finishing
+45 silly diffTrees action count 1
+46 silly diffTrees add dsp@0.0.3
+47 silly decomposeActions action count 8
+48 silly decomposeActions fetch dsp@0.0.3
+49 silly decomposeActions extract dsp@0.0.3
+50 silly decomposeActions preinstall dsp@0.0.3
+51 silly decomposeActions build dsp@0.0.3
+52 silly decomposeActions install dsp@0.0.3
+53 silly decomposeActions postinstall dsp@0.0.3
+54 silly decomposeActions test dsp@0.0.3
+55 silly decomposeActions finalize dsp@0.0.3
+56 silly executeActions Starting
+57 silly install executeActions
+58 silly doSerial global-install 0
+59 silly doParallel fetch 1
+60 verbose lock using /Users/aryamansharda/.npm/_locks/staging-3a08f0df5026584d.lock for /usr/local/lib/node_modules/.staging
+61 silly doParallel extract 1
+62 silly extract dsp@0.0.3
+63 verbose unbuild lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+64 silly gentlyRm /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36 is being purged from base /usr/local
+65 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+66 verbose tar unpack /Users/aryamansharda/.npm/dsp/0.0.3/package.tgz
+67 verbose tar unpacking to /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+68 silly gentlyRm /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36 is being purged
+69 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+70 silly gunzTarPerm modes [ '755', '644' ]
+71 silly gunzTarPerm extractEntry package.json
+72 silly gunzTarPerm extractEntry .npmignore
+73 silly gunzTarPerm extractEntry README.md
+74 silly gunzTarPerm extractEntry .travis.yml
+75 silly gunzTarPerm extractEntry binding.gyp
+76 silly gunzTarPerm extractEntry lib/test-tools.js
+77 silly gunzTarPerm extractEntry src/filter.cpp
+78 silly gunzTarPerm extractEntry src/common.h
+79 silly gunzTarPerm extractEntry src/dsp.h
+80 silly gunzTarPerm extractEntry src/fft.cpp
+81 silly gunzTarPerm extractEntry src/fft.h
+82 silly gunzTarPerm extractEntry src/dsp.cpp
+83 silly gunzTarPerm extractEntry src/filter.h
+84 silly gunzTarPerm extractEntry src/float32array.cpp
+85 silly gunzTarPerm extractEntry src/float32array.h
+86 silly gunzTarPerm extractEntry src/kiss_fft/_kiss_fft_guts.h
+87 silly gunzTarPerm extractEntry src/kiss_fft/kiss_fft.c
+88 silly gunzTarPerm extractEntry src/kiss_fft/kiss_fft.h
+89 silly gunzTarPerm extractEntry src/kiss_fft/kiss_fftr.c
+90 silly gunzTarPerm extractEntry src/kiss_fft/kiss_fftr.h
+91 silly gunzTarPerm extractEntry src/kiss_fft/kissfft.hh
+92 silly gunzTarPerm extractEntry src/module.cpp
+93 silly gunzTarPerm extractEntry test/dsp-algebra.coffee
+94 silly gunzTarPerm extractEntry test/dsp-math.coffee
+95 silly gunzTarPerm extractEntry test/dsp-vector.coffee
+96 silly gunzTarPerm extractEntry test/filter.coffee
+97 silly gunzTarPerm extractEntry test/issue-1.coffee
+98 silly gunzTarPerm extractEntry test/issue-2.coffee
+99 silly doParallel preinstall 1
+100 silly preinstall dsp@0.0.3 /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+101 info lifecycle dsp@0.0.3~preinstall: dsp@0.0.3
+102 silly lifecycle dsp@0.0.3~preinstall: no script for preinstall, continuing
+103 silly doReverseSerial remove 0
+104 silly doSerial move 0
+105 silly doSerial finalize 1
+106 silly finalize /usr/local/lib/node_modules/dsp
+107 silly doSerial build 1
+108 silly build dsp@0.0.3
+109 info linkStuff dsp@0.0.3
+110 silly linkStuff dsp@0.0.3 has /usr/local/lib/node_modules as its parent node_modules
+111 silly linkStuff dsp@0.0.3 is part of a global install
+112 silly linkStuff dsp@0.0.3 is installed into a global node_modules
+113 silly linkStuff dsp@0.0.3 is installed into the top-level global node_modules
+114 verbose linkBins dsp@0.0.3
+115 verbose linkMans dsp@0.0.3
+116 silly doSerial global-link 0
+117 silly doParallel update-linked 0
+118 silly doSerial install 1
+119 silly install dsp@0.0.3 /usr/local/lib/node_modules/.staging/dsp-ccfefcf548f79269378c07d31ae8ec36
+120 info lifecycle dsp@0.0.3~install: dsp@0.0.3
+121 verbose lifecycle dsp@0.0.3~install: unsafe-perm in lifecycle true
+122 verbose lifecycle dsp@0.0.3~install: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/dsp/node_modules/.bin:/usr/local/lib/node_modules/.bin:/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/Users/aryamansharda/.rbenv/shims:/Users/aryamansharda/.rbenv/bin:/Users/aryamansharda/.rvm/gems/ruby-2.1.2/bin:/Users/aryamansharda/.rvm/gems/ruby-2.1.2@global/bin:/Users/aryamansharda/.rvm/rubies/ruby-2.1.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/Cellar/ruby/2.0.0-p247/bin/:/Users/aryamansharda/.rvm/bin:/usr/local/mysql/bin
+123 verbose lifecycle dsp@0.0.3~install: CWD: /usr/local/lib/node_modules/dsp
+124 silly lifecycle dsp@0.0.3~install: Args: [ '-c', 'node-gyp rebuild' ]
+125 silly lifecycle dsp@0.0.3~install: Returned: code: 1  signal: null
+126 info lifecycle dsp@0.0.3~install: Failed to exec install script
+127 verbose unlock done using /Users/aryamansharda/.npm/_locks/staging-3a08f0df5026584d.lock for /usr/local/lib/node_modules/.staging
+128 silly rollbackFailedOptional Starting
+129 silly rollbackFailedOptional Finishing
+130 silly runTopLevelLifecycles Starting
+131 silly runTopLevelLifecycles Finishing
+132 silly install printInstalled
+133 verbose stack Error: dsp@0.0.3 install: `node-gyp rebuild`
+133 verbose stack Exit status 1
+133 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+133 verbose stack     at emitTwo (events.js:87:13)
+133 verbose stack     at EventEmitter.emit (events.js:172:7)
+133 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+133 verbose stack     at emitTwo (events.js:87:13)
+133 verbose stack     at ChildProcess.emit (events.js:172:7)
+133 verbose stack     at maybeClose (internal/child_process.js:818:16)
+133 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+134 verbose pkgid dsp@0.0.3
+135 verbose cwd /Users/aryamansharda/Documents/accessors/web/hosts/node
+136 error Darwin 15.0.0
+137 error argv "/usr/local/Cellar/node/4.2.1/bin/node" "/usr/local/bin/npm" "install" "-g" "/Users/aryamansharda/Downloads/node-dsp-master"
+138 error node v4.2.1
+139 error npm  v3.3.9
+140 error code ELIFECYCLE
+141 error dsp@0.0.3 install: `node-gyp rebuild`
+141 error Exit status 1
+142 error Failed at the dsp@0.0.3 install script 'node-gyp rebuild'.
+142 error This is most likely a problem with the dsp package,
+142 error not with npm itself.
+142 error Tell the author that this fails on your system:
+142 error     node-gyp rebuild
+142 error You can get their info via:
+142 error     npm owner ls dsp
+142 error There is likely additional logging output above.
+143 verbose exit [ 1, true ]

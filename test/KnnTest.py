@@ -8,10 +8,12 @@ import numpy as np
 import sys, os
 import pickle
 import time
+import string
 from numpy import recfromcsv
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'));
+sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 ## Import your algorithms here.
 from Tesla import Tesla
@@ -33,7 +35,7 @@ outputReader = csv.reader(outputFile);
 
 csv = recfromcsv(inputFilePath, delimiter=',')
 ## Change the name of the algorithm to test it out.
-algorithmTest = Knn(complexity, 7, 0, [0,0,0,0,0,0,0], {});
+algorithmTest = Knn(Complexity.secondOrder, 7, 0, [0,0,0,0,0,0,0], {});
 teslaTimestamps = {};
 knnTimestamps = {};
 
@@ -48,9 +50,10 @@ day_predict_end = 0
 for i in range(numRow*day_train_start,numRow*(day_train_end+1)):
 	row = csv[i]
 	date=row[0]
+	date=date.decode()
 	dishwasher=csv[i+1][3]
-	date=date.replace("/"," ")
-	date=date.replace(":"," ")
+	date=date.replace("/" , " ")
+	date=date.replace(":" , " ")
 	t=time.strptime(date, "%m %d %Y %H %M")
 	ti = (t[3]*3600+t[4]*60+t[5])/(24*3600.0)
 	x_obs = [ti, row[2], row[4], row[5], row[6], row[7], row[8]]
@@ -70,10 +73,11 @@ runningTotal = 0;
 for i in range(numRow*day_predict_start,numRow*(day_predict_end+1)):
 	row = csv[i]
 	date=row[0]
+	date=date.decode()
 	date_predict = csv[i+1][0]
 	output=round(csv[i+1][3],4)
-	date=date.replace("/"," ")
-	date=date.replace(":"," ")
+	date=date.replace("/" , " ")
+	date=date.replace(":" , " ")
 	t=time.strptime(date, "%m %d %Y %H %M")
 	ti = (t[3]*3600+t[4]*60+t[5])/(24*3600.0)
 	x_predict=[ti, row[2], row[4], row[5], row[6], row[7], row[8]];

@@ -1,3 +1,4 @@
-gcc -shared -mfloat-abi=hard -mfpu=neon -oFast -ftree-vectorize -fPIC -I/home/usr/include/python2.7 aesDecrypt.c aesRPi.h aesRPi.c -lpython2.7 -o aesDecrypt.pyd 
+# Added by Neha Ahlawat
+
+gcc -shared -mfloat-abi=hard -mfpu=neon -oFast -ftree-vectorize -fPIC -I/home/usr/include/python3.4m aesDecrypt.c aesRPi.h aesRPi.c -o aesDecrypt.pyd 
 mv aesDecrypt.pyd aesDecrypt.so
-alias decrypt="python decrypt.py"

@@ -1,0 +1,127 @@
+Home 1 : 5357 (mic, ref, oven)
+The overall value of R is: 0.004146
+The value of R for mic is: 0.003140
+The value of R for ref is: 0.000674
+The value of R for use is: 0.000376
+The value of R for bath is: 0.000440
+The value of R for oven is: 0.000044
+The selected set of R chosen from the set of house 2: 0.003422
+The selected set of R is for set from house 3: 0.003422
+The selected set of R is for set from house 4: 0.003422
+The selected set of R is for set from house 5: 0.003653
+The selected set of R is for set from house 6: 0.003422
+The selected set of R is for set from house 7: 0.003422
+The selected set of R is for set from house 8 : 0.004057
+The selected set of R is for set from house 9: 0.003653
+The selected set of R is for set from house 10: 0.003422
+
+
+Home 2: 2974 (oven, use , mic)
+The overall value of R is: 0.027695
+The value of R for mic is: 0.009520
+The value of R for ref is: 0.001175
+The value of R for use is: 0.001738
+The value of R for bath is: 0.000466
+The value of R for oven is: 0.020679
+The selected set of R is for set from house 1: 0.027201
+The selected set of R is for set from house 2: 0.026590
+The selected set of R is for set from house 3: 0.026590
+The selected set of R is for set from house 4: 0.026590
+The selected set of R is for set from house 5: 0.026914
+The selected set of R is for set from house 6: 0.026590
+The selected set of R is for set from house 7: 0.026590
+The selected set of R is for set from house 8: 0.010959
+The selected set of R is for set from house 9: 0.026590
+The selected set of R is for set from house 10: 0.026590
+
+Home 3: 3849 (mic, oven, use)
+The overall value of R is: 0.051802
+The value of R for mic is: 0.024414
+The value of R for ref is: 0.000947
+The value of R for use is: 0.004441
+The value of R for bath is: 0.000002
+The value of R for oven is: 0.030793
+The selected set of R is for set from house 8: 0.025196
+The selected set of R is for set from house : 0.051284 (mic, oven, use)
+
+Home 4: 8046 (mic, oven, use)
+The overall value of R is: 0.177314
+The value of R for mic is: 0.090051
+The value of R for ref is: 0.001658
+The value of R for use is: 0.00571
+The value of R for bath is: 0.001545
+The value of R for oven is: 0.107455
+The selected set of R is for set from house 8: 0.090478
+The selected set of R is for set from house : 0.177138 (mic, oven, use)
+
+home 6 (ID = 5): 9776 (mic, oven, bath)
+The overall value of R is: 0.016481
+The value of R for mic is: 0.007952
+The value of R for ref is: 0.000293
+The value of R for use is: 0.000454
+The value of R for bath is: 0.000489
+The value of R for oven is: 0.008693
+The selected set of R is for set from house 8: 0.008494
+The selected set of R is for set from house : 0.016090 (mic, oven, use)
+
+Home 7 (ID = 6): 6990 (mic, oven, use)
+The overall value of R is: 0.050285
+The value of R for mic is: 0.005132
+The value of R for ref is: 0.001498
+The value of R for use is: 0.008557
+The value of R for bath is: 0.000018
+The value of R for oven is: 0.046844
+The selected set of R is for set from house 8: 0.006369
+The selected set of R is for set from house : 0.049948 (mic, oven, use)
+
+Home 8: 2361
+NaN
+
+Home 9 (ID = 7): 9773 (mic, oven, use)
+The overall value of R is: 0.030612
+The value of R for mic is: 0.013458
+The value of R for ref is: 0.000808
+The value of R for use is: 0.004376
+The value of R for bath is: 0.006276
+The value of R for oven is: 0.012173
+The selected set of R is for set from house 8: 0.019775
+The selected set of R is for set from house : 0.025270 (mic, oven, use)
+ 
+Home 10 (ID = 8): 3192 (mic, ref, bath)
+The overall value of R is: 0.000925
+The value of R for mic is: 0.000192
+The value of R for ref is: 0.000111
+The value of R for use is: 0.000110
+The value of R for bath is: 0.000561
+The value of R for oven is: 0.000004
+The selected set of R is for set from house 8 : 0.000856
+The selected set of R is for set from house : 0.000276 (mic, oven, use)
+
+Home 11: NaN
+Home 12: NaN
+
+Home 13 (ID = 9): 1415 (bath, oven, mic)
+The overall value of R is: 0.015815
+The value of R for mic is: 0.000438
+The value of R for ref is: 0.000075
+The value of R for use is: 0.000250
+The value of R for bath is: 0.012339
+The value of R for oven is: 0.003072
+The selected set of R is for set from house 8: 0.012818
+The selected set of R is for set from house : 0.003467 (mic, oven, use)
+
+Home 14: NaN
+Home 15 (ID = 10): 3456 (mic, oven, use)
+The overall value of R is: 0.022388
+The value of R for mic is: 0.004399
+The value of R for ref is: 0.000122
+The value of R for use is: 0.001169
+The value of R for bath is: 0.000383
+The value of R for oven is: 0.018832
+The selected set of R is for set from house 8: 0.004814
+The selected set of R is for set from house : 0.022015  (mic, oven, use)
+
+
+
+
+
