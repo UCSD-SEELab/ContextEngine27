@@ -1,23 +1,27 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
+import sys,os
+sys.path.insert(1, os.path.join(sys.path[0], '..'));
+from ContextEngineBase import *    
 import numpy as np
 import csv
 
-class KNNClassify :
+class KNNClassify(ContextEngineBase) :
     complexity = 0;
     numInputs = 0;
-    discreteOutput = 0;
-    discreteInputs = [];
+    #discreteOutput = 0;
+    #discreteInputs = [];
     numObservations = 0;
     x_Obs = np.empty([0, 0]);
     y_Obs = np.empty([0]);
     y_Test = np.empty([0]);
     neigh = KNeighborsClassifier(n_neighbors=11, weights='distance')
-    def __init__(self, complexity, numInputs, discreteOutputs, discreteInputs):
-        self.complexity = complexity;
-        self.numInputs = numInputs;
-        self.discreteOutputs = discreteOutputs;
-        self.discreteInputs = discreteInputs;
+    def __init__(self, complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict):
+        ContextEngineBase.__init__(self,complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict)
+        #self.complexity = complexity;
+        #self.numInputs = numInputs;
+        #self.discreteOutputs = discreteOutputs;
+        #self.discreteInputs = discreteInputs;
         self.x_Obs = np.empty([0,numInputs]);
         self.x_Test = np.empty([0,numInputs]);
     def addSingleObservation(self, newInputObs, newOutputObs):
