@@ -32,12 +32,9 @@ inputReader = csv.reader(inputFile)
 outputReader = csv.reader(outputFile)
 csv = recfromcsv(inputFilePath, delimiter=',')
 ## Change the name of the algorithm to test it out.
-algorithmTest = SVR(complexity, 1, 0, [0], {})
+algorithmTest = SVR(complexity, 1, 0, [0], {});
 teslaTimestamps = {}
 svrTimestamps = {}
-
-#print(algorithmTest.complexity);
-#print(algorithmTest.functionOrder);
 
 totRow = 35040
 numRow = 96
@@ -129,6 +126,6 @@ netLoadingTime = 0;
 for i in range(numTrainingSamples):
     netLoadingTime += svrTimestamps["load" + str(i)]
 
-print("Loading time (tot): " + str(netLoadingTime) + " seconds")
-print("Loading time (avg): " + str(netLoadingTime/(1.0*numTrainingSamples)) + " seconds")
+print("Time (tot): " + str(netLoadingTime) + " seconds")
+print("Time (avg): " + str(netLoadingTime/(1.0*numTrainingSamples)) + " seconds")
 print("MAE: " + str(runningMAE))
