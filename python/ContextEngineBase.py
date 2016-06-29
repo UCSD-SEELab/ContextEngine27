@@ -1,4 +1,4 @@
-from enum import Enum
+from aenum import Enum
 
 import math
 import numpy as np
@@ -23,7 +23,7 @@ class Complexity(Enum):
 
 ## Implementation of the context engine base class: the class inherited by other
 ## machine learning algorithms.
-class ContextEngineBase:
+class ContextEngineBase(object):
 
     ## Member variables
     #  Function order - limit the highest order of the function
