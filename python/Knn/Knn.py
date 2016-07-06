@@ -40,7 +40,7 @@ class Knn(ContextEngineBase):
     #  row array of size numInputs. newOutputObs must be a single value.
 	def addSingleObservation(self, newInputObs, newOutputObs): 
 		if (len(newInputObs) == self.numInputs and type(newOutputObs) not in (tuple, list)):
-			print("All good!");
+			# print("All good!");
 			self.x_Obs = np.vstack((self.x_Obs,newInputObs));
 			#self.y_Obs = np.append(self.y_Obs, newOutputObs);
 			#self.x_Obs = np.append(self.x_Obs, newInputObs);
@@ -57,7 +57,7 @@ class Knn(ContextEngineBase):
 
 		if(len(newInputObsMatrix.shape) == 2 and newInputObsMatrix.shape[1] == self.numInputs
 			and newOutputVector.shape[0] == newInputObsMatrix.shape[0]):
-			print("All good!");
+			# print("All good!");
 			newOutputVector = newOutputVector.ravel();
 			i = 0;
 			for newInputVector in newInputObsMatrix:
@@ -73,7 +73,7 @@ class Knn(ContextEngineBase):
     #  enough observations.
 	def train(self):
 		if (self.numObservations > 0):
-			print("Training started");
+			# print("Training started");
 			self.knnRegressor.fit(self.x_Obs, self.y_Obs);
 			return True;
 		else:
@@ -84,7 +84,7 @@ class Knn(ContextEngineBase):
     #	inputObsVector is a row vector of doubles
 	def execute(self, inputObsVector):
 		if(len(inputObsVector) == self.numInputs):
-			print("Begin execute");
+			# print("Begin execute");
     		#x_Test = np.vstack((self.x_Test,inputObsVector));
 			x_Test = np.reshape(inputObsVector,(1,self.numInputs));
 			self.y_Test = self.knnRegressor.predict(x_Test);
