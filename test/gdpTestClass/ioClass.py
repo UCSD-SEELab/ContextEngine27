@@ -1,5 +1,24 @@
 import gdp
+import json
 # Input/output class. Identifies the gcl_name and parameter_name for each input or output.
+
+def collectTrace(gclHandle, param, start, stop):
+    # this is the actual subscribe call
+    gclHandle.multiread(start, stop-start+1)
+
+    # timeout
+    t = {'tv_sec':0, 'tv_nsec':500*(10**6), 'tv_accuracy':0.0}
+    data = []
+    while True:
+        # This could return a None, after the specified timeout
+        event = gdp.GDP_GCL.get_next_event(t)
+        if event is None or event["type"] == gdp.GDP_EVENT_EOS:
+            break
+        datum = event["datum"]
+        handle = event["gcl_handle"]
+        data.append(float(json.loads(datum['data'])[param]))
+    return data
+
 class ioClass(object):
     def __init__(self, nameStr = "", paramName = "", lagVal = 0):
         if nameStr == "":
@@ -17,3 +36,9 @@ class ioClass(object):
 
     def printTester(self):
         print self.gcl, self.param, self.lag
+    def readLog(self, start, stop): 
+        param = self.param
+        handle = self.gclHandle            
+        lag = self.lag
+        trace = collectTrace(handle, param, start - lag, stop - lag)
+        return trace

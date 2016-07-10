@@ -1,5 +1,4 @@
 import gdp
-import json
 from ioClass import ioClass
 import numpy as np
 ## This class creates a tester instance for supervised learning models.
@@ -15,22 +14,6 @@ def checkDictKeys(d):
         raise ValueError ('I/O dictionary does not contain required'\
                           ' keys: gclName, paramName, lag')
 
-def collectTrace(gclHandle, param, start, stop):
-    # this is the actual subscribe call
-    gclHandle.multiread(start, stop-start+1)
-
-    # timeout
-    t = {'tv_sec':0, 'tv_nsec':500*(10**6), 'tv_accuracy':0.0}
-    data = []
-    while True:
-        # This could return a None, after the specified timeout
-        event = gdp.GDP_GCL.get_next_event(t)
-        if event is None or event["type"] == gdp.GDP_EVENT_EOS:
-            break
-        datum = event["datum"]
-        handle = event["gcl_handle"]
-        data.append(float(json.loads(datum['data'])[param]))
-    return data
 
 
 class gdpSupervisedTester (object):
@@ -74,16 +57,11 @@ class gdpSupervisedTester (object):
     def collectData(self, start, stop):
         inData = []
         for inObj in self.inObjs:
-            param = inObj.param
-            handle = inObj.gclHandle            
-            lag = inObj.lag
-            trace = collectTrace(handle, param, start - lag, stop - lag)
+            trace = inObj.readLog(start, stop)
             inData.append(trace)
     
-        param = self.outObj.param
-        handle = self.outObj.gclHandle            
-        lag = self.outObj.lag
-        outData = collectTrace(handle, param, start - lag, stop - lag)
+        outData = self.outObj.readLog(start, stop)
+        # Change this line to accomodate different data types
         return np.array(inData).T, np.array(outData)
         
 
