@@ -95,28 +95,17 @@ static PyObject* aesDecrypt ( PyObject* self, PyObject* args) {
 }
  
 static PyMethodDef aesDecrypt_methods[] = {
-      {"aesDecrypt", aesDecrypt, METH_VARARGS}, {NULL, NULL, 0}
+      {"aesDecrypt", aesDecrypt, METH_VARARGS}
 };
-
-static struct PyModuleDef aesDecryptFunc =
-{
-	
-    PyModuleDef_HEAD_INIT,
-    "aesDecrypt", /* name of module */
-    "aes Module", /* module documentation, may be NULL */
-    -1,          /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
-    aesDecrypt_methods
-};
-
 
 /************************************************************
 *   Python calls this fucntion to initialize decrypt module
 ************************************************************
 */
 
-PyMODINIT_FUNC PyInit_aesDecrypt(void)
+void initaesDecrypt()
 {
-      return PyModule_Create(&aesDecryptFunc);
+      (void) Py_InitModule("aesDecrypt", aesDecrypt_methods);
 }
 
 

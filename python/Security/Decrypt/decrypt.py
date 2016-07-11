@@ -16,27 +16,28 @@ def decrypt(arg1, arg2):
     returnFile = arg2+"DecryptOut.csv"
     keyFile = open(arg1+".dec", "rb")
     decryptedFile = open( returnFile, "wb")
+    
 
     try:
         encryptedText = bytearray(16)
-        encryptedText = encryptedFile.read(16)
-        key = keyFile.read(16)
-        while encryptedText != '':
-            if key == '':
+	encryptedText = encryptedFile.read(16)
+	key = keyFile.read(16)
+	while encryptedText != '':
+	    if key == '':
                 print ("Key Read Error")
-            
-            else:
+
+	    else:
                 decryptedText = bytearray(16)
-                decryptedText = aesDecrypt(encryptedText, key)
-                decryptedFile.write(decryptedText)
-                encryptedText = bytearray(16)
-                encryptedText = encryptedFile.read(16)
+		decryptedText = aesDecrypt(encryptedText, key)
+    		decryptedFile.write(decryptedText)
+    		encryptedText = bytearray(16)
+		encryptedText = encryptedFile.read(16)
 	
     finally:
 
-        keyFile.close()
-        encryptedFile.close()
-        decryptedFile.close()
+	keyFile.close()
+	encryptedFile.close()
+	decryptedFile.close()
     return returnFile;
 
 # Before decrypting the data, this fucntion decrypts the 
