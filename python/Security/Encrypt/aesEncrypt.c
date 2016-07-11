@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 #include <arm_neon.h>
-#include <python3.4m/Python.h>
+#include <python2.7/Python.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -98,17 +98,7 @@ static PyObject* aesEncrypt ( PyObject* self, PyObject* args) {
 }
  
 static PyMethodDef aesEncrypt_methods[] = {
-      {"aesEncrypt", aesEncrypt, METH_VARARGS}, {NULL, NULL, 0}
-};
-
-static struct PyModuleDef aesEncryptFunc =
-{
-	
-    PyModuleDef_HEAD_INIT,
-    "aesEncrypt", /* name of module */
-    "aes Module", /* module documentation, may be NULL */
-    -1,          /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
-    aesEncrypt_methods
+      {"aesEncrypt", aesEncrypt, METH_VARARGS}
 };
 
 /************************************************************
@@ -116,9 +106,9 @@ static struct PyModuleDef aesEncryptFunc =
 ************************************************************
 */
 
-PyMODINIT_FUNC PyInit_aesEncrypt(void)
+void initaesEncrypt()
 {
-      return PyModule_Create(&aesEncryptFunc);
+      (void) Py_InitModule("aesEncrypt", aesEncrypt_methods);
 }
 
 
