@@ -16,7 +16,6 @@ sys.path.insert(1, os.path.join(sys.path[0], '../python/Svr'));
 sys.path.insert(1, os.path.join(sys.path[0], '../python'));
 
 ## Import your algorithms here.
-from Tesla import Tesla
 from svr import SVR
 from ContextEngineBase import Complexity
 

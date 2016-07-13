@@ -11,6 +11,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 ## Implementation of the SVR algorithm:
 class LinSVM(ContextEngineBase):
     svmObj = None  
+    # testList = []
     #  Name of the file that contains the key for encryption/decryption
     def __init__(self, complexity, numInputs, outputClassifier, 
             inputClassifiers,appFieldsDict): 
@@ -32,9 +33,9 @@ class LinSVM(ContextEngineBase):
 #           print("Wrong dimensions!")
 
     def printO(self):
-        print self.observationMatrix
-        print self.outputVector
-        print self.svmObj.predict([[2.,2.]])
+        #print self.observationMatrix
+        #print self.outputVector
+        print self.testList
         
 
     def addBatchObservations(self, newInputObsMatrix, newOutputVector):
@@ -48,7 +49,7 @@ class LinSVM(ContextEngineBase):
                 self.addSingleObservation(newInputVector, newOutputValue);
                 i += 1;
         else:
-            print("Wrong dimensions!");
+            raise ValueError ("Wrong dimensions! %f" %newInputObsMatrix.shape[1])
 
     def train(self):
         if (self.numObservations > 0):
@@ -56,7 +57,7 @@ class LinSVM(ContextEngineBase):
             self.svmObj.fit(self.observationMatrix, self.outputVector);
             return True;
         else:
-            print("Not enough observations to train!");
+            raise ValueError ("Not enough observations to train!");
             return False;
 
     def execute(self, inputObsVector):
@@ -64,8 +65,9 @@ class LinSVM(ContextEngineBase):
             #print("Begin execute");
             #x_Test = np.vstack((self.x_Test,inputObsVector));
             x_Test = np.reshape(inputObsVector,(1,self.numInputs));
-            self.y_Test = self.svrLinear.predict(x_Test);
-            return self.y_Test;
+            y_Test = self.svmObj.predict(x_Test);
+            # self.testList.append(y_Test[0])
+            return y_Test;
         else:
-            print("Wrong dimensions, fail to execute");
+            raise ValueError ("Wrong dimensions, fail to execute");
             return None;

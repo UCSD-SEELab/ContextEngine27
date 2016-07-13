@@ -3,7 +3,7 @@ from aenum import Enum
 import math
 import numpy as np
 import sys
-
+from sklearn.cluster import KMeans 
 #sys.path.append("../python/Security/Encrypt/")
 #from encrypt import encrypt
 #from encrypt import rsaEncrypt
@@ -95,6 +95,21 @@ class ContextEngineBase(object):
         # All other matrices/vectors are left the same, as they are dependent
         # on the number of observations.
 
+        # Check whether clustering is required in the output
+        if self.outputClassifier > 0:
+            self.outputClustering = KMeans(n_clusters = self.outputClassifier,\
+                    random_state = 170) # change to random later on
+            print ">> Output classifier with %d states defined" %self.outputClassifier
+
+        self.inputClustering = {}
+        for i in xrange(self.numInputs):
+            if self.inputClassifiersList[i] > 0:
+                self.inputClustering[i] = KMeans(n_clusters = \
+                        self.inputClassifiersList[i], random_state = 170) # random
+                print ">> Input classifier %d with %d states defined" \
+                        %(i, self.inputClassifiersList[i])
+
+
     #  Add a new training observation. Requirements: newInputObs must be a
     #  row array of size numInputs. newOutputObs must be a single value.
     def addSingleObservation(self, newInputObs, newOutputObs):
@@ -146,6 +161,7 @@ class ContextEngineBase(object):
 
     #  Train the coefficients on the existing observation matrix if there are
     #  enough observations.
+
     def train(self):
         if (self.observationMatrix.shape[0] >= self.numNormalizedInputs):
             print("Training started");
@@ -154,6 +170,49 @@ class ContextEngineBase(object):
         else:
             print("Not enough observations to train!");
     
+    def clusterAndTrain(self):
+        # We add clustering functionality here.
+        # Before each training, the data that is saved in observationMatrix\
+        # is given to a kMeans clustering algorithm, which finds k clusters\
+        # within the data and labels them accordingly. The number k is\
+        # provided during initialization. Test data can also be classified\
+        # according to this clustering, using the desgnated TODO function. 
+        if self.outputClassifier > 0:
+            # print np.asarray(self.outputVector).reshape(-1,1).reshape(-1,1)
+            self.outputClustering.fit(np.asarray(self.outputVector).reshape(-1,1))
+            outClust = []
+            for out in self.outputVector:
+                outClust.append(self.outputClustering.predict(float(out))[0])
+            self.outputVector = outClust
+            print outClust
+        # Now we train
+        self.train()
+
     #  Test the trained matrix against the given input observation
     def execute(self, inputObsVector):
         return np.dot(self.coefficientVector[0],inputObsVector);
+
+    def executeAndCluster(self, inputObsVector):
+        # We now execute the algorithm, and then classify the \
+        # result using the same clustering criteria that was \
+        # created in training. If the algorithm already outputs\
+        # clustered results, execute() function may be used.
+        res = float(self.execute(inputObsVector))
+        return self.outputClustering.predict(np.asarray(res).reshape(-1,1))
+
+    def classify(self, number, index):
+        # this function classifies "number" based on the clustering that is\
+        # performed on one of the inputs or output. The index identifies\
+        # which clustering to use. -1 corresponds to output clustering,\
+        # while any other number shows one of the input clusterings.
+        modNumber = np.asarray(float(number)).reshape(-1, 1)
+        if index == -1:
+            if self.outputClassifier > 0:   # we have a clustering for output       
+                return self.outputClustering.predict(modNumber)
+            # TODO add error case for when clustering has not been fitted yet
+            else:
+                raise ValueError ("Clustering for output is undefined")
+        else:
+            if index in self.inputClustering: # we have a clustering for this input
+                return self.inputClustering[index].predict(modNumber)
+            # TODO add error case for when clustering has not been fitted yet
