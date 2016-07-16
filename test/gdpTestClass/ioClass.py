@@ -20,7 +20,7 @@ def collectTrace(gclHandle, param, start, stop):
     return data
 
 class ioClass(object):
-    def __init__(self, nameStr = "", paramName = "", lagVal = 0):
+    def __init__(self, nameStr = "", paramName = "", lagVal = 0, normMeth = 'none'):
         if nameStr == "":
             raise ValueError ("GCL name must be provided.")
         if paramName == "":
@@ -33,6 +33,12 @@ class ioClass(object):
         self.param = paramName
         # Lag from the current record. Can be used to implement time series functions.
         self.lag = lagVal
+        # Normalization method for data:
+        # 'none': no normalization
+        # 'lin': linear normalization: mean-zeroed and divided by std
+        self.norm = normMeth
+        # Normalization parameters (i.e., avg, std etc.)
+        self.normParam = {}
 
     def printTester(self):
         print self.gcl, self.param, self.lag

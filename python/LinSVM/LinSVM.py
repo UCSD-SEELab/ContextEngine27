@@ -17,10 +17,10 @@ class LinSVM(ContextEngineBase):
             inputClassifiers,appFieldsDict): 
         ContextEngineBase.__init__(self,complexity, numInputs, 
                 outputClassifier, inputClassifiers, appFieldsDict)
-        self.numInputs = numInputs;
-        self.outputClassifier = outputClassifier;
-        self.inputClassifiersList = inputClassifiers;
-        self.customFieldsDict = appFieldsDict;
+        self.numInputs = numInputs
+        self.outputClassifier = outputClassifier
+        self.inputClassifiersList = inputClassifiers
+        self.customFieldsDict = appFieldsDict
         self.svmObj = svm.LinearSVC()
 
 #    def addSingleObservation(self, newInputObs, newOutputObs):
@@ -41,33 +41,33 @@ class LinSVM(ContextEngineBase):
     def addBatchObservations(self, newInputObsMatrix, newOutputVector):
         if(len(newInputObsMatrix.shape) == 2 and newInputObsMatrix.shape[1] == self.numInputs
                 and newOutputVector.shape[0] == newInputObsMatrix.shape[0]):
-            #print("All good!");
-            newOutputVector = newOutputVector.ravel();
-            i = 0;
+            #print("All good!")
+            newOutputVector = newOutputVector.ravel()
+            i = 0
             for newInputVector in newInputObsMatrix:
-                newOutputValue = newOutputVector[i];
-                self.addSingleObservation(newInputVector, newOutputValue);
-                i += 1;
+                newOutputValue = newOutputVector[i]
+                self.addSingleObservation(newInputVector, newOutputValue)
+                i += 1
         else:
             raise ValueError ("Wrong dimensions! %f" %newInputObsMatrix.shape[1])
 
     def train(self):
         if (self.numObservations > 0):
-            #print("Training started");
-            self.svmObj.fit(self.observationMatrix, self.outputVector);
-            return True;
+            #print("Training started")
+            self.svmObj.fit(self.observationMatrix, self.outputVectorIdx)
+            return True
         else:
-            raise ValueError ("Not enough observations to train!");
-            return False;
+            raise ValueError ("Not enough observations to train!")
+            return False
 
     def execute(self, inputObsVector):
         if(len(inputObsVector) == self.numInputs):
-            #print("Begin execute");
-            #x_Test = np.vstack((self.x_Test,inputObsVector));
-            x_Test = np.reshape(inputObsVector,(1,self.numInputs));
-            y_Test = self.svmObj.predict(x_Test);
+            #print("Begin execute")
+            #x_Test = np.vstack((self.x_Test,inputObsVector))
+            x_Test = np.reshape(inputObsVector,(1,self.numInputs))
+            y_Test = self.svmObj.predict(x_Test)
             # self.testList.append(y_Test[0])
-            return y_Test;
+            return self.outputClustering.cluster_centers_[y_Test][0]
         else:
-            raise ValueError ("Wrong dimensions, fail to execute");
-            return None;
+            raise ValueError ("Wrong dimensions, fail to execute")
+            return None

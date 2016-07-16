@@ -24,13 +24,11 @@ import math
 
 
 def AnomThresh(data):
-
     ares = [];
     i = 0;
     while(i < len(data)):
-        ares = abs(data[i])
+        ares.append(abs(data[i]))
         i = i+1;
-    
     datasigma = median(ares);
 
     i = 0;
