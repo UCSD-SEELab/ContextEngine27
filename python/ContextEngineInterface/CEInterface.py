@@ -16,7 +16,7 @@ def checkDictKeys(d):
 
 
 
-class gdpSupervisedTester (object):
+class ceInterface(object):
     def __init__(self, numInputs = None, inDicts = None, outDict = None):
         if numInputs is None:
             raise ValueError ('Number of inputs must be provided.')
@@ -49,9 +49,9 @@ class gdpSupervisedTester (object):
 
         self.inObjs = []
         for d in inDicts:
-            self.inObjs.append(ioClass(d['gcl'], d['param'], d['lag']))
+            self.inObjs.append(ioClass(d['gcl'], d['param'], d['lag'], d['norm']))
         self.outObj = ioClass(outDict['gcl'], outDict['param'],
-                              outDict['lag'])
+                              outDict['lag'], outDict['norm'])
 
 
     def collectData(self, start, stop):

@@ -1,72 +1,82 @@
-import csv
 import datetime
 import math
 import numpy as np
 import sys, os
-import pickle
 import time
 import gdp
-
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python'))
 sys.path.insert(1, os.path.join(sys.path[0], '../python/Knn'))
-## Test class path 
-sys.path.insert(1, os.path.join(sys.path[0], 'gdpTestClass'))
-
+sys.path.insert(1, os.path.join(sys.path[0], '../python/LinSVM'))
+sys.path.insert(1, os.path.join(sys.path[0], '../python/Svr'))
+sys.path.insert(1, os.path.join(sys.path[0], '../python/DecisionTreeWAdaboost'))
+sys.path.insert(1, os.path.join(sys.path[0], '../python/Tesla'))
+## Interface path
+sys.path.insert(1, os.path.join(sys.path[0], '../python/ContextEngineInterface'))
 
 ## Import your algorithms here.
 from Knn import Knn
-from ContextEngineBase import Complexity
-## Test class import
-from gdpSupervisedTester import gdpSupervisedTester
- 
-
-## For different tests, these values will vary.
-complexity = Complexity.firstOrder
+from LinSVM import LinSVM
+from svr import SVR
+from dtAB import DecisionTreeAB
+from Tesla import Tesla
+printFlag = True
 
 # Create dictionary object for each of the context engine I/Os
 # each dictionary object includes: log name, JSON parameter in that log, lag
 dict0 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
-          'lag': 0}
+          'lag': 0,
+          'norm': 'lin'}
 dict1 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
-          'lag': 1}
+          'lag': 1,
+          'norm': 'lin'}
 dict2 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
-          'lag': 2}
+          'lag': 2,
+          'norm': 'lin'}
 dict3 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
-          'lag': 3}
+          'lag': 3,
+          'norm': 'lin'}
 dict4 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
-          'lag': 4}
+          'lag': 4,
+          'norm': 'lin'}
 # Number of CE input
 numInp = 4
-# Instantiate gdpSupervisedTester which creates all input and 
-# output IOClass objects
-gdpTest = gdpSupervisedTester(numInp, [dict1, dict2, dict3, dict3], dict0)
+## Algorithm to be tested
+interfaceDict = {'in': [dict1, dict2, dict3, dict4], 
+                 'out': dict0}
+ceDict = {'interface': interfaceDict,
+          'n_neighbors': 4,
+          'weights': 'uniform',
+          'algorithm': 'auto',
+          'n_jobs': 1,
+          'complexity': 1}
+
+algorithmTest = Knn(numInp, 0, [0,0,0,0], ceDict)
+
 print "Collecting training and test data from GDP"
 # Use the collect data routine to fetch training data in separate lists
 # for input and output
-trainRecStart = 1000
-trainRecStop = 2000
+trainRecStart = 100
+trainRecStop = 200
 numTrainingSamples = trainRecStop - trainRecStart + 1
-inDataTrain, outDataTrain = gdpTest.collectData(trainRecStart, trainRecStop)
+inDataTrain, outDataTrain = algorithmTest.interface.collectData(trainRecStart, trainRecStop)
 # Use the collect data routine to fetch test data in separate lists
 # for input and output
-testRecStart = 2001
-testRecStop = 3000
+testRecStart = 201
+testRecStop = 250
 numExecuteSamples = testRecStop - testRecStart + 1
-inDataTest, outDataTest = gdpTest.collectData(testRecStart,testRecStop)
+inDataTest, outDataTest = algorithmTest.interface.collectData(testRecStart,testRecStop)
 print "Done: collecting data from GDP"
 print "Beginning loading and training"
 # For testing purpose. print input for test data
 # each line in output corresponds to one input data field (record)
 # print inDataTest
 
-## Change the name of the algorithm to test it out.
-algorithmTest = Knn(complexity, numInp, 0, numInp*[0], {})
 timestamps = {}
 # Add training data to CE object
 for i in xrange(len(outDataTrain)):
@@ -77,23 +87,37 @@ for i in xrange(len(outDataTrain)):
     timestamps["load" + str(i)] = secondTS - firstTS
 # training CE using the added data, while the training time is measured
 firstTS = time.time()
-algorithmTest.train()
+algorithmTest.clusterAndTrain()
 secondTS = time.time()
 timestamps["train"] = secondTS - firstTS
 print "Done: loading and training"
 print "Beginning execution"
 runningTotal = 0
+
 for executeSample in range(testRecStop - testRecStart + 1):
     # computing output of test data using trained CE (time measured)
     # Saving error for each test data.
     firstTS = time.time()
-    theor = algorithmTest.execute(list(inDataTest[executeSample]))
-    secondTS = time.time()
+    algoRes = algorithmTest.deNormalizeSnippet(
+            algorithmTest.executeAndCluster(list(inDataTest[executeSample])),-1)
+    secondTS = time.time() 
     timestamps["test" + str(executeSample)] = secondTS - firstTS
     timestamps["delta" + str(executeSample)] = \
-            abs(outDataTest[executeSample] - theor)
+            abs(np.asarray(algorithmTest.deNormalizeSnippet(\
+                algorithmTest.classify(\
+                algorithmTest.normalizeSnippet(\
+                outDataTest[executeSample], -1), -1), -1))\
+                - np.asarray(algoRes))
+    if printFlag == True:
+        print algorithmTest.deNormalizeSnippet(\
+            algorithmTest.classify(\
+            algorithmTest.normalizeSnippet(\
+            outDataTest[executeSample], -1), -1), -1), \
+            algoRes
     runningTotal += outDataTest[executeSample]
 print "Done: execution"
+
+
 # computing average of the output test data
 avgActual = runningTotal/(1.0*numExecuteSamples)
 # calculating the loading time of the whole training dataset

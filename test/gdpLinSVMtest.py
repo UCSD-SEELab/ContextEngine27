@@ -1,87 +1,72 @@
-import csv
 import datetime
 import math
 import numpy as np
 import sys, os
-import pickle
 import time
 import gdp
-
 ## Append the paths to your algorithms here.
 sys.path.insert(1, os.path.join(sys.path[0], '../python'))
 sys.path.insert(1, os.path.join(sys.path[0], '../python/LinSVM'))
-## Test class path 
-sys.path.insert(1, os.path.join(sys.path[0], 'gdpTestClass'))
-
+## Interface path 
+sys.path.insert(1, os.path.join(sys.path[0], '../python/ContextEngineInterface'))
 
 ## Import your algorithms here.
 from LinSVM import LinSVM
-from ContextEngineBase import Complexity
-## Test class import
-from gdpSupervisedTester import gdpSupervisedTester
- 
-
-## For different tests, these values will vary.
-complexity = Complexity.firstOrder
-
+printFlag = True
+timestamps = {}
 # Create dictionary object for each of the context engine I/Os
 # each dictionary object includes: log name, JSON parameter in that log, lag
 dict0 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
           'param': 'apparent_power',
           'lag': 0,
-          'norm': 'lin'}
-dict1 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
+          'norm': 'none'}
+dict1 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570008b',
           'param': 'apparent_power',
-          'lag': 1,
+          'lag': 0,
           'norm': 'lin'}
-dict2 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
+dict2 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e5700088',
           'param': 'apparent_power',
-          'lag': 2,
+          'lag': 0,
           'norm': 'lin'}
-dict3 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
+dict3 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570008e',
           'param': 'apparent_power',
-          'lag': 3,
+          'lag': 0,
           'norm': 'lin'}
-dict4 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e570002b',
+dict4 = {'gcl': 'edu.berkeley.eecs.bwrc.device.c098e570008f',
           'param': 'apparent_power',
-          'lag': 4,
+          'lag': 0,
           'norm': 'lin'}
 # Number of CE input
 numInp = 4
+
+interfaceDict = {"in":[dict1, dict2, dict3, dict4], 
+                 "out":dict0}
+# Pass Linear SVM model parameters with this dictionary
+ceDict = {"interface": interfaceDict}
+## Change the name of the algorithm to test it out
+algorithmTest = LinSVM(numInp, 2, [0,4,2,6], ceDict)
+
+
 # Instantiate gdpSupervisedTester which creates all input and 
 # output IOClass objects
-gdpTest = gdpSupervisedTester(numInp, [dict1, dict2, dict3, dict3], dict0)
+# gdpTest = gdpSupervisedTester(numInp, [dict1, dict2, dict3, dict3], dict0)
 print "Collecting training and test data from GDP"
 # Use the collect data routine to fetch training data in separate lists
 # for input and output
-# TODO fix list - int error in large datasets.
+
+
 # TODO test on larger datasets
-trainRecStart = 100
-trainRecStop = 200
+trainRecStart = 2000
+trainRecStop = 2400
 numTrainingSamples = trainRecStop - trainRecStart + 1
-inDataTrain, outDataTrain = gdpTest.collectData(trainRecStart, trainRecStop)
+inDataTrain, outDataTrain = algorithmTest.interface.collectData(trainRecStart, trainRecStop)
 # Use the collect data routine to fetch test data in separate lists
 # for input and output
-testRecStart = 201
-testRecStop = 240
+testRecStart = 2401
+testRecStop = 2600
 numExecuteSamples = testRecStop - testRecStart + 1
-inDataTest, outDataTest = gdpTest.collectData(testRecStart,testRecStop)
+inDataTest, outDataTest = algorithmTest.interface.collectData(testRecStart,testRecStop)
 
-## NORMALIZATION
-# TODO: Either create a method in class to do this, or make it 
-# happen automatically before training.
-# TODO: separate each feature's normalization!
-
-avg = float((sum(outDataTest) + sum(outDataTrain)))\
-        / float((len(outDataTrain) + len(outDataTest)))
-std = np.std(np.append(outDataTest, outDataTrain))
-
-#inDataTrain = (np.asarray(inDataTrain) - float(avg)) / float(std)
-#inDataTest = (np.asarray(inDataTest) - float(avg)) / float(std)
-
-# Creating classification labels from continues data
-#outDataTrain = map(lambda x: int(x > avg), outDataTrain)
-#outDataTest = map(lambda x: int(x > avg), outDataTest)
 print "Done: collecting data from GDP"
 
 print "Beginning loading and training"
@@ -89,10 +74,6 @@ print "Beginning loading and training"
 # each line in output corresponds to one input data field (record)
 # print inDataTest
 
-## Change the name of the algorithm to test it out.
-# IMPORTANT: outputClassifier is set to 2, because output is NOT continous
-algorithmTest = LinSVM(complexity, numInp, 2, [0,0,0,0], {})
-timestamps = {}
 # Add training data to CE object
 for i in xrange(len(outDataTrain)):
     # recording time stamps before and after adding to measure load time
@@ -114,13 +95,21 @@ for executeSample in range(testRecStop - testRecStart + 1):
     # computing output of test data using trained CE (time measured)
     # Saving error for each test data.
     firstTS = time.time()
-    theor = algorithmTest.executeAndCluster(list(inDataTest[executeSample]))
-    secondTS = time.time()
+    algoRes = algorithmTest.deNormalizeSnippet(
+            algorithmTest.executeAndCluster(list(inDataTest[executeSample])),-1)
+    secondTS = time.time() 
     timestamps["test" + str(executeSample)] = secondTS - firstTS
     timestamps["delta" + str(executeSample)] = \
-            abs(algorithmTest.classify(outDataTest[executeSample], -1)\
-                - theor)
-    print algorithmTest.classify(outDataTest[executeSample], -1), theor
+            abs(np.asarray(algorithmTest.deNormalizeSnippet(\
+                algorithmTest.classify(\
+                algorithmTest.normalizeSnippet(\
+                outDataTest[executeSample], -1), -1), -1))\
+                - np.asarray(algoRes))
+    print algorithmTest.deNormalizeSnippet(\
+          algorithmTest.classify(\
+          algorithmTest.normalizeSnippet(\
+          outDataTest[executeSample], -1), -1), -1), \
+          algoRes
     runningTotal += outDataTest[executeSample]
 print "Done: execution"
 # computing average of the output test data

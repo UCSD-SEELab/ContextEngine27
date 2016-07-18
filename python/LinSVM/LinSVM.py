@@ -1,6 +1,5 @@
 # Nima
 # Modified SVR code from Wanlin Cui
-
 import numpy as np
 import math
 from sklearn import svm
@@ -13,24 +12,15 @@ class LinSVM(ContextEngineBase):
     svmObj = None  
     # testList = []
     #  Name of the file that contains the key for encryption/decryption
-    def __init__(self, complexity, numInputs, outputClassifier, 
+    def __init__(self, numInputs, outputClassifier, 
             inputClassifiers,appFieldsDict): 
-        ContextEngineBase.__init__(self,complexity, numInputs, 
+        ContextEngineBase.__init__(self, numInputs, 
                 outputClassifier, inputClassifiers, appFieldsDict)
         self.numInputs = numInputs
         self.outputClassifier = outputClassifier
         self.inputClassifiersList = inputClassifiers
         self.customFieldsDict = appFieldsDict
         self.svmObj = svm.LinearSVC()
-
-#    def addSingleObservation(self, newInputObs, newOutputObs):
-#       if (len(newInputObs) == self.numInputs and type(newOutputObs) not in (tuple, list)):
-#           #print("All good!")
-#           self.x_Obs = np.vstack((self.x_Obs,newInputObs))
-#           self.y_Obs = np.append(self.y_Obs, newOutputObs)
-#           self.numObservations += 1
-#       else:
-#           print("Wrong dimensions!")
 
     def printO(self):
         #print self.observationMatrix
@@ -52,6 +42,8 @@ class LinSVM(ContextEngineBase):
             raise ValueError ("Wrong dimensions! %f" %newInputObsMatrix.shape[1])
 
     def train(self):
+        if self.outputClassifier == 0:
+            raise ValueError('Linear SVM output must be defined as discrete.')
         if (self.numObservations > 0):
             #print("Training started")
             self.svmObj.fit(self.observationMatrix, self.outputVectorIdx)

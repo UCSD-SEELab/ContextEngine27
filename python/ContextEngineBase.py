@@ -3,6 +3,9 @@ import math
 import numpy as np
 import sys
 from sklearn.cluster import KMeans 
+sys.path.append("ContextEngineInterface")
+from CEInterface import ceInterface
+
 #sys.path.append("../python/Security/Encrypt/")
 #from encrypt import encrypt
 #from encrypt import rsaEncrypt
@@ -11,22 +14,14 @@ from sklearn.cluster import KMeans
 #from decrypt import rsaDecrypt
 #from decrypt import decrypt
 
-class Complexity(Enum):
-    firstOrder  = 1
-    secondOrder = 2
-    thirdOrder  = 3
-    fourthOrder = 4
-    fifthOrder  = 5
-    
 
 
 ## Implementation of the context engine base class: the class inherited by other
 ## machine learning algorithms.
 class ContextEngineBase(object):
-
     ## Member variables
     #  Function order - limit the highest order of the function
-    complexity = Complexity.firstOrder
+    # complexity = Complexity.firstOrder
 
     #  Number of inputs - interface for the number of input variables -
     #  defines input vector (+1 for training vector - n input, 1 output)
@@ -47,6 +42,7 @@ class ContextEngineBase(object):
     
     #  Matrix model - each row represents a new input vector
     observationMatrix = np.empty([0, 0])
+    observationMatrixIdx = np.empty([0, 0])
 
     #  Coefficient vector - the column vector representing the trained
     #  coefficients based on observations
@@ -55,9 +51,10 @@ class ContextEngineBase(object):
     #  Output observation vector - the column vector of recorded observations
     outputVector = []
     outputVectorIdx = []
-    
+    #outputVectorNorm = []
+
     #  Name of the file that contains the key for encryption/decryption
-    key = {}   
+    key = {}
 
     #  Constructor - the order and number of inputs are mandatory
     #  Parameters:
@@ -67,7 +64,7 @@ class ContextEngineBase(object):
     #    inputClassifiers: list of integers for discrete/continuous inputs
     #    appFieldsDict: dictionary of key/value pairs of app-specific fields
     def __init__(self,
-                 complexity,
+                 #complexity,
                  numInputs,
                  outputClassifier,
                  inputClassifiers,
@@ -76,7 +73,7 @@ class ContextEngineBase(object):
         if (len(inputClassifiers) != numInputs):
             raise ValueError("The magnitude of inputClassifiers",
                              "must be the same as numInputs")
-        self.complexity = complexity
+        #self.complexity = complexity
         self.numInputs = numInputs
         self.outputClassifier = outputClassifier
         self.inputClassifiersList = inputClassifiers
@@ -108,7 +105,13 @@ class ContextEngineBase(object):
                         self.inputClassifiersList[i], random_state = 170) # random
                 print ">> Input classifier %d with %d states defined" \
                         %(i, self.inputClassifiersList[i])
-
+        # Interface (i.e., GDP log info for IO)
+        if "interface" in appFieldsDict:
+            inDicts = appFieldsDict["interface"]["in"]
+            outDict = appFieldsDict["interface"]["out"]
+            self.interface = ceInterface (numInputs, inDicts, outDict)
+        else:
+            raise ValueError("Interface dictionary must be provided")
 
     #  Add a new training observation. Requirements: newInputObs must be a
     #  row array of size numInputs. newOutputObs must be a single value.
@@ -177,10 +180,9 @@ class ContextEngineBase(object):
         # is given to a kMeans clustering algorithm, which finds k clusters\
         # within the data and labels them accordingly. The number k is\
         # provided during initialization. Test data can also be classified\
-        # according to this clustering, using "classify" function. 
+        # according to this clustering, using "classify" function.
         self.normalizeData()
-
-        print self.outputVector
+        # output clustering
         if self.outputClassifier > 0:
             # print np.asarray(self.outputVector).reshape(-1,1).reshape(-1,1)
             self.outputClustering.fit(np.asarray(self.outputVector).reshape(-1,1))
@@ -190,14 +192,25 @@ class ContextEngineBase(object):
             self.outputVectorIdx = outClust
             self.outputVector = [self.outputClustering.cluster_centers_[c][0]\
                     for c in outClust]
-        # print self.outputVector
-        # TODO add input clustering here
+        # Input clustering
+        self.observationMatrixIdx = np.copy(self.observationMatrix)
+        for i in xrange(self.numInputs):
+            if self.inputClassifiersList[i] > 0:
+                snip = map(lambda d: d[i], self.observationMatrix)
+                self.inputClustering[i].fit(np.asarray(snip).reshape(-1,1))
+                j = 0
+                for rec in self.observationMatrixIdx:
+                    clust = self.inputClustering[i].predict(float(rec[i]))[0]
+                    self.observationMatrixIdx[j][i] = clust
+                    self.observationMatrix[j][i] = \
+                        self.inputClustering[i].cluster_centers_[clust]
+                    j = j + 1
 
-        # Now we train
+        # Now we train using normalized and clustered data
         self.train()
 
     #  Test the trained matrix against the given input observation
-    def execute(self, inputObsVector): 
+    def execute(self, inputObsVector):
         return np.dot(self.coefficientVector[0],inputObsVector)
 
     def executeAndCluster(self, inputObsVector, idx = None):
@@ -205,12 +218,18 @@ class ContextEngineBase(object):
         # result using the same clustering criteria that was \
         # created in training. If the algorithm requires clustered\
         # inputs, the clustering is performed here.
-        # TODO cluster input before calling execute (if necessary)
-        res = float(self.execute(inputObsVector))
+        # Normalize and cluster input before calling execute (if necessary):
+        normInp = self.normalizeInputRec(inputObsVector)
+        for i in xrange(self.numInputs):
+            if self.inputClassifiersList[i] > 0:
+                inputObsVector[i] = self.inputClustering[i].\
+                        cluster_centers_[self.inputClustering[i].
+                        predict(float(inputObsVector[i]))][0][0]
+        res = float(self.execute(normInp))
         # Return cluster centroid if output is         if self.outputClassifier > 0:
         if self.outputClassifier > 0:
             return self.outputClustering.cluster_centers_[self.outputClustering\
-                    .predict(np.asarray(res).reshape(-1,1))][0]
+                    .predict(float(res))][0][0]
         else:
             return res
 
@@ -220,22 +239,108 @@ class ContextEngineBase(object):
         # which clustering to use. -1 corresponds to output clustering,\
         # while any other number shows one of the input clusterings.
         modNumber = np.asarray(float(number)).reshape(-1, 1)
-        if index == -1:
+        if index == -1 and self.outputClassifier > 0:
             if self.outputClassifier > 0:   # we have a clustering for output       
                 return self.outputClustering.cluster_centers_[\
-                        self.outputClustering.predict(modNumber)][0]
+                        self.outputClustering.predict(modNumber)][0][0]
             # TODO add error case for when clustering has not been fitted yet
             else:
                 raise ValueError ("Clustering for output is undefined")
-        else:
-            if index in self.inputClustering: # we have a clustering for this input
-                return self.outputClustering.cluster_centers_[\
-                        self.inputClustering[index].predict(modNumber)][0]
+        elif index in self.inputClustering: # we have a clustering for this input
+            return self.outputClustering.cluster_centers_[\
+                   self.inputClustering[index].predict(modNumber)][0][0]
             # TODO add error case for when clustering has not been fitted yet
+        else:
+            return number
 
     # normalize (zero mean and divide by standard deviation) for each
     # of inputs or 
     def normalizeData(self):
-        print "hi"
+        # output normalization:
+        # Linear normlization, zero-mean and divide by std
+        if self.interface.outObj.norm == 'lin':
+            avg = np.mean(self.outputVector)
+            std = np.std(self.outputVector)
+            self.outputVector = [(r - avg) / std for r in self.outputVector]
+            self.interface.outObj.normParam = {'avg': avg, 'std': std}
+        else:
+            self.outputVector = self.outputVector
+        # input normalization
+        for i in xrange(self.numInputs):
+            inObj = self.interface.inObjs[i]
+            if inObj.norm == 'lin':
+                # Extracting the i'th input to normalize
+                inSnippet = map(lambda d: d[i], self.observationMatrix)
+                avg = np.mean(inSnippet)
+                std = np.std(inSnippet)
+                normInp = [(r - avg) / std for r in inSnippet]
+                self.updateSingleInputSnippet(normInp, i)
+                self.interface.inObjs[i].normParam = {'avg': avg, 'std': std}
+            i = i + 1
 
+    def normalizeSnippet(self, snip, idx):
+        if idx == -1:
+            if self.interface.outObj.norm == 'lin':
+                avg = self.interface.outObj.normParam['avg']
+                std = self.interface.outObj.normParam['std']
+            else:
+                avg = float(0)
+                std = float(1)
+        elif idx < numInputs:
+            if self.interface.inObjs[idx].norm == 'lin':
+                avg = self.interface.inObjs[idx].normParam['avg']
+                std = self.interface.inObjs[idx].normParam['std']
+            else:
+                avg = float(0)
+                std = float(1)
+        else:
+            raise ValueError ("Index out of bound: idx > numInputs")
 
+        if type(snip) == np.float64:
+            return (snip - avg) / std
+        else:
+            return [(r - avg) / std for r in snip]
+
+    def deNormalizeSnippet(self, snip, idx):
+        if idx == -1:
+            if self.interface.outObj.norm == 'lin':
+                avg = self.interface.outObj.normParam['avg']
+                std = self.interface.outObj.normParam['std']
+            else:
+                avg = float(0)
+                std = float(1)
+        elif idx < numInputs:
+            if self.interface.inObjs[idx].norm == 'lin':
+                avg = self.interface.inObjs[idx].normParam['avg']
+                std = self.interface.inObjs[idx].normParam['std']
+            else:
+                avg = float(0)
+                std = float(1)
+        else:
+            raise ValueError ("Index out of bound: idx > numInputs")
+        if type(snip) != np.ndarray or type(snip) != list:
+            return snip * std + avg
+        else:
+            return [f * std + avg for f in snip]
+
+    def normalizeInputRec(self, rec):
+        if len(rec) == self.numInputs:
+            for i in xrange(self.numInputs):
+                if self.interface.inObjs[i].norm == 'lin':
+                    avg = self.interface.inObjs[i].normParam['avg']
+                    std = self.interface.inObjs[i].normParam['std']
+                    rec[i] = (rec[i] - avg) / std
+            return rec
+        else:
+            raise ValueError ("Record Length does not match numInputs")
+    # TODO make this faster
+    def updateSingleInputSnippet(self, snippet, idx):
+        if len(self.observationMatrix) != len(snippet):
+            raise ValueError ("Input update data snippet does not match the\
+                    number of observed data")
+        else:
+            j = 0
+            for rec in self.observationMatrix:
+                rec[idx] = snippet[j]
+                j = j + 1
+    
