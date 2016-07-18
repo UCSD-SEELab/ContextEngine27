@@ -15,8 +15,8 @@ class Anom(ContextEngineBase):
 #    y_test = np.empty([0])
     Thresh = 0
         
-    def __init__(self, complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict):
-        ContextEngineBase.__init__(self,complexity, numInputs, outputClassifier, inputClassifiers, appFieldsDict)
+    def __init__(self, numInputs, outputClassifier, inputClassifiers, appFieldsDict):
+        ContextEngineBase.__init__(self, numInputs, outputClassifier, inputClassifiers, appFieldsDict)
         #self.discreteOutputs = discreteOutputs;
         #3sself.discreteInputs = discreteInputs;
         #self.x_Obs = np.empty([0,numInputs]);

@@ -64,6 +64,13 @@ class ceInterface(object):
         # Change this line to accomodate different data types
         return np.array(inData).T, np.array(outData)
         
+    def streamInputInit (self, idx):
+        if idx == -1:
+            raise ValueError ('Subscription is not defined for output.')
+        if idx >= self.numInputs:
+            raise ValueError ('Subscription index out of bound (idx > numInputs).')
+        self.inObjs[idx].subscribeLog()
+        return
 
 #        if (trainRecStart is None or trainRecStop is None or
 #            testRecStart is None or testRecStop is None):  

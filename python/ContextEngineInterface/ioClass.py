@@ -48,3 +48,6 @@ class ioClass(object):
         lag = self.lag
         trace = collectTrace(handle, param, start - lag, stop - lag)
         return trace
+    def subscribeLog(self):
+        self.gclHandle.subscribe(0, 0, None)
+

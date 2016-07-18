@@ -34,7 +34,10 @@ interfaceDict = {'in': [dict0],
 ceDict = {'interface': interfaceDict}
 ## Change the name of the algorithm to test it out.
 algorithmTest = Anom(numInp, 0,[0], ceDict)
-
+# subscribe to input log
+algorithmTest.streamInputInit(0)
+event = gdp.GDP_GCL.get_next_event(None)
+print event 
 print "Collecting training and test data from GDP"
 # Use the collect data routine to fetch training data in separate lists
 # for input and output

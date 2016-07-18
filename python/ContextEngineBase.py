@@ -58,13 +58,11 @@ class ContextEngineBase(object):
 
     #  Constructor - the order and number of inputs are mandatory
     #  Parameters:
-    #    complexity: an instance of the Complexity enumerated type
     #    numInputs: integer number of inputs
     #    outputClassifier: integer for discrete (#) or continuous (0) output
     #    inputClassifiers: list of integers for discrete/continuous inputs
     #    appFieldsDict: dictionary of key/value pairs of app-specific fields
     def __init__(self,
-                 #complexity,
                  numInputs,
                  outputClassifier,
                  inputClassifiers,
@@ -220,11 +218,16 @@ class ContextEngineBase(object):
         # inputs, the clustering is performed here.
         # Normalize and cluster input before calling execute (if necessary):
         normInp = self.normalizeInputRec(inputObsVector)
-        for i in xrange(self.numInputs):
-            if self.inputClassifiersList[i] > 0:
-                inputObsVector[i] = self.inputClustering[i].\
-                        cluster_centers_[self.inputClustering[i].
-                        predict(float(inputObsVector[i]))][0][0]
+        if self.numInputs == 1 and self.inputClassifiersList[0] > 0:
+            inputObsVector = self.inputClustering[0].\
+                    cluster_centers_[self.inputClustering[0].\
+                    predict(float(inputObsVector))][0][0]
+        else:
+            for i in xrange(self.numInputs):
+                if self.inputClassifiersList[i] > 0:
+                    inputObsVector[i] = self.inputClustering[i].\
+                            cluster_centers_[self.inputClustering[i].
+                            predict(float(inputObsVector[i]))][0][0]
         res = float(self.execute(normInp))
         # Return cluster centroid if output is         if self.outputClassifier > 0:
         if self.outputClassifier > 0:
@@ -324,6 +327,13 @@ class ContextEngineBase(object):
             return [f * std + avg for f in snip]
 
     def normalizeInputRec(self, rec):
+        # only 1 input
+        if type(rec) == np.float64:
+            avg = self.interface.inObjs[0].normParam['avg']
+            std = self.interface.inObjs[0].normParam['std']
+            rec = (rec - avg) / std
+            return rec
+        # several inputs
         if len(rec) == self.numInputs:
             for i in xrange(self.numInputs):
                 if self.interface.inObjs[i].norm == 'lin':
@@ -344,3 +354,10 @@ class ContextEngineBase(object):
                 rec[idx] = snippet[j]
                 j = j + 1
     
+    def streamInputInit (self, idx):
+        if idx == -1:
+            raise ValueError ('Subscription is not defined for output.')
+        if idx >= self.numInputs:
+            raise ValueError ('Subscription index out of bound (idx > numInputs).')
+        self.interface.inObjs[idx].subscribeLog()
+        return
