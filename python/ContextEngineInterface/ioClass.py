@@ -50,4 +50,11 @@ class ioClass(object):
         return trace
     def subscribeLog(self):
         self.gclHandle.subscribe(0, 0, None)
+    def getNextData(self):
+        ## NOTE How to identify log?! next line. How to muliti-Log?!
+        ## NOTE Maybe you subs to all and it returns event for each?!
+        newRecord = gdp.GDP_GCL.get_next_event(None)
+        newDataPoint = json.loads(newRecord['datum']['data'])['temperature_celcius']
+#        print newDataPoint
+        return newDataPoint
 

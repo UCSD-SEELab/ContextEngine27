@@ -15,7 +15,6 @@ from CEInterface import ceInterface
 #from decrypt import decrypt
 
 
-
 ## Implementation of the context engine base class: the class inherited by other
 ## machine learning algorithms.
 class ContextEngineBase(object):
@@ -361,3 +360,10 @@ class ContextEngineBase(object):
             raise ValueError ('Subscription index out of bound (idx > numInputs).')
         self.interface.inObjs[idx].subscribeLog()
         return
+
+    def fetchOnlineData (self, idx):
+        if idx == -1:
+            raise ValueError ('Subscription is not defined for output.')
+        if idx >= self.numInputs:
+            raise ValueError ('Subscription index out of bound (idx > numInputs).')
+        return self.interface.inObjs[idx].getNextData()
