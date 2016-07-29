@@ -32,7 +32,11 @@ class ceInterface(object):
         else:
             for d in inDicts:
                 if isinstance(d, dict):
-                    checkDictKeys(d)
+                    # TODO create a more general dictionary key check
+                    # checkDictKeys(d)
+                    if 'source' not in d:
+                        raise ValueError ('Input dictionaries must\
+                                contain source')
                 else:
                      raise ValueError ('Input description must be a'\
                                        ' dictionary object')
@@ -41,7 +45,12 @@ class ceInterface(object):
             raise ValueError ('Output description dictionary'\
                               ' must be provided.')
         elif isinstance(outDict, dict):
-            checkDictKeys(outDict)
+            # TODO create a more general dictionary key check
+            # checkDictKeys(outDict)
+            if 'sink' not in outDict:
+                raise ValueError ('Output Dictionary must\
+                        containg sink')
+            # TODO error for pasword and key missing
         else:
              raise ValueError ('Output description must be a'\
                                ' dictionary object')
@@ -49,9 +58,12 @@ class ceInterface(object):
 
         self.inObjs = []
         for d in inDicts:
-            self.inObjs.append(ioClass(d['gcl'], d['param'], d['lag'], d['norm']))
-        self.outObj = ioClass(outDict['gcl'], outDict['param'],
-                              outDict['lag'], outDict['norm'])
+            self.inObjs.append(ioClass(d['source'], d['gcl'], 
+                            d['param'], d['lag'], d['norm']))
+        self.outObj = ioClass(outDict['sink'], outDict['gcl'], 
+                              outDict['param'], outDict['lag'], 
+                              outDict['norm'], outDict['key'],
+                              outDict['password'])
 
 
     def collectData(self, start, stop):
@@ -63,7 +75,20 @@ class ceInterface(object):
         outData = self.outObj.readLog(start, stop)
         # Change this line to accomodate different data types
         return np.array(inData).T, np.array(outData)
-        
+    
+    # TODO function: collectDataByTime(self, timeStart, timeStop, timeStep)
+    def collectDataByTime(self, timeStart, timeStop, timeStep):
+        pass
+
+    def collectDataIn(self, start, stop):
+        inData = [] 
+        for inObj in self.inObjs:
+            trace = inObj.readLog(start, stop)
+            inData.append(trace)
+        return np.array(inData).T
+
+    def outputData(self, data):
+        self.outObj.write(data)
 
 #        if (trainRecStart is None or trainRecStop is None or
 #            testRecStart is None or testRecStop is None):  
