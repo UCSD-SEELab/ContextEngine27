@@ -19,7 +19,12 @@ printFlag = True
 timestamps = {}
 # Create dictionary object for each of the context engine I/Os
 # each dictionary object includes: log name, JSON parameter in that log, lag
-dict0 = {'source': 'GDP_I',
+dict0 = {'source': 'BT_I',
+        'name': '20:91:48:A8:E4:0A',
+        'param': 'temperature_celcius',
+          'lag': 0,
+          'norm': 'lin'}
+dict1 = {'source': 'GDP_I',
         'name': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
         'param': 'temperature_celcius',
           'lag': 0,
@@ -40,6 +45,20 @@ ceDict = {'interface': interfaceDict}
 algorithmTest = Anom(numInp, 0,[0], ceDict)
 # subscribe to input log
 algorithmTest.streamInputInit(0)
+
+for i in xrange(2000):
+    char = sock.recv(1)
+    if char == '\r':
+        j = j + 1
+        print '%dth input' %j
+        print data
+        data = ''
+    else:
+        data = data + char
+sock.close()
+                                                                 
+
+
 # Get the latest data point, extract latest recno, train on the most
 # recent batch of data prior to online run.
 event = gdp.GDP_GCL.get_next_event(None)

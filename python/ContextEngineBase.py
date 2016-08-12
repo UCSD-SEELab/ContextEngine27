@@ -358,7 +358,7 @@ class ContextEngineBase(object):
             raise ValueError ('Subscription is not defined for output.')
         if idx >= self.numInputs:
             raise ValueError ('Subscription index out of bound (idx > numInputs).')
-        self.interface.inObjs[idx].subscribeLog()
+        self.interface.inObjs[idx].subscribe()
         return
 
     def fetchOnlineData (self, idx):

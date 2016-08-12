@@ -19,11 +19,13 @@ printFlag = True
 timestamps = {}
 # Create dictionary object for each of the context engine I/Os
 # each dictionary object includes: log name, JSON parameter in that log, lag
-dict0 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
+dict0 = {'source': 'GDP_I',
+        'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
         'param': 'temperature_celcius',
           'lag': 0,
           'norm': 'lin'}
-dict1 = {'gcl': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
+dict1 = {'source': 'GDP_I',
+        'gcl': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
         'param': 'temperature_celcius',
           'lag': 0,
           'norm': 'lin'}
@@ -31,10 +33,13 @@ dict1 = {'gcl': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
 #        'param': 'apparent_power',
 #          'lag': 0,
 #          'norm': 'lin'}
-dict4 = {'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
+dict4 = {'sink': 'Console', # Console not yet defined`
+        'gcl': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
           'param': 'temperature_celcius',
           'lag': 4,
-          'norm': ''}
+          'norm': '',
+          'key': 'DgAAAOhbtHYAAAAA-Fm0diD2h36MEfB2AAAAAAAAAAA.pem',
+          'password': '1234'}
 # Number of CE input
 numInp = 2
 interfaceDict = {'in': [dict0, dict1], 

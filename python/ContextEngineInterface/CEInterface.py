@@ -35,8 +35,8 @@ class ceInterface(object):
                     # TODO create a more general dictionary key check
                     # checkDictKeys(d)
                     if 'source' not in d:
-                        raise ValueError ('Input dictionaries must\
-                                contain source')
+                        raise ValueError ('Input dictionaries must'\
+                                'contain source')
                 else:
                      raise ValueError ('Input description must be a'\
                                        ' dictionary object')
@@ -48,8 +48,7 @@ class ceInterface(object):
             # TODO create a more general dictionary key check
             # checkDictKeys(outDict)
             if 'sink' not in outDict:
-                raise ValueError ('Output Dictionary must\
-                        containg sink')
+                raise ValueError ('Output Dictionary must contain sink')
             # TODO error for pasword and key missing
         else:
              raise ValueError ('Output description must be a'\
@@ -58,9 +57,9 @@ class ceInterface(object):
 
         self.inObjs = []
         for d in inDicts:
-            self.inObjs.append(ioClass(d['source'], d['gcl'], 
+            self.inObjs.append(ioClass(d['source'], d['name'], 
                             d['param'], d['lag'], d['norm']))
-        self.outObj = ioClass(outDict['sink'], outDict['gcl'], 
+        self.outObj = ioClass(outDict['sink'], outDict['name'], 
                               outDict['param'], outDict['lag'], 
                               outDict['norm'], outDict['key'],
                               outDict['password'])

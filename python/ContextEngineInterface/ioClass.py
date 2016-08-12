@@ -1,5 +1,6 @@
 import gdp
 import json
+import bluetooth
 # Input/output class. Identifies the gcl_name and parameter_name for each input or output.
 
 def collectTrace(gclHandle, param, start, stop):
@@ -24,19 +25,30 @@ class ioClass(object):
     def __init__(self, srcSink = "", nameStr = "", paramName = "", lagVal = 0, normMeth = 'none', 
                 key = "", password = ""):
         if nameStr == "":
-            raise ValueError ("GCL name must be provided.")
+            raise ValueError ("Name must be provided.")
         if paramName == "":
             raise ValueError ("JSON parameter name must be provided.") 
-        # Log name in GDP
-        self.gclName = gdp.GDP_NAME(nameStr)
         if srcSink == "":
             raise ValueError ("Source/Sink must be provided.")
         elif srcSink == "GDP_I":
             self.IO = 'in'
+            self.IOtype = 'GDP'
             # Assume that GCL already exists and create the GCL handle
+            # Log name in GDP
+            self.gclName = gdp.GDP_NAME(nameStr)
             self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
+        elif srcSink == "BT_I":
+            print "BT"
+            self.IO = 'in'
+            self.IOtype = 'BT'
+            self.btAddr = nameStr
         elif srcSink == "GDP_O":
+            print nameStr
+            # Log name in GDP
+            self.gclName = gdp.GDP_NAME(nameStr)
+            self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
             self.IO = 'out'
+            self.IOtype = 'GDP'
             if key == "" or password == "":
                 raise ValueError ("Key path and password must \
                             be provided.")
@@ -67,8 +79,15 @@ class ioClass(object):
         lag = self.lag
         trace = collectTrace(handle, param, start - lag, stop - lag)
         return trace
-    def subscribeLog(self):
-        self.gclHandle.subscribe(0, 0, None)
+    def subscribe(self):
+        if self.IO == 'in':
+            if self.IOtype == 'BT':
+                self.btSock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+                self.btSock.connect((self.btAddr, 1)) # Fixed to port 1
+            else:   # Assume GDP log
+                self.gclHandle.subscribe(0, 0, None)
+        else:
+            raise ValueError ('Subscription is not defined for output ports')
     def getNextData(self):
         ## NOTE How to identify log?! next line. How to muliti-Log?!
         ## NOTE Maybe you subs to all and it returns event for each?!
