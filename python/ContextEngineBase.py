@@ -25,7 +25,7 @@ class ContextEngineBase(object):
     #  Number of inputs - interface for the number of input variables -
     #  defines input vector (+1 for training vector - n input, 1 output)
     numInputs = 0
-
+    
     #  Classification of the output - 0 is continuous, 1+ is # of states
     outputClassifier = 0
 
@@ -78,7 +78,7 @@ class ContextEngineBase(object):
 
         # Generate the blank coefficient matrix
         self.coefficientVector = np.zeros([self.numInputs,1])
-
+        
         # Check for the presence of AES key in the key-value pair, and update 
         # the value of key with the keyFileName passed as argument
         if "key" in appFieldsDict:
@@ -102,6 +102,8 @@ class ContextEngineBase(object):
                         self.inputClassifiersList[i], random_state = 170) # random
                 print ">> Input classifier %d with %d states defined" \
                         %(i, self.inputClassifiersList[i])
+
+        
         # Interface (i.e., GDP log info for IO)
         if "interface" in appFieldsDict:
             inDicts = appFieldsDict["interface"]["in"]

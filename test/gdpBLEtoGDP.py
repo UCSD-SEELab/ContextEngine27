@@ -20,11 +20,14 @@ timestamps = {}
 # Create dictionary object for each of the context engine I/Os
 # each dictionary object includes: log name, JSON parameter in that log, lag
 dict0 = {'dir': 'in',
-        'source': 'GDP_I',
+        'source': 'BLE_I',
         'name': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
-        'param': 'temperature_celcius',
-          'lag': 0,
-          'norm': 'lin'}
+        'service_uuid': '0000ffe0-0000-1000-8000-00805f9b34fb',
+        'tx_char_uuid': '0000ffe1-0000-1000-8000-00805f9b34fb',
+        'rx_char_uuid': '0000ffe1-0000-1000-8000-00805f9b34fb',
+        'param': 'whole',
+        'lag': 0,
+        'norm': 'lin'}
 dict4 = {'dir': 'out',
           'sink': 'GDP_O',
           'name': 'tCcbytv6gY0BdzvMx_JHw9ovPGwcpzvptFJiZ1k2u7Y',
@@ -38,19 +41,12 @@ numInp = 1
 interfaceDict = {'in': [dict0], 
                  'out': dict4}
 ceDict = {'interface': interfaceDict}
-
-
 ## Change the name of the algorithm to test it out.
-
-## TODO ERROR HAPPENS HERE!
 algorithmTest = Anom(numInp, 0,[0], ceDict)
-
 # subscribe to input log
 algorithmTest.streamInputInit(0)
 # Get the latest data point, extract latest recno, train on the most
 # recent batch of data prior to online run.
-
-
 event = gdp.GDP_GCL.get_next_event(None)
 print event
 batchSize = 8

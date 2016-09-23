@@ -40,7 +40,7 @@ class ceInterface(object):
                 else:
                      raise ValueError ('Input description must be a'\
                                        ' dictionary object')
-
+        
         if outDict is None:        
             raise ValueError ('Output description dictionary'\
                               ' must be provided.')
@@ -54,17 +54,13 @@ class ceInterface(object):
              raise ValueError ('Output description must be a'\
                                ' dictionary object')
 
-
         self.inObjs = []
         for d in inDicts:
-            self.inObjs.append(ioClass(d['source'], d['name'], 
-                            d['param'], d['lag'], d['norm']))
-        self.outObj = ioClass(outDict['sink'], outDict['name'], 
-                              outDict['param'], outDict['lag'], 
-                              outDict['norm'], outDict['key'],
-                              outDict['password'])
-
-
+            self.inObjs.append(ioClass(d))
+        print 12
+        self.outObj = ioClass(outDict)
+        #ioClass(outDict)
+        print 99
     def collectData(self, start, stop):
         inData = []
         for inObj in self.inObjs:
