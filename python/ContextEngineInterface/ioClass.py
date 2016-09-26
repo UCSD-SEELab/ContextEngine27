@@ -56,7 +56,7 @@ class ioClass(object):
                 self.IOtype = 'GDP'  
                 # Log name in GDP
                 self.gclName = gdp.GDP_NAME(d['name'])
-                self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
+                #self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
                 key = d['key']
                 password = d['password']
                 if key == "" or password == "":
@@ -81,17 +81,17 @@ class ioClass(object):
         self.norm = d['norm']
         # Normalization parameters (i.e., avg, std etc.)
         self.normParam = {} 
-        print 20
+        
     
     
-    print 66
+    
     
     def processBLE(self, data):
         if data.find('{\"msg\"') != -1:
             print self.buff
             self.buff = ''
         self.buff = self.buff + str(data)
-    print 5 
+     
     def printTester(self):
         print self.gcl, self.param, self.lag
     def readLog(self, start, stop): 

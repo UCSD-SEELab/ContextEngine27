@@ -11,7 +11,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '../python'))
 sys.path.insert(1, os.path.join(sys.path[0], '../python/AnomalyDetection'))
 ## Interface path
 sys.path.insert(1, os.path.join(sys.path[0], '../python/ContextEngineInterface'))
-
+print os.getpid()
 # Import your algorithms here.
 from Anom import Anom
 import Anomaly
@@ -21,7 +21,8 @@ timestamps = {}
 # each dictionary object includes: log name, JSON parameter in that log, lag
 dict0 = {'dir': 'in',
         'source': 'GDP_I',
-        'name': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
+        #'name': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
+        'name': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
         'param': 'temperature_celcius',
           'lag': 0,
           'norm': 'lin'}
@@ -75,16 +76,18 @@ algorithmTest.clusterAndTrain()
 secondTS = time.time()
 
 i = 0
-while i < 100:
+while 1:
+    print i
     newDataPoint = algorithmTest.fetchOnlineData(0)
-    algorithmTest.addSingleObservation([newDataPoint], 0)
+    #algorithmTest.addSingleObservation([newDataPoint], 0)
     if True: #algorithmTest.executeAndCluster(newDataPoint) == 1:
-        result = int(algorithmTest.executeAndCluster([newDataPoint]))
-        print result, newDataPoint
-        algorithmTest.interface.outputData(str(result)+'pad')
-    if i < batchSize:
-        i = i + 1
-    else:
-        i = 0
-        algorithmTest.clusterAndTrain()
+        #result = int(algorithmTest.executeAndCluster([newDataPoint]))
+        #print result, newDataPoint
+        print newDataPoint
+        #algorithmTest.interface.outputData(str(result)+' pad')
+    #if i < batchSize:
+        #i = i + 1
+    #else:
+        #i = 0
+        #algorithmTest.clusterAndTrain()
 

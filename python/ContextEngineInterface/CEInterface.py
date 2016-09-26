@@ -57,10 +57,10 @@ class ceInterface(object):
         self.inObjs = []
         for d in inDicts:
             self.inObjs.append(ioClass(d))
-        print 12
+        
         self.outObj = ioClass(outDict)
         #ioClass(outDict)
-        print 99
+        
     def collectData(self, start, stop):
         inData = []
         for inObj in self.inObjs:
