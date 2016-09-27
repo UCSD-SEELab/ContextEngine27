@@ -3,7 +3,7 @@ import json
 #import Adafruit_BluefruitLE
 # Input/output class. Identifies the gcl_name and parameter_name for each input or output.
 
-def collectTrace(gclHandle, param, start, stop):
+def collectTrace(gclHandle, param1, param2, start, stop):
     # this is the actual subscribe call
     gclHandle.multiread(start, stop-start+1)
 
@@ -17,7 +17,10 @@ def collectTrace(gclHandle, param, start, stop):
             break
         datum = event["datum"]
         handle = event["gcl_handle"]
-        data.append(float(json.loads(datum['data'])[param]))
+        if param2 == None:
+            data.append(float(json.loads(datum['data'])[param1]))
+        else:
+            data.append(float(json.loads(datum['data'])[param1][param2]))
     return data
 
 class ioClass(object):
@@ -71,7 +74,8 @@ class ioClass(object):
                     # Assume that GCL already exists and create the GCL handle
                     self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RA, open_info)
         # JSON parameter name to be used in each log record
-        self.param = d['param']
+        self.param1 = d['param_lev1']
+        self.param2 = d['param_lev2']
         # Lag from the current record. Can be used to implement time series functions.
         self.lag = d['lag']
 
@@ -95,10 +99,11 @@ class ioClass(object):
     def printTester(self):
         print self.gcl, self.param, self.lag
     def readLog(self, start, stop): 
-        param = self.param
+        param1 = self.param1
+        param2 = self.param2
         handle = self.gclHandle            
         lag = self.lag
-        trace = collectTrace(handle, param, start - lag, stop - lag)
+        trace = collectTrace(handle, param1, param2, start - lag, stop - lag)
         return trace
     def subscribe(self):
         if self.IO == 'in':
@@ -170,7 +175,10 @@ class ioClass(object):
         ## NOTE Maybe you subs to all and it returns event for each?!
             ## NOTE ^^ Yeah, exactly that.^^
         newRecord = gdp.GDP_GCL.get_next_event(None)
-        newDataPoint = json.loads(newRecord['datum']['data'])['temperature_celcius']
+        if [self.param2] == None:
+            newDataPoint = json.loads(newRecord['datum']['data'])[self.param1]
+        else:
+            newDataPoint = json.loads(newRecord['datum']['data'])[self.param1][self.param2]
 #        print newDataPoint
         return newDataPoint
     def write(self, data):

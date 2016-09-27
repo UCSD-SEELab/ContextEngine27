@@ -22,14 +22,19 @@ timestamps = {}
 dict0 = {'dir': 'in',
         'source': 'GDP_I',
         #'name': 'edu.berkeley.eecs.swarmlab.device.c098e5300003',
-        'name': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
-        'param': 'temperature_celcius',
+        #'name': 'edu.berkeley.eecs.bwrc.device.c098e530005d',
+        'name': '58jK2obVbOma7OwQNkgA7kuYqrEVcy4Tw5hMlREn5jY',
+        #'param_lev1': 'temperature_celcius',
+        #'param_lev2': None,
+        'param_lev1': 'raw',
+        'param_lev2': 'S1A',
           'lag': 0,
           'norm': 'lin'}
 dict4 = {'dir': 'out',
           'sink': 'GDP_O',
           'name': 'tCcbytv6gY0BdzvMx_JHw9ovPGwcpzvptFJiZ1k2u7Y',
-          'param': 'temperature_celcius',
+          'param_lev1': 'raw',
+          'param_lev2': 'S1A',
           'lag': 4,
           'norm': '',
           'key': 'DgAAAOhbtHYAAAAA-Fm0diD2h36MEfB2AAAAAAAAAAA.pem',
@@ -77,17 +82,16 @@ secondTS = time.time()
 
 i = 0
 while 1:
-    print i
+    #print i
     newDataPoint = algorithmTest.fetchOnlineData(0)
-    #algorithmTest.addSingleObservation([newDataPoint], 0)
+    algorithmTest.addSingleObservation([newDataPoint], 0)
     if True: #algorithmTest.executeAndCluster(newDataPoint) == 1:
-        #result = int(algorithmTest.executeAndCluster([newDataPoint]))
-        #print result, newDataPoint
-        print newDataPoint
-        #algorithmTest.interface.outputData(str(result)+' pad')
-    #if i < batchSize:
-        #i = i + 1
-    #else:
-        #i = 0
-        #algorithmTest.clusterAndTrain()
+        result = int(algorithmTest.executeAndCluster([newDataPoint]))
+        print result, newDataPoint
+        algorithmTest.interface.outputData(str(result)+' pad')
+    if i < batchSize:
+        i = i + 1
+    else:
+        i = 0
+        algorithmTest.clusterAndTrain()
 
