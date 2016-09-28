@@ -15,7 +15,7 @@ if len(sys.argv) < 4:
 else:
     serial_port = sys.argv[1]
     name_str = sys.argv[2]
-    ketfile = sys.argv[3]
+    keyfile = sys.argv[3]
 
 # serial_port = 'dev/ttyACM0' # Tested on Raspberry Pi
 ser = serial.Serial(serial_port, timeout = 2)
@@ -39,12 +39,12 @@ gcl_handle = gdp.GDP_GCL(gcl_name, gdp.GDP_MODE_AO,
 
 i = 0
 while 1:
-    i = i + 1
     line = ser.readline()
     if is_json(line):
         jsonLine = json.loads(line)
         if 'msg' in jsonLine:
             if jsonLine['msg'] == 'read':
-                #print 'line: ', i, ', ', line
+                i = i + 1
+                print 'Record: ', i, ', ', line
                 datum = {'data': line}
                 gcl_handle.append(datum)
