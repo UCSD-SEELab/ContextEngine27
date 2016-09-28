@@ -59,7 +59,7 @@ algorithmTest.streamInputInit(0)
 
 event = gdp.GDP_GCL.get_next_event(None)
 print event
-batchSize = 8
+batchSize =5 
 trainRecStart = event['datum']['recno'] - batchSize
 print "Collecting initial training data from GDP"
 # Use the collect data routine to fetch training data in separate lists
@@ -84,7 +84,7 @@ i = 0
 while 1:
     #print i
     newDataPoint = algorithmTest.fetchOnlineData(0)
-    algorithmTest.addSingleObservation([newDataPoint], 0)
+    algorithmTest.addSingleObservation([float(newDataPoint)], 0)
     if True: #algorithmTest.executeAndCluster(newDataPoint) == 1:
         result = int(algorithmTest.executeAndCluster([newDataPoint]))
         print result, newDataPoint

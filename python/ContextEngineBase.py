@@ -263,9 +263,9 @@ class ContextEngineBase(object):
         # output normalization:
         # Linear normlization, zero-mean and divide by std
         if self.interface.outObj.norm == 'lin':
-            avg = np.mean(self.outputVector)
-            std = np.std(self.outputVector)
-            self.outputVector = [(r - avg) / std for r in self.outputVector]
+            avg = float(np.mean(self.outputVector))
+            std = float(np.std(self.outputVector))
+            self.outputVector = [(float(r) - avg) / std for r in self.outputVector]
             self.interface.outObj.normParam = {'avg': avg, 'std': std}
         else:
             self.outputVector = self.outputVector
@@ -275,9 +275,9 @@ class ContextEngineBase(object):
             if inObj.norm == 'lin':
                 # Extracting the i'th input to normalize
                 inSnippet = map(lambda d: d[i], self.observationMatrix)
-                avg = np.mean(inSnippet)
-                std = np.std(inSnippet)
-                normInp = [(r - avg) / std for r in inSnippet]
+                avg = float(np.mean(inSnippet))
+                std = float(np.std(inSnippet))
+                normInp = [(float(r) - avg) / std for r in inSnippet]
                 self.updateSingleInputSnippet(normInp, i)
                 self.interface.inObjs[i].normParam = {'avg': avg, 'std': std}
             i = i + 1
@@ -351,9 +351,9 @@ class ContextEngineBase(object):
                     number of observed data")
         else:
             j = 0
-            for rec in self.observationMatrix:
-                rec[idx] = snippet[j]
-                j = j + 1
+            for j in xrange(len(self.observationMatrix)):
+                self.observationMatrix[j][idx] = 1.0*float(snippet[j])
+                
     
     def streamInputInit (self, idx):
         if idx == -1:
