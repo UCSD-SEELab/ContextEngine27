@@ -62,6 +62,7 @@ class Anom(ContextEngineBase):
             self.Thresh = Anomaly.AnomThresh(self.observationMatrix);
             # TODO confirm that delete is working and there is no remaining data
             del self.observationMatrix
+            self.observationMatrix = np.empty([0, 0])
             self.numObservations = 0
             return True;
         else:
