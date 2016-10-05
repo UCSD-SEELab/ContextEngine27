@@ -1,8 +1,12 @@
-from aenum import Enum
+#from aenum import Enum
 import math
 import numpy as np
 import sys
-from sklearn.cluster import KMeans 
+try:
+    from sklearn.cluster import KMeans 
+except:
+    print 'Warning: Unable to import KMeans clustering from sklearn.'
+
 sys.path.append("ContextEngineInterface")
 from CEInterface import ceInterface
 
@@ -180,6 +184,7 @@ class ContextEngineBase(object):
         # within the data and labels them accordingly. The number k is\
         # provided during initialization. Test data can also be classified\
         # according to this clustering, using "classify" function.
+        print self.observationMatrix
         self.normalizeData()
         # output clustering
         if self.outputClassifier > 0:

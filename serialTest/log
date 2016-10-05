@@ -1,0 +1,40 @@
+
+GCL name: JzeEhdTGQrJ9uxsciHq3MTsDlIMkpf8TeRY270A7sO8
+pass phrase: 44661936
+log server edu.berkeley.eecs.gdp-02.gdplogd
+
+GCL name: 4mW54b7bF-tiJXv1dwyOOzui18036Q711HPCL-c5BUs
+pass phrase: SeeLabUcsd
+log server edu.berkeley.eecs.gdp-03.gdplogd
+
+GCL name: tCcbytv6gY0BdzvMx_JHw9ovPGwcpzvptFJiZ1k2u7Y
+pass: 1234
+DgAAAOhbtHYAAAAA-Fm0diD2h36MEfB2AAAAAAAAAAA.pem
+
+new: 
+GCL name: 58jK2obVbOma7OwQNkgA7kuYqrEVcy4Tw5hMlREn5jY
+pass: 1234
+DgAAAOjbtnYAAAAA-Nm2dkD2j36MofJ2AAAAAAAAAAA.pem  (in ~/serialTest)
+
+
+Subscription ok logs:
+
+BWRC, Server room: BLEE Rear wall: edu.berkeley.eecs.bwrc.device.c098e5300036
+
+BWRC, Server room: BLEE Mid wall: edu.berkeley.eecs.bwrc.device.c098e530005d
+
+BWRC, Server room: BLEE Hot aisle: edu.berkeley.eecs.bwrc.device.c098e5300054
+
+BWRC, Server room: BLINK: edu.berkeley.eecs.bwrc.device.c098e590001e
+
+BWRC, Server room: BLEE Lab rear wall: edu.berkeley.eecs.bwrc.device.c098e5300009
+
+BWRC, Server room: Power Blade - Utility power to sump pump: edu.berkeley.eecs.bwrc.device.c098e570008f
+
+BWRC, Server room: Power Blade - Utility power to Air Compressor: ERROR 600: no route available!
+
+-----
+
+Swarmlab, Immersion room: BLEE rear camera pillar: edu.berkeley.eecs.swarmlab.device.c098e5300003
+
+

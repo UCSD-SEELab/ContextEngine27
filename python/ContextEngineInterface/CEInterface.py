@@ -1,4 +1,7 @@
-import gdp
+try:
+    import gdp
+except:
+    print 'Warning: Unable to import GDP.'
 from ioClass import ioClass
 import numpy as np
 ## This class creates a tester instance for supervised learning models.
@@ -84,6 +87,9 @@ class ceInterface(object):
 
     def outputData(self, data):
         self.outObj.write(data)
+
+    def writeDataToInputPort(self, idx, data):
+        self.inObjs[idx].write(data)
 
 #        if (trainRecStart is None or trainRecStop is None or
 #            testRecStart is None or testRecStop is None):  
