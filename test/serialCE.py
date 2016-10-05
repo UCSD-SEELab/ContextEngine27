@@ -37,10 +37,19 @@ dict4 = {'dir': 'out',
           'lag': 0,
           'norm': '',
           }
+dict5 = {'dir': 'out',
+          'sink': 'GDP_O',
+          'name': 'tCcbytv6gY0BdzvMx_JHw9ovPGwcpzvptFJiZ1k2u7Y',
+          'param_lev1': 'raw',
+          'param_lev2': 'S1A',
+          'lag': 4,
+          'norm': '',
+          'key': 'DgAAAOhbtHYAAAAA-Fm0diD2h36MEfB2AAAAAAAAAAA.pem',
+          'password': '1234'}
 # Number of CE input
 numInp = 1
 interfaceDict = {'in': [dict0], 
-                 'out': dict4}
+                 'out': dict5}
 ceDict = {'interface': interfaceDict}
 
 

@@ -184,7 +184,7 @@ class ContextEngineBase(object):
         # within the data and labels them accordingly. The number k is\
         # provided during initialization. Test data can also be classified\
         # according to this clustering, using "classify" function.
-        print self.observationMatrix
+        #print self.observationMatrix
         self.normalizeData()
         # output clustering
         if self.outputClassifier > 0:
