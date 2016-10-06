@@ -97,6 +97,7 @@ class ioClass(object):
                 self.IOtype = 'CONSOLE'
             elif d['sink'] == 'DRONE':
                 self.IOtype = 'DRONE'
+                self.timeout = d['timeout']
                 self.url = d['name']
                 print 'Drone launch trigger defined: ', self.url
                 
@@ -240,7 +241,7 @@ class ioClass(object):
                 if int(data) == 1:
                     try:
                         print 'Triggering the drone...'
-                        r = requests.get(self.url)
+                        r = requests.get(self.url, timeout = self.timeout)
                         print r.status_code
                     except:
                         print 'Network error: cannot use request to trigger drone.'
