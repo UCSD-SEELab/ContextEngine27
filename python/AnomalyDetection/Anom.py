@@ -3,7 +3,9 @@ import math
 import scipy
 import Anomaly
 import sys
-sys.path.append("..")
+#sys.path.append("/home/nima/src/ContextEngine27/python")
+sys.path.insert(0, "/home/nima/src/ContextEngine27/python")
+sys.path.insert(0, "/home/nima/src/ContextEngine27/python/ContextEngineInterface")
 from ContextEngineBase import *
 
 

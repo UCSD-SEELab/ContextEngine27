@@ -2,12 +2,15 @@
 import math
 import numpy as np
 import sys
+import os
 try:
     from sklearn.cluster import KMeans 
 except:
     print 'Warning: Unable to import KMeans clustering from sklearn.'
 
-sys.path.append("ContextEngineInterface")
+
+#sys.path.append("ContextEngineInterface")
+sys.path.insert(0,"/home/nima/src/ContextEngine27/ContextEngineInterface")
 from CEInterface import ceInterface
 
 #sys.path.append("../python/Security/Encrypt/")

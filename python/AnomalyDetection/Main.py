@@ -32,8 +32,8 @@ mag = np.linalg.norm(data)
 newData=np.array([0]*len(data))
 
 
-anomalyDet = Anom (complexity = 0, numInputs = 1, outputClassifier = 0, inputClassifiers = [0], appFieldsDict = {})
-
+anomalyDet = Anom (numInputs = 1, outputClassifier = 0, inputClassifiers = [0], appFieldsDict = {})
+#anomalyDet = Anom (complexity = 0, numInputs = 1, outputClassifier = 0, inputClassifiers = [0], appFieldsDict = {})
 for rec in data[0:1000]:
     anomalyDet.addSingleObservation([rec],0)
 anomalyDet.train()

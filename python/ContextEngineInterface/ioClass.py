@@ -56,6 +56,10 @@ class ioClass(object):
                 # Log name in GDP
                 self.gclName = gdp.GDP_NAME(d['name'])
                 self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
+
+                # JSON parameter name to be used in each log record
+                self.param1 = d['param_lev1']
+                self.param2 = d['param_lev2']
             elif d['source'] == "BLE_I":
                 print "BLE input init."
                 self.IOtype = 'BLE'
@@ -70,7 +74,10 @@ class ioClass(object):
                 self.IOtype = 'SER'
                 self.port = d['name']
                 self.serialHandle = serial.Serial(self.port, timeout = 2)
-
+                
+                # JSON parameter name to be used in each log record
+                self.param1 = d['param_lev1']
+                self.param2 = d['param_lev2']
             else:
                 raise ValueError("Undefined source for input: "+d['source'])
         if d['dir'] == 'out':
@@ -101,9 +108,6 @@ class ioClass(object):
                 self.url = d['name']
                 print 'Drone launch trigger defined: ', self.url
                 
-        # JSON parameter name to be used in each log record
-        self.param1 = d['param_lev1']
-        self.param2 = d['param_lev2']
         # Lag from the current record. Can be used to implement time series functions.
         self.lag = d['lag']
 
