@@ -31,7 +31,8 @@ dict0 = {'dir': 'in',
           'norm': 'lin'}
 dict4 = {'dir': 'out',
           'sink': 'DRONE',
-          'name': 'http://192.168.1.37:5000/launch',
+          #'name': 'http://192.168.1.37:5000/launch',
+          'name': 'http://0.0.0.0:5000/launch',
           'timeout': 2,
           'lag': 0,
           'norm': '',
@@ -48,7 +49,7 @@ dict5 = {'dir': 'out',
 # Number of CE input
 numInp = 1
 interfaceDict = {'in': [dict0], 
-                 'out': dict5}
+                 'out': dict4}
 ceDict = {'interface': interfaceDict}
 
 

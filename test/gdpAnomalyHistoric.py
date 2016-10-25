@@ -58,6 +58,7 @@ trainRecStop = 4001
 batchSize = 200
 numTrainingSamples = trainRecStop - trainRecStart + 1
 inDataTrain, outDataTrain = algorithmTest.interface.collectData(trainRecStart, trainRecStart + batchSize)
+print inDataTrain.shape
 print "Done: collecting data from GDP"
 
 print "Beginning loading and training"
@@ -76,18 +77,9 @@ secondTS = time.time()
 data = inDataTrain
 i = 0
 
-dg = time.time()
-startCount = dg
-algorithmTest.interface.controlPlug("75.80.49.247","9999","off")
 while trainRecStart < trainRecStop:
     if algorithmTest.executeAndCluster(data[i][0]) == 1:
         print int(algorithmTest.executeAndCluster(data[i][0])), inDataTrain[i][0], data[i][0]
-	algorithmTest.interface.controlPlug("75.80.49.247","9999","on")
-        startCount = time.time()
-    else:
-        if time.time()-startCount > 1:
-            startCount = time.time()
-            algorithmTest.interface.controlPlug("75.80.49.247","9999","off")
     if i < batchSize:
         i = i + 1
     else:
@@ -98,4 +90,3 @@ while trainRecStart < trainRecStop:
             algorithmTest.addSingleObservation(inDataTrain[:][j], outDataTrain[i])
         data = inDataTrain
         algorithmTest.clusterAndTrain()
-print time.time()-dg

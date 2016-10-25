@@ -77,20 +77,22 @@ secondTS = time.time()
 data = inDataTrain
 i = 0
 
+plugIP1 = "192.168.1.46"
+plugIP2 = "192.168.1.51"
 dg = time.time()
 startCount = dg
 #algorithmTest.interface.controlPlug("75.80.49.247","9999","off")
-demoProximity.test("192.168.1.51","off")
+#demoProximity.test(plugIP1,plugIP2,"off")
 while trainRecStart < trainRecStop:
     if algorithmTest.executeAndCluster(data[i][0]) == 1:
         print int(algorithmTest.executeAndCluster(data[i][0])), inDataTrain[i][0], data[i][0]
-        demoProximity.test("192.168.1.51","on")
+#        demoProximity.test(plugIP1,plugIP2,"on")
 #	algorithmTest.interface.controlPlug("75.80.49.247","9999","on")
         startCount = time.time()
     else:
         if time.time()-startCount > 1:
             startCount = time.time()
-            demoProximity.test("192.168.1.51","off")
+#            demoProximity.test(plugIP1,plugIP2,"off")
 #            algorithmTest.interface.controlPlug("75.80.49.247","9999","off")
     if i < batchSize:
         i = i + 1
@@ -102,4 +104,5 @@ while trainRecStart < trainRecStop:
             algorithmTest.addSingleObservation(inDataTrain[:][j], outDataTrain[i])
         data = inDataTrain
         algorithmTest.clusterAndTrain()
-print time.time()-dg
+#print time.time()-dg
+#demoProximity.test(plugIP1,plugIP2,"off")

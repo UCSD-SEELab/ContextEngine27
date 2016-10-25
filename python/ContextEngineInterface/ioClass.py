@@ -8,6 +8,8 @@ except:
     print 'Warning: Unable to import requests.'
 import json
 import serial
+import MySQLdb #for local database input mode
+
 #import Adafruit_BluefruitLE
 # Input/output class. Identifies the gcl_name and parameter_name for each input or output.
 
@@ -17,24 +19,42 @@ def is_json(mystr):
     except ValueError, e:
         return False
     return True
-def collectTrace(gclHandle, param1, param2, start, stop):
-    # this is the actual subscribe call
-    gclHandle.multiread(start, stop-start+1)
+def collectTrace(io,gclHandle, param1, param2, start, stop):
+    if(io == "GDP"):
+        # this is the actual subscribe call
+        gclHandle.multiread(start, stop-start+1)
 
-    # timeout
-    t = {'tv_sec':0, 'tv_nsec':500*(10**6), 'tv_accuracy':0.0}
-    data = []
-    while True:
-        # This could return a None, after the specified timeout
-        event = gdp.GDP_GCL.get_next_event(t)
-        if event is None or event["type"] == gdp.GDP_EVENT_EOS:
-            break
-        datum = event["datum"]
-        handle = event["gcl_handle"]
+        # timeout
+        t = {'tv_sec':0, 'tv_nsec':500*(10**6), 'tv_accuracy':0.0}
+        data = []
+        while True:
+            # This could return a None, after the specified timeout
+            event = gdp.GDP_GCL.get_next_event(t)
+            if event is None or event["type"] == gdp.GDP_EVENT_EOS:
+                break
+            datum = event["datum"]
+            handle = event["gcl_handle"]
+            if param2 == None:
+                data.append(float(json.loads(datum['data'])[param1]))
+            else:
+                data.append(float(json.loads(datum['data'])[param1][param2]))
+    else:
+        cd = MySQLdb.connect("localhost","root","seelab","localgdp" )
+        cur = cd.cursor()
         if param2 == None:
-            data.append(float(json.loads(datum['data'])[param1]))
+            sql = "SELECT "+param1+" FROM localdatabase WHERE ID >= "+str(start)+" AND ID <= "+str(stop)
         else:
-            data.append(float(json.loads(datum['data'])[param1][param2]))
+            sql = "SELECT "+param2+" FROM localdatabase WHERE ID >= "+str(start)+" AND ID <= "+str(stop)
+        cur.execute(sql)
+        a = cur.fetchall()
+        data = []
+        index = 0
+        for row in a:
+            data.append(float(a[index][0]))
+            index = index + 1
+        cd.close()
+#    print "CollectTrace ioClass.py    "+str(type(data[0]))
+#    print data
     return data
 
 class ioClass(object):
@@ -54,8 +74,27 @@ class ioClass(object):
                 self.IOtype = 'GDP'
                 # Assume that GCL already exists and create the GCL handle
                 # Log name in GDP
+                # NOTE
+                # NOTE
+                # NOTE XXX NOTE
+                # NOTE XXX TODO
+                # TODO XXX TODO
+                # TODO
+                # TODO
+                gdp.gdp_init()
+                #gdp.dbg_set("*=50")
                 self.gclName = gdp.GDP_NAME(d['name'])
                 self.gclHandle = gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
+
+                # JSON parameter name to be used in each log record
+                self.param1 = d['param_lev1']
+                self.param2 = d['param_lev2']
+            elif d['source']  == "Database":
+                self.IOtype = 'Database'
+                # Assume that GCL already exists and create the GCL handle
+                # Log name in GDP
+                self.gclName = d['name']
+                self.gclHandle = "dont care" #gdp.GDP_GCL(self.gclName, gdp.GDP_MODE_RO)
 
                 # JSON parameter name to be used in each log record
                 self.param1 = d['param_lev1']
@@ -135,7 +174,8 @@ class ioClass(object):
         param2 = self.param2
         handle = self.gclHandle            
         lag = self.lag
-        trace = collectTrace(handle, param1, param2, start - lag, stop - lag)
+        io = self.IOtype 
+        trace = collectTrace(io,handle, param1, param2, start - lag, stop - lag)
         return trace
 
     def subscribe(self):
@@ -223,7 +263,7 @@ class ioClass(object):
             ## NOTE Maybe you subs to all and it returns event for each?!
             ## NOTE ^^ Yeah, exactly that.^^
             newRecord = gdp.GDP_GCL.get_next_event(None)
-            if [self.param2] == None:
+            if self.param2 == None:
                 newDataPoint = json.loads(newRecord['datum']['data'])[self.param1]
             else:
                 newDataPoint = json.loads(newRecord['datum']['data'])[self.param1][self.param2]
@@ -245,7 +285,8 @@ class ioClass(object):
                 if int(data) == 1:
                     try:
                         print 'Triggering the drone...'
-                        r = requests.get(self.url, timeout = self.timeout)
+                        start_time = json.dumps({'start_time': time.time()})
+                        r = requests.post(self.url, start_time)#, timeout = self.timeout)
                         print r.status_code
                     except:
                         print 'Network error: cannot use request to trigger drone.'
