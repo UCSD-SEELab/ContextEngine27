@@ -8,9 +8,7 @@ try:
 except:
     print 'Warning: Unable to import KMeans clustering from sklearn.'
 
-
-#sys.path.append("ContextEngineInterface")
-sys.path.insert(0,"/home/nima/src/ContextEngine27/ContextEngineInterface")
+sys.path.append(os.path.join(os.path.dirname(__file__), "ContextEngineInterface"))
 from CEInterface import ceInterface
 
 #sys.path.append("../python/Security/Encrypt/")
