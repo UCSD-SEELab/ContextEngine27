@@ -19,6 +19,12 @@ from CEInterface import ceInterface
 #from decrypt import rsaDecrypt
 #from decrypt import decrypt
 
+class Complexity(Enum):
+    firstOrder  = 1
+    secondOrder = 2
+    thirdOrder  = 3
+    fourthOrder = 4
+    fifthOrder  = 5
 
 ## Implementation of the context engine base class: the class inherited by other
 ## machine learning algorithms.
