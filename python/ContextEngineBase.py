@@ -3,6 +3,8 @@ import math
 import numpy as np
 import sys
 import os
+from enum import Enum # for python2.7, install enum34 (backport from 3.4)
+
 try:
     from sklearn.cluster import KMeans 
 except:
